@@ -1,9 +1,9 @@
 ﻿using ChillToeic.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChillToeic.Models
+namespace ChillToeic.Repository
 {
-    public class ApplicationDbContext: DbContext
+    public class ApplicationDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Answer> Answers { get; set; }
