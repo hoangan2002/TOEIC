@@ -27,8 +27,15 @@ namespace ChillToeic.Repository
         public DbSet<Test> Tests { get; set; }
         public DbSet<TestOfUser> TestOfUsers { get; set; }
         public DbSet<TestType> TestTypes { get; set; }
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+       
+        private const string connectionString = @"
+                Data Source=localhost;Database=ChillTOEIC;
+                User ID=sa;Password=123; TrustServerCertificate=True;";
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseSqlServer(connectionString);
         }
+
     }
 }

@@ -1,6 +1,7 @@
 
 using ChillToeic.Jwt;
 using ChillToeic.Repository;
+using ChillToeic.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -10,7 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddTransient<UserService>();
 // Add Authentication
 builder.Services.AddSingleton<JwtService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

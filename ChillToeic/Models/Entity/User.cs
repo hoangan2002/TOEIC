@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChillToeic.Models.Entity
 {
+    
     public class User
     {
         [Key]

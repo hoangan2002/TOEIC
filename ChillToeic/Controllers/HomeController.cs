@@ -1,6 +1,9 @@
 ﻿using ChillToeic.Infrastructure.Jwt;
 using ChillToeic.Jwt;
 using ChillToeic.Models;
+using ChillToeic.Models.Entity;
+using ChillToeic.Repository;
+using ChillToeic.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -10,8 +13,7 @@ namespace ChillToeic.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         
-
-        public HomeController(ILogger<HomeController> logger, JwtService jwtService)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
