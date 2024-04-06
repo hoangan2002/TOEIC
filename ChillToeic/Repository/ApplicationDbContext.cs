@@ -10,7 +10,6 @@ namespace ChillToeic.Repository
         public DbSet<Certificate> Certificates { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Discount> Discount { get; set; }
-        public DbSet<Document> Documents { get; set; }
         public DbSet<EducationCenter> EducationCenters { get; set; }
         public DbSet<Lecture> Lectures { get; set; }
         public DbSet<LectureDetail> LectureDetails { get; set; }
@@ -27,9 +26,10 @@ namespace ChillToeic.Repository
         public DbSet<Test> Tests { get; set; }
         public DbSet<TestOfUser> TestOfUsers { get; set; }
         public DbSet<TestType> TestTypes { get; set; }
-       
+        public DbSet<EmailOTP> EmailOTPs { get; set; }
+
         private const string connectionString = @"
-                Data Source=localhost;Database=ChillTOEIC;
+                Data Source=localhost;Database=ChillTOEIC2;
                 User ID=sa;Password=123; TrustServerCertificate=True;";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

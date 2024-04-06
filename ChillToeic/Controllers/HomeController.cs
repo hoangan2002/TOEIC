@@ -1,4 +1,5 @@
 using ChillToeic.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -12,11 +13,17 @@ namespace ChillToeic.Controllers
         {
             _logger = logger;
         }
-
+       
         public IActionResult Index()
         {
             return View();
         }
+        [Authorize]
+        public IActionResult ok()
+        {
+            return Ok("OK");
+        }
+
 
         public IActionResult Privacy()
         {

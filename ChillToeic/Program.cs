@@ -1,6 +1,9 @@
 
 
+using ChillToeic.Infrastructure.EmailSender;
+using ChillToeic.Infrastructure.Middleware;
 using ChillToeic.Jwt;
+using ChillToeic.Models.Entity;
 using ChillToeic.Repository;
 using ChillToeic.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,6 +19,15 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<UserService>();
+builder.Services.AddTransient<EducationService>();
+builder.Services.AddScoped<IEmailService,EmailService>();
+builder.Services.AddTransient<EmailOTPService>();
+builder.Services.AddTransient<TestOfUserService>();
+builder.Services.AddTransient<QuestionOfTestService>();
+builder.Services.AddTransient<TestService>();
+builder.Services.AddTransient<QuestionService>();
+builder.Services.AddTransient<AnswerService>();
+builder.Services.AddTransient<QuestionDetailService>();
 // Add Authentication
 builder.Services.AddSingleton<JwtService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -43,7 +55,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseMiddleware<JwtFromCookieMiddleware>();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

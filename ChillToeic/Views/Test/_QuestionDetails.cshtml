@@ -1,0 +1,33 @@
+﻿
+@model IEnumerable<ChillToeic.Models.Entity.QuestionDetail>
+
+<div>
+    @foreach (var detail in Model.OrderBy(q => q.NumberQuestion))
+    {
+        <div class="img-q">
+            
+            @if (@detail.Img != null)
+            {
+                <img src="@detail.Img" alt="#">
+
+                <img src="~/img/author1.jpg" alt="#">
+            }
+            
+        </div>
+        <div class="img-q">
+            <h1>@detail.NumberQuestion</h1>
+           
+            @if (detail.Description !=null)
+            {
+                <p>@detail.Description</p>
+            }
+        </div>
+        <label><input type="radio" name="question1" value="a"> A. @detail.AnswerA</label>
+        <label><input type="radio" name="question1" value="b"> B. @detail.AnswerB</label>
+        <label><input type="radio" name="question1" value="c"> C. @detail.AnswerC</label>
+        @if (detail.AnswerD != null)
+        {
+            <label><input type="radio" name="question1" value="d"> D. @detail.AnswerD</label>
+        }
+    }
+</div>

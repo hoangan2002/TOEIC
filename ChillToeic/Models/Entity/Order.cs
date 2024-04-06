@@ -6,6 +6,7 @@ namespace ChillToeic.Models.Entity
     public class Order
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }
         public Boolean Status { get; set; }

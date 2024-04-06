@@ -20,7 +20,19 @@ namespace ChillToeic.Service
 
         public User GetUserById(int id)
         {
-            return _userRepository.GetById(id);
+            return _userRepository.Find(m =>m.Id == id).FirstOrDefault();
+        }
+        public User FindUserByEmail(string email)
+        {
+          
+
+            return _userRepository.Find(m => m.Email == email).FirstOrDefault();
+        }
+        public User FindUserByUserName(string username)
+        {
+
+
+            return _userRepository.Find(m => m.UserName == username).FirstOrDefault();
         }
 
         public void AddUser(User user)

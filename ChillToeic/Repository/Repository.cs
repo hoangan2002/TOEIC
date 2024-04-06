@@ -25,12 +25,26 @@ namespace ChillToeic.Repository
             _context.SaveChanges();
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public IEnumerable<TEntity>? Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return _context.Set<TEntity>().Where(predicate).ToList();
-        }
+            return _context.Set<TEntity>().Where(predicate).ToList(); 
 
-        public IEnumerable<TEntity> GetAll()
+        }
+		public IEnumerable<TEntity>? Find(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
+		{
+			IQueryable<TEntity> items = _context.Set<TEntity>().AsNoTracking(); // Importance Always include AsNoTracking for Query Side
+			if (includeProperties != null)
+				foreach (var includeProperty in includeProperties)
+					items = items.Include(includeProperty);
+
+			if (predicate is not null)
+				items = items.Where(predicate);
+
+			return items;
+		}
+
+
+		public IEnumerable<TEntity> GetAll()
         {
             return _context.Set<TEntity>().ToList();
         }

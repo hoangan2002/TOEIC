@@ -5,7 +5,8 @@ namespace ChillToeic.Models.Entity
 {
     public class Notification
     {
-        [Key]   
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Description { get; set; }
         public Boolean HaveRead { get; set; }

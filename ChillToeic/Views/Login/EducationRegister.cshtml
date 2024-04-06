@@ -1,0 +1,100 @@
+﻿
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/stylelogin.css">
+    <title>Modern Login Page | AsmrProg</title>
+</head>
+
+
+<body>
+    @model ChillToeic.Models.DTO.UserRegisterDTO
+    <div class="container" id="container">
+        <div class="form-container sign-in">
+             @using (Html.BeginForm("EducationRegister", "Login", FormMethod.Post))
+        {
+
+                <h1>Create Education Center Account</h1>
+                <div class="social-icons">
+                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                </div>
+                <span>or use your email for registration</span>
+                <div >
+                    @Html.TextBoxFor(m => m.FullName, "", new { @type="text", @placeholder = "Name" })
+                    @Html.ValidationMessageFor(m => m.FullName, "")
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.UserName, "", new { @type = "text", @placeholder = "Username" })
+                    @Html.ValidationMessageFor(m => m.UserName, "")
+                </div>
+                @ViewBag.username
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.Password, "", new { @id = "password", @type = "password", @placeholder = "Password" })
+                    @Html.ValidationMessageFor(m => m.Password, "")
+                </div>
+                <div class="email-otp" asp-action="SendOTP" asp-controller="Login" method="post">
+                <div class="form-group">
+                        @Html.TextBoxFor(m => m.Email, "", new { @type = "email", @placeholder = "Email", @class = "email", @id = "email" })
+                    @Html.ValidationMessageFor(m => m.Email, "")
+                        @ViewBag.email
+                </div>
+                    
+                    <button type="button" class="send-otp" id="send-otp">Send OTP</button>
+                    
+                </div>
+                @Html.TextBoxFor(m => m.VerifyOTP, "", new { @type = "verifyemail", @placeholder = "Enter your OTP", @class = "verifyemail", @id = "verifyemail" })
+                @Html.ValidationMessageFor(m => m.VerifyOTP, "")
+                @ViewBag.otp
+                <button type="submit" value="Login">Sign Up</button>
+            }
+        </div>
+       
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-right">
+                    <h1>Welcome Back!</h1>
+                    <p>Enter your personal details to use all of site features</p>
+                    <button class="hidden" id="login">Sign In</button>
+                </div>
+             
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('login').addEventListener('click', function () {
+            window.location.href = '@Url.Action("Index", "Login")';
+        });
+        
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#send-otp').click(function () {
+                var email = $('#email').val();
+                $.ajax({
+                    url: '@Url.Action("SendOTP", "Login")',
+                    type: 'POST',
+                    data: { email: email },
+                    success: function (response) {
+                        // Hiển thị phản hồi từ Controller
+                        console.log(response); // Hiển thị phản hồi từ Controller
+                        $('.email-otp + .response').remove();
+                        // Hiển thị nội dung phản hồi mới nhất sau phần tử .email-otp
+                        $('.email-otp').after('<div class="response">' + response + '</div>');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText); // Hiển thị lỗi nếu có
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="~/js/script.js"></script>
+</body>
+
+</html>

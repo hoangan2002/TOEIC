@@ -7,7 +7,9 @@ namespace ChillToeic.Repository
         TEntity GetById(int id);
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
-        void Add(TEntity entity);
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties);
+
+		void Add(TEntity entity);
         void Update(TEntity entity);
         void Delete(int id);
     }

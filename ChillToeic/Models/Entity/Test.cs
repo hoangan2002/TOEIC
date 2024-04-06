@@ -12,20 +12,19 @@ namespace ChillToeic.Models.Entity
         public string Description { get; set; }
         [ForeignKey("TestType")]
         public int TestTypeId { get; set; }
-
         public virtual TestType TestType { get; set; }
         public int NumberOfQuestion { get; set; }
         public int Duration { get; set; }
         public int Score { get; set; }
         public Boolean Status { get; set; }
         public DateTime CreatedAt { get; set; }
-        [ForeignKey("User")]
+        
         public int? UserId { get; set; }
         public virtual User User { get; set; }
-        [ForeignKey("EducationCenter")]
+        
         public int? EducationCenterId { get; set; }
         public virtual EducationCenter EducationCenter { get; set; }
-        [ForeignKey("Course")]
+        
         public int? CourseId { get; set; }
         public virtual Course Course { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }

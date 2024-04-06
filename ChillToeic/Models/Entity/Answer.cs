@@ -5,7 +5,8 @@ namespace ChillToeic.Models.Entity
 {
     public class Answer
     {
-        [Key]   
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int QuestionNumber { get; set; }
         public int AnswerQuestion { get; set; }

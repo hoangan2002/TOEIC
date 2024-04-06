@@ -6,6 +6,7 @@ namespace ChillToeic.Models.Entity
     public class QuestionOfTest
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [ForeignKey("Test")]
         public int TestId { get; set; }
