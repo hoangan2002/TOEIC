@@ -27,9 +27,10 @@ namespace ChillToeic.Repository
         public DbSet<TestOfUser> TestOfUsers { get; set; }
         public DbSet<TestType> TestTypes { get; set; }
         public DbSet<EmailOTP> EmailOTPs { get; set; }
+		public DbSet<LearningProgress> LearningProgresses { get; set; }
 
-        private const string connectionString = @"
-                Data Source=localhost;Database=ChillTOEIC2;
+		private const string connectionString = @"
+                Data Source=localhost;Database=ChillToeicNew;
                 User ID=sa;Password=123; TrustServerCertificate=True;";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

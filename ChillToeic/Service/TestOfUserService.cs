@@ -54,6 +54,15 @@ namespace ChillToeic.Service
 		{
 			_testofuserRepository.Delete(id);
 		}
-	}
+        public double GetAverageScoreByUserId(int userId)
+        {
+            var userTests = _testofuserRepository.GetAll().Where(t => t.UserId == userId && t.Score != null).ToList();
+            if (userTests.Any())
+            {
+                return userTests.Average(t => t.Score.Value);
+            }
+            return 0; // return 0 if no tests or scores found
+        }
+    }
 
 }

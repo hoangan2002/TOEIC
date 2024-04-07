@@ -1,0 +1,361 @@
+﻿@{
+
+	ViewBag.Title = "Home Page";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ChillToeic.Models.CenterDetailViewModel;
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<!-- Breadcrumbs -->
+<div class="breadcrumbs overlay">
+	<div class="container">
+		<div class="bread-inner">
+			<div class="row">
+				<div class="col-12">
+					<h2>Contact Us</h2>
+					<ul class="bread-list">
+						<li><a asp-area="" asp-controller="Home" asp-action="HomePage">Home</a></li>
+						<li><i class="icofont-simple-right"></i></li>
+						<li class="active">My Course</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Breadcrumbs -->
+<!-- Start Contact Us -->
+<section class="contact-us section">
+	<div class="container">
+		<div class="inner" id="top">
+			<div class="row">
+				<div class="col-lg-12">
+
+					<div class="contact-us-form">
+						<div class="row">
+							<div class="col-lg-8 col-12">
+								<a asp-area="" asp-controller="Center" asp-action="CenterAddCourse" class="btn btn-primary btn-block">Add Course</a>
+							</div>
+							<div class="col-lg-4 col-12">
+								<form class="form-inline">
+									<div class="input-group">
+										<input type="text" class="form-control search-bar" placeholder="Search" aria-label="Search" aria-describedby="search-addon">
+										<div class="input-group-append">
+											<button class="btn btn-outline-secondary" type="button"><i class="fa fa-search"></i></button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+
+		<div class="inner" id="top">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="contact-us-form">
+						<h3 class="titleList">Course list</h3>
+						<div class="row">
+							
+ 							@foreach (var course in Model.Courses)
+							{
+								<div class="col-lg-4 col-md-6 mb-4">
+									<a href="/CourseDetail/CourseDetail" id="a-card">
+										<div class="rounded overflow-hidden mb-2">
+											<img class="img-fluid" src="~/img/author1.jpg" alt="">
+											<div class="card p-4">
+												<div class="d-flex justify-content-between mb-3">
+													<small class="m-0"><i class="fa fa-users text-primary mr-2"></i> @Html.DisplayFor(modelItem => course.QuantityOfRegister)</small>
+													<small class="m-0"><i class="far fa-clock text-primary mr-2"></i>@Html.DisplayFor(modelItem => course.CreatedAt)</small>
+												</div>
+												<a class="h5" href=""> @Html.DisplayFor(modelItem => course.Name)</a>
+												<div class="border-top mt-4 pt-4">
+													<div class="d-flex justify-content-between">
+														<h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
+														<h5 class="m-0">@Html.DisplayFor(modelItem => course.Price)</h5>
+													</div>
+												</div>
+											</div>
+										</div>
+									</a>
+								</div>
+							} 
+						</div>
+					</div>
+					<!--/ End Course -->
+				</div>
+			</div>
+		</div>
+
+		<div class="inner">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="contact-us-form">
+						<h3 class="titleList">Test list</h3>
+						<div class="row">
+							@foreach (var test in Model.Tests)
+							{
+								<div class="col-lg-4 col-md-6 mb-4" id="test">
+									<div class="rounded overflow-hidden mb-2">
+										<div class="card p-4">
+											<h3 class="h5" href="">@Html.DisplayFor(modelItem => test.Name)</h3>
+											<div class="d-flex justify-content-between mb-3">
+												<small class="m-0" id="small"><i class="far fa-clock"></i> @Html.DisplayFor(modelItem => test.Duration) minute</small>
+												<p>|</p>
+												<small class="m-0" id="small"><i class="far fa-user"></i> @Html.DisplayFor(modelItem => test.NumberOfUserTest)</small>
+											</div>
+											<div class="d-flex justify-content-between mb-3">
+												<small class="m-0" id="small"><i class=""></i> @Html.DisplayFor(modelItem => test.NumberOfPart) contest</small>
+												<p>|</p>
+												<small class="m-0" id="small"><i class=""></i> @Html.DisplayFor(modelItem => test.NumberOfQuestion) question</small>
+											</div>
+											<a href="/CourseDetail/CourseDetail" class="btn" id="detail" sid="detail">Delail</a>
+										</div>
+									</div>
+								</div>
+							}
+						</div>
+					</div>
+					<!--/ End Course -->
+				</div>
+			</div>
+		</div>
+
+		<div class="contact-info">
+			
+			<div class="row">
+				<!-- single-info -->
+				<div class="col-lg-4 col-12 ">
+					<div class="single-info">
+						<i class="icofont icofont-ui-call"></i>
+						<div class="content">
+								<h3>@Model.Centers[0].Name</h3>
+							<div class="input-group ml-auto">
+								<input type="text" class="form-control" id="phonelInput" value="+84 234 567 890">
+								<div class="input-group-append">
+									<button type="button" class="btn btn-primary" onclick="">Save</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--/End single-info -->
+				<!-- single-info -->
+				<div class="col-lg-4 col-12 ">
+					<div class="single-info">
+						<i class="icofont-email"></i>
+						<div class="content">
+							<h3>@Model.Centers[0].Email</h3>
+							<div class="input-group ml-auto">
+								<input type="text" class="form-control" id="emailInput" value="info@company.com">
+								<div class="input-group-append">
+									<button type="button" class="btn btn-primary" onclick="">Save</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--/End single-info -->
+				<!-- single-info -->
+				<div class="col-lg-4 col-12 ">
+					<div class="single-info">
+						<i class="icofont icofont-google-map"></i>
+						<div class="content">
+							<h3>@Model.Centers[0].Address</h3>
+							<div class="input-group ml-auto">
+								<input type="text" class="form-control" id="addressInput" value="Address">
+								<div class="input-group-append">
+									<button type="button" class="btn btn-primary" onclick="">Save</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--/End single-info -->
+			</div>
+			
+		</div>
+	</div>
+</section>
+<!--/ End Contact Us -->
+<style>
+	#detail {
+		color: #fff;
+	}
+
+	#small {
+		font-size: 15px;
+	}
+
+	#test {
+		padding: 15px;
+	}
+
+	.cart {
+		margin: 15px;
+	}
+
+	#top {
+		margin-bottom: 20px;
+	}
+
+	#course {
+		background-color: ##1A76D1;
+	}
+
+	.contact-us .single-info .content h2 {
+		color: #fff;
+		font-size: 26px;
+		font-weight: 600;
+	}
+
+	.progress {
+		height: 35px;
+	}
+
+		.progress span {
+			font-size: 25px;
+		}
+
+	.single-info {
+		position: relative; /* Thiết lập vị trí tương đối */
+	}
+
+		.single-info .btn {
+			position: absolute; /* Thiết lập vị trí tuyệt đối để điều chỉnh vị trí */
+			right: 25px;
+			top: 25px;
+			color: #000;
+			background-color: #fff;
+		}
+
+	.content {
+		display: flex;
+		margin: 0 20px;
+		flex-wrap: wrap;
+	}
+
+	.row {
+		justify-content: center;
+	}
+
+	.card-text {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	#price {
+		font-size: 25px;
+	}
+
+	h1 {
+		display: flex;
+		justify-content: center;
+	}
+
+	#a-card:hover {
+		text-decoration: none;
+	}
+
+	.rate .star:hover {
+		color: #000;
+	}
+
+	.btn-primary {
+		color: #fff;
+	}
+
+	.h5 {
+		color: #000;
+	}
+s
+	.titleList{
+		display: flex;
+		justify-content: center;
+		color: #000;
+		text-transform: capitalize;
+		font-size: 38px;
+		font-weight: 700;
+		margin-bottom: 30px;
+		padding: 0;
+	}
+	#top {
+		margin-bottom: 20px;
+	}
+
+	#course {
+		background-color: ##1A76D1;
+	}
+
+	.contact-us .single-info .content h2 {
+		color: #fff;
+		font-size: 26px;
+		font-weight: 600;
+	}
+
+	.progress {
+		height: 35px;
+	}
+
+		.progress span {
+			font-size: 25px;
+		}
+
+	.single-info {
+		position: relative; /* Thiết lập vị trí tương đối */
+	}
+
+		.single-info .btn {
+			position: absolute; /* Thiết lập vị trí tuyệt đối để điều chỉnh vị trí */
+			right: 25px;
+			top: 25px;
+			color: #000;
+			background-color: #fff;
+		}
+
+	.content {
+		display: flex;
+		margin: 0 20px;
+		flex-wrap: wrap;
+	}
+
+	.row {
+		justify-content: center;
+	}
+
+	.card-text {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	#price {
+		font-size: 25px;
+	}
+
+	h1 {
+		display: flex;
+		justify-content: center;
+	}
+
+	#a-card:hover {
+		text-decoration: none;
+	}
+
+	.rate .star:hover {
+		color: #000;
+	}
+
+	.btn-primary {
+		color: #fff;
+	}
+
+</style>
+
+<script>
+
+</script>

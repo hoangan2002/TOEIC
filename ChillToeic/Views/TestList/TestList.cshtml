@@ -1,0 +1,177 @@
+﻿@{
+
+	ViewBag.Title = "Home Page";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-vw4D99FQeF4ycpB8wO5RgfawQ-df9M0WV2HJ9bzoIq3gVhNHU+q22pMyo5mz6P8+" crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+ @model IEnumerable<ChillToeic.Models.Entity.Test> 
+
+<!-- Breadcrumbs -->
+<div class="breadcrumbs overlay">
+	<div class="container">
+		<div class="bread-inner">
+			<div class="row">
+				<div class="col-12">
+					<h2>Center List</h2>
+					<ul class="bread-list">
+						<li><a asp-area="" asp-controller="Home" asp-action="HomePage">Home</a></li>
+						<li><i class="icofont-simple-right"></i></li>
+						<li class="active">Test list</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Breadcrumbs -->
+<!-- Start Contact Us -->
+<section class="contact-us section">
+	<div class="container">
+		<div class="inner" id="top">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="contact-us-form">
+						<div class="row">
+							@* <div class="col-lg-8 col-12">
+							<a asp-area="" asp-controller="Center" asp-action="CenterAddCourse" class="btn btn-primary btn-block">Add Course</a>
+							</div> *@
+							<div class="col-lg-4 col-12">
+								<form class="form-inline">
+									<div class="input-group">
+										<input type="text" class="form-control search-bar" placeholder="Search" aria-label="Search" aria-describedby="search-addon">
+										<div class="input-group-append">
+											<button class="btn btn-outline-secondary" type="button"><i class="fa fa-search"></i></button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!------------------------------------------------------------------------------------------------------------------------------------>
+		<div class="inner">
+			<div class="row">
+				 @foreach (var test in Model)
+				{ 
+					<div class="col-lg-4 col-md-6 mb-4" id="test">
+						<div class="rounded overflow-hidden mb-2">
+							<div class="card p-4">
+								<h3 class="h5" href="">@Html.DisplayFor(modelItem => test.Name)</h3>
+								<div class="d-flex justify-content-between mb-3">
+									<small class="m-0" id="small"><i class="far fa-clock"></i> @Html.DisplayFor(modelItem => test.Duration) minute</small>
+									<p>|</p>
+									<small class="m-0" id="small"><i class="far fa-user"></i> @Html.DisplayFor(modelItem => test.NumberOfUserTest)</small>
+								</div>
+								<div class="d-flex justify-content-between mb-3">
+									<small class="m-0" id="small"><i class=""></i> @Html.DisplayFor(modelItem => test.NumberOfPart) contest</small>
+									<p>|</p>
+									<small class="m-0" id="small"><i class=""></i> @Html.DisplayFor(modelItem => test.NumberOfQuestion) question</small>
+								</div>
+									<a href="/CourseDetail/CourseDetail" class="btn" id="detail" sid="detail">Delail</a>
+								</div>
+						</div>
+					</div>
+				 }  
+			</div>
+		</div>
+
+	</div>
+</section>
+<!--/ End Contact Us -->
+<style>
+	#detail{
+		color: #fff;
+	}
+	#small{
+		font-size: 15px;
+	}
+	#test{
+		padding: 15px;
+	}
+	.cart{
+		margin: 15px;
+
+	}
+	#top {
+		margin-bottom: 20px;
+	}
+
+	#course {
+		background-color: ##1A76D1;
+	}
+
+	.contact-us .single-info .content h2 {
+		color: #fff;
+		font-size: 26px;
+		font-weight: 600;
+	}
+
+	.progress {
+		height: 35px;
+	}
+
+		.progress span {
+			font-size: 25px;
+		}
+
+	.single-info {
+		position: relative; /* Thiết lập vị trí tương đối */
+	}
+
+		.single-info .btn {
+			position: absolute; /* Thiết lập vị trí tuyệt đối để điều chỉnh vị trí */
+			right: 25px;
+			top: 25px;
+			color: #000;
+			background-color: #fff;
+		}
+
+	.content {
+		display: flex;
+		margin: 0 20px;
+		flex-wrap: wrap;
+	}
+
+	.row {
+		justify-content: center;
+	}
+
+	.card-text {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	#price {
+		font-size: 25px;
+	}
+
+	h1 {
+		display: flex;
+		justify-content: center;
+	}
+
+	#a-card:hover {
+		text-decoration: none;
+	}
+
+	.rate .star:hover {
+		color: #000;
+	}
+
+	.btn-primary {
+		color: #fff;
+	}
+	.h5{
+		color: #000;
+	}
+
+</style>
+
+<script>
+
+</script>

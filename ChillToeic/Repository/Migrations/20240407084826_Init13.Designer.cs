@@ -4,6 +4,7 @@ using ChillToeic.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChillToeic.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240407084826_Init13")]
+    partial class Init13
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,8 +112,9 @@ namespace ChillToeic.Migrations
                     b.Property<int>("QuantityOfRegister")
                         .HasColumnType("int");
 
-                    b.Property<int>("level")
-                        .HasColumnType("int");
+                    b.Property<string>("level")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -218,42 +221,6 @@ namespace ChillToeic.Migrations
                     b.ToTable("EmailOTPs");
                 });
 
-            modelBuilder.Entity("ChillToeic.Models.Entity.LearningProgress", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("LectureDetailId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LectureId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("LectureDetailId");
-
-                    b.HasIndex("LectureId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("LearningProgresses");
-                });
-
             modelBuilder.Entity("ChillToeic.Models.Entity.Lecture", b =>
                 {
                     b.Property<int>("Id")
@@ -340,9 +307,11 @@ namespace ChillToeic.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int?>("CertificateId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("CourseId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -353,9 +322,11 @@ namespace ChillToeic.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("OrderId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("TestId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -387,24 +358,11 @@ namespace ChillToeic.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Discount")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
-
-                    b.Property<double>("TotalAmount")
-                        .HasColumnType("float");
-
-                    b.Property<double>("UnitPrice")
-                        .HasColumnType("float");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -607,13 +565,7 @@ namespace ChillToeic.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NumberOfPart")
-                        .HasColumnType("int");
-
                     b.Property<int>("NumberOfQuestion")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumberOfUserTest")
                         .HasColumnType("int");
 
                     b.Property<int>("Score")
@@ -795,41 +747,6 @@ namespace ChillToeic.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("ChillToeic.Models.Entity.LearningProgress", b =>
-                {
-                    b.HasOne("ChillToeic.Models.Entity.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ChillToeic.Models.Entity.LectureDetail", "LectureDetail")
-                        .WithMany()
-                        .HasForeignKey("LectureDetailId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ChillToeic.Models.Entity.Lecture", "Lecture")
-                        .WithMany()
-                        .HasForeignKey("LectureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ChillToeic.Models.Entity.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Lecture");
-
-                    b.Navigation("LectureDetail");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("ChillToeic.Models.Entity.Lecture", b =>
                 {
                     b.HasOne("ChillToeic.Models.Entity.Course", "Course")
@@ -864,19 +781,27 @@ namespace ChillToeic.Migrations
                 {
                     b.HasOne("ChillToeic.Models.Entity.Certificate", "Certificate")
                         .WithMany()
-                        .HasForeignKey("CertificateId");
+                        .HasForeignKey("CertificateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ChillToeic.Models.Entity.Course", "Course")
                         .WithMany()
-                        .HasForeignKey("CourseId");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ChillToeic.Models.Entity.Order", "Order")
                         .WithMany()
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ChillToeic.Models.Entity.Test", "Test")
                         .WithMany("Notifications")
-                        .HasForeignKey("TestId");
+                        .HasForeignKey("TestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ChillToeic.Models.Entity.User", "User")
                         .WithMany("Notifications")

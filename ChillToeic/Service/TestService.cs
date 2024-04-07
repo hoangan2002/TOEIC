@@ -49,5 +49,9 @@ namespace ChillToeic.Service
         {
 			_testRepository.Delete(id);
         }
+        public IEnumerable<Test> GetTestByCenterId(int id)
+        {
+            return _testRepository.Find(m => m.EducationCenterId == id);
+        }
     }
 }

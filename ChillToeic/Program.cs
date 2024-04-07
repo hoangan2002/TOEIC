@@ -28,6 +28,14 @@ builder.Services.AddTransient<TestService>();
 builder.Services.AddTransient<QuestionService>();
 builder.Services.AddTransient<AnswerService>();
 builder.Services.AddTransient<QuestionDetailService>();
+builder.Services.AddTransient<CertificateService>();
+builder.Services.AddTransient<CourseService>();
+builder.Services.AddTransient<LectureDetailService>();
+builder.Services.AddTransient<LectureService>();
+builder.Services.AddTransient<CenterService>();
+builder.Services.AddTransient<LearningProgressService>();
+
+builder.Services.AddTransient<OrdersService>();
 // Add Authentication
 builder.Services.AddSingleton<JwtService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

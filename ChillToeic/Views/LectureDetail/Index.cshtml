@@ -1,0 +1,105 @@
+﻿@using ChillToeic.Service;
+@model IEnumerable<ChillToeic.Models.Entity.LectureDetail>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs overlay">
+    <div class="container">
+        <div class="bread-inner">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Lecture Detail</h1>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container" style="display:flex;width:100%;">
+    <div class="container-1" style="width:100%;">
+        @foreach (var lecture in Model)
+        {
+            <div class="card">
+                @if (lecture.LectureType.Title == "video")
+                {
+                    <a href="@Url.Action("Video", "LectureDetail", new { lectureId = lecture.Id })">
+                        <h3>@lecture.Title</h3>
+                        <p>Lecture Type: Video</p>
+                    </a>
+                }
+                else if (lecture.LectureType.Title == "pdf")
+                {
+                    <a href="@Url.Action("Document", "LectureDetail", new { lectureId = lecture.Id })">
+                        <h3>@lecture.Title</h3>
+                        <p>Lecture Type: PDF</p>
+                    </a>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+
+<style>
+
+    body, h1, ul, li {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+
+    .card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 10px;
+        transition: box-shadow 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .card .type {
+            font-weight: bold;
+        }
+
+    .breadcrumbs.overlay h1 {
+        color: white;
+    }
+</style>

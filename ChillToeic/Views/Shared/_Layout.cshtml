@@ -1,4 +1,6 @@
-
+@using System.Security.Claims
+@using ChillToeic.Service
+@inject UserService userService
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
@@ -89,7 +91,7 @@
 						<!-- Contact -->
 						<ul class="top-link">
 							<li><a asp-area="" asp-controller="Home" asp-action="HomePage">Home</a></li>
-							<li><a asp-area="" asp-controller="Test" asp-action="Test">Test</a></li>
+							<li><a asp-area="" asp-controller="TestList" asp-action="TestList">Test</a></li>
 							<li><a asp-area="" asp-controller="Center" asp-action="CenterList">Center</a></li>
 							<li><a asp-area="" asp-controller="" asp-action="">Course</a></li>
 							<li><a asp-area="" asp-controller="" asp-action="">Center Registration</a></li>
@@ -115,6 +117,12 @@
 					<div class="row">
 						<div class="col-lg-2 col-md-3 col-12">
 							<!-- Start Logo -->
+							@{
+								var claimsIdentity = User.Identity as ClaimsIdentity;
+								var nameClaim = claimsIdentity?.FindFirst(ClaimTypes.Name);
+								string userName = nameClaim.Value;
+								int id = userService.FindUserByUserName(userName).Id;
+							}
 							<div class="logo">
 								<a asp-area="" asp-controller="Home" asp-action="HomePage"><img src="~/img/Toeic.png" alt="#"></a>
 							</div>
@@ -132,7 +140,7 @@
 											<a asp-area="" asp-controller="Home" asp-action="HomePage">Home</a>
 
 										</li>
-										<li><a asp-area="" asp-controller="MyCourse" asp-action="MyCourse">My Course</a></li>
+										<li><a asp-area="" asp-controller="MyCourse" asp-action="MyCourse" asp-route-id="@id">My Course</a></li>
 
 										<li><a asp-area="" asp-controller="Course" asp-action="Course">Course</a></li>
 										<li>
@@ -140,7 +148,7 @@
 
 										</li>
 										<li>
-											<a asp-area="" asp-controller="" asp-action="">Test</a>
+											<a asp-area="" asp-controller="TestList" asp-action="TestList">Test</a>
 
 										</li>
 										<li><a asp-area="" asp-controller="" asp-action="">Payment</a></li>
@@ -151,7 +159,7 @@
 						</div>
 						<div class="col-lg-2 col-12">
 							<div class="get-quote">
-								<a asp-area="" asp-controller="CenterDetail" asp-action="CenterDetail" class="btn">Ở đây chứa tên</a>
+								<a asp-area="" asp-controller="CenterDetail" asp-action="CenterDetail" class="btn">@userName</a>
 							</div>
 						</div>
 						<div class="col-lg-1 col-12">
@@ -193,7 +201,7 @@
 							<div class="row">
 								<div class="col-lg-6 col-md-6 col-12">
 									<ul>
-										<li><a asp-area="" asp-controller="Home" asp-action="HomePage"><i class="fa fa-caret-right" aria-hidden="true"></i>Home page</a></li>
+										<li><a asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-caret-right" aria-hidden="true"></i>Home page</a></li>
 										<li><a asp-area="" asp-controller="Home" asp-action="MyCourse"><i class="fa fa-caret-right" aria-hidden="true"></i>My Course</a></li>
 										<li><a asp-area="" asp-controller="Home" asp-action="Course"><i class="fa fa-caret-right" aria-hidden="true"></i>Course</a></li>
 										<li><a asp-area="" asp-controller="Center" asp-action="Center"><i class="fa fa-caret-right" aria-hidden="true"></i>Center123</a></li>
@@ -276,7 +284,7 @@
 	<!-- Magnific Popup JS -->
 	<script src="~/js/jquery.magnific-popup.min.js"></script>
 	<!-- Counter Up CDN JS -->
-	<!--  <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script> -->
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
 	<!-- Bootstrap JS -->
 	<script src="~/js/bootstrap.min.js"></script>
 	<!-- Main JS -->

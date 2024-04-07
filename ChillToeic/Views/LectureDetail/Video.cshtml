@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Video Player";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model ChillToeic.Models.Entity.LectureDetail
+
+@if (Model != null && !string.IsNullOrEmpty(Model.Content))
+{
+    <div class="container">
+        <h2>Video Player</h2>
+        <div id="videoContent">
+            <!-- Nội dung video -->
+            <video id="videoPlayer" width="100%" controls>
+                <source src="~/video/@Model.Content" type="video/mp4">
+            </video>
+        </div>
+        <div class="navigation-buttons">
+            <button class="btn btn-primary" id="backButton">Back</button>
+            <button class="btn btn-primary" id="nextButton">Next</button>
+            <button class="btn btn-success" id="doneButton">Done</button>
+        </div>
+    </div>
+}
+else
+{
+    <p>Không tìm thấy dữ liệu cho bài giảng này.</p>
+}
+
+<script>
+    // Xử lý khi nút Done được bấm
+    document.getElementById("doneButton").addEventListener("click", function () {
+        // Gửi yêu cầu AJAX đến Controller
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "@Url.Action("MarkAsCompleted", "LearningProgress")");
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Xử lý phản hồi từ Server (nếu cần)
+                    alert("Bài giảng đã hoàn thành!");
+                } else {
+                    // Xử lý khi có lỗi từ Server (nếu cần)
+                    alert("Đã có lỗi xảy ra. Vui lòng thử lại sau!");
+                }
+            }
+        };
+        xhr.send(JSON.stringify({ lectureDetailId: @Model.Id }));
+    });
+</script>

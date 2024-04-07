@@ -52,7 +52,7 @@ namespace ChillToeic.Controllers
 			Test test = _testService.GetTestById(idTest);
 			ViewBag.Duration = test.Duration;
 			//Lấy danh sách câu hỏi
-			IEnumerable<Question> questions = _questionOfTestService.GetQuestionsByTestId(idTest);
+			IEnumerable<Question> questions = _questionOfTestService.GetQuestionsByTestId(idTest).OrderBy(q => q.Part); 
 			ViewBag.idTest= idTest;
             return View(questions);
 		}

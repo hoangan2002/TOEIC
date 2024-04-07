@@ -1,0 +1,32 @@
+﻿@using ChillToeic.Models.Entity;
+@model IEnumerable<ChillToeic.Models.Entity.Certificate>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>All Certificates</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Course Name</th>
+            <th>Issue Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var certificate in Model)
+        {
+            <tr>
+                <td>@certificate.Course.Name</td>
+                <td>@certificate.IssueDate.ToShortDateString()</td>
+                <td>
+                    <a href="/Certificate/CertificateDetail/@certificate.Id" class="btn btn-primary">Detail</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

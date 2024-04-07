@@ -2,18 +2,20 @@
 	ViewData["Title"] = "";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model ChillToeic.Models.Entity.HomeModel
 
 <!-- Slider Area -->
 <section class="slider">
 	<div class="hero-slider">
+		@foreach (var course in Model.CoursesWithinRange) { 
 		<!-- Start Single Slider -->
 		<div class="single-slider" style="background-image:url('img/slider2.jpg')">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-7">
 						<div class="text">
-							<h1>Ở đây là tên của khóa học neeeeee</h1>
-							<p>Ở đây là phần miêu tả của khóa học</p>
+							<h1>@course.Name</h1>
+							<p></p>
 							<div class="button">
 								<a href="#" class="btn">Learn more</a>
 								<a href="#" class="btn primary">Buy now</a>
@@ -24,13 +26,15 @@
 			</div>
 		</div>
 		<!-- End Single Slider -->
-		<!-- Start Single Slider -->
-		<div class="single-slider" style="background-image:url('img/slider.jpg')">
+		}
+
+		@* <!-- Start Single Slider -->
+		<div class="single-slider" style="background-image:url('img/slider3.jpg')">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-7">
 						<div class="text">
-							<h1>Ở đây là tên của khóa học</h1>
+							<h1>@Model.CoursesWithinRange[0].Name</h1>
 							<p>Ở đây là phần miêu tả của khóa học</p>
 							<div class="button">
 								<a href="#" class="btn">Learn more</a>
@@ -41,8 +45,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- Start End Slider -->
-		<!-- Start Single Slider -->
+
 		<div class="single-slider" style="background-image:url('img/slider3.jpg')">
 			<div class="container">
 				<div class="row">
@@ -59,7 +62,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- End Single Slider -->
+		<!-- End Single Slider --> *@
 	</div>
 </section>
 <!--/ End Slider Area -->
@@ -70,66 +73,55 @@
 			<div class="row">
 				<div class="col-lg-4 col-md-6 col-12 ">
 					<!-- single-schedule -->
-					<div class="single-schedule middle">
-						<div class="inner">
+					<div class="">
+						<div class="inner" style="padding: 20px ;background-color: #C0C0C0; border-radius: 5px; box-shadow: 0 0 10px #FFFFFF, 0 0 20px #C0C0C0, 0 0 30px #FFFFFF, 0 0 40px #C0C0C0, 0 0 70px #FFFFFF, 0 0 80px #C0C0C0, 0 0 100px #FFFFFF;transform: translateY(30px);">
 							<a href="/CourseDetail/CourseDetail" id="a-card">
+								<h3 style="color: #FFFFFF; text-align: center; margin-bottom: 10px;">Top 2</h3>
 								<img src="~/img/call-bg.jpg" class="card-img-top" alt="Course Image">
-								<p>Loremmmmmmm</p>
-								<div class="rate">
-									<span class="star">&#9733;</span>
-									<span class="star">&#9733;</span>
-									<span class="star">&#9733;</span>
-									<span class="star">&#9733;</span>
-									<span class="star">&#9733;</span>
-								</div>
+								<h4 style="color: #FFFFFF;">@Model.Top3Courses[1].Name</h4>
+								<div class="rate"></div>
 								<div class="card-text">
-									<p id="price"> 300$</p>
+									<p id="price">@Model.Top3Courses[1].Price VND</p>
 								</div>
 							</a>
 						</div>
 					</div>
+
+
 				</div>
 				<div class="col-lg-4 col-md-6 col-12">
 					<!-- single-schedule -->
-					<div class="single-schedule middle">
-						<div class="inner">
+					<div class="">
+						<div class="inner" style="padding: 20px ;background: linear-gradient(to bottom right, #FFD700, #DAA520); border-radius: 5px; box-shadow: 0 0 10px #FFD700, 0 0 20px #DAA520;">
 							<a href="/CourseDetail/CourseDetail" id="a-card">
+								<h3 style="color: #FFFFFF; text-align: center; margin-bottom: 10px;">Top 1</h3>
 								<img src="~/img/call-bg.jpg" class="card-img-top" alt="Course Image">
-								<p>Loremmmmmmm</p>
-								<div class="rate">
-									<span class="star">&#9733;</span>
-									<span class="star">&#9733;</span>
-									<span class="star">&#9733;</span>
-									<span class="star">&#9733;</span>
-									<span class="star">&#9733;</span>
-								</div>
+								<h4 style="color: #FFFFFF;">@Model.Top3Courses[0].Name</h4>
+								<div class="rate"></div>
 								<div class="card-text">
-									<p id="price"> 300$</p>
+									<p id="price">@Model.Top3Courses[0].Price VND</p>
 								</div>
 							</a>
 						</div>
 					</div>
+
 				</div>
 				<div class="col-lg-4 col-md-12 col-12">
 					<!-- single-schedule -->
-					<div class="single-schedule middle">
-						<div class="inner">
+					<div class="ngoai" >
+						<div class="inner" style="padding: 20px ;background: linear-gradient(to bottom right, #B87333, #CD853F); border-radius: 5px; box-shadow: 0 0 10px #B87333, 0 0 20px #CD853F; transform: translateY(60px);">
 							<a href="/CourseDetail/CourseDetail" id="a-card">
+								<h3 style="color: #FFFFFF; text-align: center; margin-bottom: 10px;">Top 3</h3>
 								<img src="~/img/call-bg.jpg" class="card-img-top" alt="Course Image">
-								<p>Loremmmmmmm</p>
-								<div class="rate">
-									<span class="star">&#9733;</span>
-									<span class="star">&#9733;</span>
-									<span class="star">&#9733;</span>
-									<span class="star">&#9733;</span>
-									<span class="star">&#9733;</span>
-								</div>
+								<h4 style="color: #FFFFFF;">@Model.Top3Courses[2].Name</h4>
+								<div class="rate"></div>
 								<div class="card-text">
-									<p id="price"> 300$</p>
+									<p id="price">@Model.Top3Courses[2].Price VND</p>
 								</div>
 							</a>
 						</div>
 					</div>
+
 				</div>
 			</div>
 		</div>
@@ -142,45 +134,8 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="section-title">
-					<h2>Đây là sờ lâu gần </h2>
-					<img src="img/section-img.png" alt="#">
-					<p>Lorem ipsum dolor sit amet consectetur adipiscing elit praesent aliquet. pretiumts</p>
+					<a asp-area="" asp-controller="Course" asp-action="Course" class="btn" id="bluebtn">More course</a>
 				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-4 col-12">
-				<!-- Start Single features -->
-				<div class="single-features">
-					<div class="signle-icon">
-						<i class="icofont icofont-ambulance-cross"></i>
-					</div>
-					<h3>Emergency Help</h3>
-					<p>Lorem ipsum sit, consectetur adipiscing elit. Maecenas mi quam vulputate.</p>
-				</div>
-				<!-- End Single features -->
-			</div>
-			<div class="col-lg-4 col-12">
-				<!-- Start Single features -->
-				<div class="single-features">
-					<div class="signle-icon">
-						<i class="icofont icofont-medical-sign-alt"></i>
-					</div>
-					<h3>Enriched Pharmecy</h3>
-					<p>Lorem ipsum sit, consectetur adipiscing elit. Maecenas mi quam vulputate.</p>
-				</div>
-				<!-- End Single features -->
-			</div>
-			<div class="col-lg-4 col-12">
-				<!-- Start Single features -->
-				<div class="single-features last">
-					<div class="signle-icon">
-						<i class="icofont icofont-stethoscope"></i>
-					</div>
-					<h3>Medical Treatment</h3>
-					<p>Lorem ipsum sit, consectetur adipiscing elit. Maecenas mi quam vulputate.</p>
-				</div>
-				<!-- End Single features -->
 			</div>
 		</div>
 	</div>
@@ -190,7 +145,11 @@
 <div id="fun-facts" class="fun-facts section overlay">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-4 col-md-6 col-12">
+			<div class="col-lg-2 col-md-6 col-12">
+				<!-- Start Single Fun -->
+				<!-- End Single Fun -->
+			</div>
+			<div class="col-lg-6 col-md-6 col-12">
 				<!-- Start Single Fun -->
 				<div class="single-fun">
 					<i class="icofont icofont-home"></i>
@@ -212,110 +171,95 @@
 				</div>
 				<!-- End Single Fun -->
 			</div>
-			<div class="col-lg-4 col-md-6 col-12">
-				<!-- Start Single Fun -->
-				<div class="single-fun">
-					<i class="icofont-simple-smile"></i>
-					<div class="content">
-						<span class="counter">4379</span>
-						<p>Course</p>
-					</div>
-				</div>
-				<!-- End Single Fun -->
-			</div>
+			
 		</div>
 	</div>
 </div>
 <!--/ End Fun-facts -->
-<!-- Start Why choose -->
-<section class="why-choose section">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="section-title">
-					<h2>HOT NEWS</h2>
-					<img src="img/section-img.png" alt="#">
-					<p>Lorem ipsum dolor sit amet consectetur adipiscing elit praesent aliquet. pretiumts</p>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-6 col-12">
-				<!-- Start Choose Left -->
-				<div class="choose-left">
-					<h3>Who We Are</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra antege vel est lobortis, a commodo magna rhoncus. In quis nisi non emet quam pharetra commodo. </p>
-					<p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
-					<div class="row">
-						<div class="col-lg-6">
-							<ul class="list">
-								<li><i class="fa fa-caret-right"></i>Maecenas vitae luctus nibh. </li>
-								<li><i class="fa fa-caret-right"></i>Duis massa massa.</li>
-								<li><i class="fa fa-caret-right"></i>Aliquam feugiat interdum.</li>
-							</ul>
-						</div>
-						<div class="col-lg-6">
-							<ul class="list">
-								<li><i class="fa fa-caret-right"></i>Maecenas vitae luctus nibh. </li>
-								<li><i class="fa fa-caret-right"></i>Duis massa massa.</li>
-								<li><i class="fa fa-caret-right"></i>Aliquam feugiat interdum.</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<!-- End Choose Left -->
-			</div>
-			<div class="col-lg-6 col-12">
-				<!-- Start Choose Rights -->
-				<div class="choose-right">
-					<div class="video-image">
-						<!-- Video Animation -->
-						<div class="promo-video">
-							<div class="waves-block">
-								<div class="waves wave-1"></div>
-								<div class="waves wave-2"></div>
-								<div class="waves wave-3"></div>
-							</div>
-						</div>
-						<!--/ End Video Animation -->
-						<a href="https://www.youtube.com/watch?v=RFVXy6CRVR4" class="video video-popup mfp-iframe"><i class="fa fa-play"></i></a>
-					</div>
-				</div>
-				<!-- End Choose Rights -->
-			</div>
-		</div>
-	</div>
-</section>
-<!--/ End Why choose -->
-<!-- Start Call to action -->
-<section class="call-action overlay" data-stellar-background-ratio="0.5">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12 col-md-12 col-12">
-				<div class="content">
-					<h2>Do you need Emergency Medical Care? Call 1234 56789</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque porttitor dictum turpis nec gravida.</p>
-					<div class="button">
-						<a href="#" class="btn">Contact Now</a>
-						<a href="#" class="btn second">Learn More<i class="fa fa-long-arrow-right"></i></a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<!--/ End Call to action -->
+
 <!-- Start portfolio -->
 <section class="portfolio section">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Center list</h2>
+					<a asp-area="" asp-controller="Center" asp-action="CenterList" class="btn" id="bluebtn">More center</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container-fluid">
+		
+		<div class="row">
+			
+			<div class="col-lg-12 col-12">
+				
+				<div class="owl-carousel portfolio-slider">
+                    @foreach (var center in Model.Centers)
+                    {
+					<div class="single-pf">
+						<img src="img/pf1.jpg" alt="#">
+							<h3 style=" text-align: center; margin-top:10px;">@center.Name</h3>
+						<a asp-area="" asp-controller="CenterProfile" asp-action="CenterProfile" class="btn">View Details</a>
+					</div>
+					}
+				</div>
+				
+			</div>
+			
+		</div>
+		}
+	</div>
+	
+</section>
+<!--/ End portfolio -->
+
+<!-- Start Call to action -->
+<div id="fun-facts" class="fun-facts section overlay">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-2 col-md-6 col-12">
+				<!-- Start Single Fun -->
+
+				<!-- End Single Fun -->
+			</div>
+			<div class="col-lg-6 col-md-6 col-12">
+				<!-- Start Single Fun -->
+				<div class="single-fun">
+					<i class="icofont icofont-home"></i>
+					<div class="content">
+						<span class="counter">3468</span>
+						<p>Center</p>
+					</div>
+				</div>
+				<!-- End Single Fun -->
+			</div>
+			<div class="col-lg-4 col-md-6 col-12">
+				<!-- Start Single Fun -->
+				<div class="single-fun">
+					<i class="icofont icofont-user-alt-3"></i>
+					<div class="content">
+						<span class="counter">557</span>
+						<p>Learner</p>
+					</div>
+				</div>
+				<!-- End Single Fun -->
+			</div>
+
+		</div>
+	</div>
+</div>
+<!--/ End Call to action -->
+<!-- Start service -->
+<section class="portfolio section">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
 				<div class="section-title">
-					<a asp-area="" asp-controller="Center" asp-action="CenterList">
-						<h2>Center list</h2>
-					</a>
-					<img src="img/section-img.png" alt="#">
-					<p>Lorem ipsum dolor sit amet consectetur adipiscing elit praesent aliquet. pretiumts</p>
+					<h2>Test list</h2>
+					<a asp-area="" asp-controller="TestList" asp-action="TestList" class="btn" id="bluebtn">More Test</a>
 				</div>
 			</div>
 		</div>
@@ -324,117 +268,20 @@
 		<div class="row">
 			<div class="col-lg-12 col-12">
 				<div class="owl-carousel portfolio-slider">
+					@foreach(var test in Model.Tests){
 					<div class="single-pf">
 						<img src="img/pf1.jpg" alt="#">
-						<h3></h3>
-						<a asp-area="" asp-controller="Center" asp-action="CenterProfile" class="btn">View Details</a>
+							<h3 style=" text-align: center; margin-top:10px;">@test.Name</h3>
+						<a asp-area="" asp-controller="TestDetail" asp-action="TestDetail" class="btn">View Details</a>
 					</div>
-					<div class="single-pf">
-						<img src="https://scontent.fsgn2-6.fna.fbcdn.net/v/t39.30808-6/434757105_444075857998292_3166917776146478888_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_ohc=QUXxweCgihUAX8VFJt1&_nc_ht=scontent.fsgn2-6.fna&oh=00_AfBQlxY_xkynusrONSO2wBaYDaTpXu0RYs2tXFxv_msZpQ&oe=6611A95C" alt="#">
-						<a asp-area="" asp-controller="Center" asp-action="CenterProfile" class="btn">View Details</a>
-					</div>
-					<div class="single-pf">
-						<img src="img/pf3.jpg" alt="#">
-						<a asp-area="" asp-controller="Center" asp-action="CenterProfile" class="btn">View Details</a>
-					</div>
-					<div class="single-pf">
-						<img src="img/pf4.jpg" alt="#">
-						<a asp-area="" asp-controller="Center" asp-action="CenterProfile" class="btn">View Details</a>
-					</div>
-					<div class="single-pf">
-						<img src="img/pf1.jpg" alt="#">
-						<a asp-area="" asp-controller="Center" asp-action="CenterProfile" class="btn">View Details</a>
-					</div>
-					<div class="single-pf">
-						<img src="https://scontent.fdad2-1.fna.fbcdn.net/v/t39.30808-6/399745823_858519312723287_3720671825896674031_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_ohc=1paOgfVeAX4AX-30WGc&_nc_ht=scontent.fdad2-1.fna&oh=00_AfBzESxpPuUN6jc7rditVbgRtu-gwZ2s_1J-8riPROdQKQ&oe=660C7925" alt="#">
-						<a asp-area="" asp-controller="Center" asp-action="CenterProfile" class="btn">View Details</a>
-					</div>
-					<div class="single-pf">
-						<img src="img/pf3.jpg" alt="#">
-						<a asp-area="" asp-controller="Center" asp-action="CenterProfile" class="btn">View Details</a>
-					</div>
-					<div class="single-pf">
-						<img src="img/pf4.jpg" alt="#">
-						<a asp-area="" asp-controller="Center" asp-action="CenterProfile" class="btn">View Details</a>
-					</div>
+					}
 				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<!--/ End portfolio -->
-<!-- Start service -->
-<section class="services section">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="section-title">
-					<h2>We Offer Different Services To Improve Your Health</h2>
-					<img src="img/section-img.png" alt="#">
-					<p>Lorem ipsum dolor sit amet consectetur adipiscing elit praesent aliquet. pretiumts</p>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-4 col-md-6 col-12">
-				<!-- Start Single Service -->
-				<div class="single-service">
-					<i class="icofont icofont-prescription"></i>
-					<h4><a href="service-details.html">General Treatment</a></h4>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet. </p>
-				</div>
-				<!-- End Single Service -->
-			</div>
-			<div class="col-lg-4 col-md-6 col-12">
-				<!-- Start Single Service -->
-				<div class="single-service">
-					<i class="icofont icofont-tooth"></i>
-					<h4><a href="service-details.html">Teeth Whitening</a></h4>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet. </p>
-				</div>
-				<!-- End Single Service -->
-			</div>
-			<div class="col-lg-4 col-md-6 col-12">
-				<!-- Start Single Service -->
-				<div class="single-service">
-					<i class="icofont icofont-heart-alt"></i>
-					<h4><a href="service-details.html">Heart Surgery</a></h4>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet. </p>
-				</div>
-				<!-- End Single Service -->
-			</div>
-			<div class="col-lg-4 col-md-6 col-12">
-				<!-- Start Single Service -->
-				<div class="single-service">
-					<i class="icofont icofont-listening"></i>
-					<h4><a href="service-details.html">Ear Treatment</a></h4>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet. </p>
-				</div>
-				<!-- End Single Service -->
-			</div>
-			<div class="col-lg-4 col-md-6 col-12">
-				<!-- Start Single Service -->
-				<div class="single-service">
-					<i class="icofont icofont-eye-alt"></i>
-					<h4><a href="service-details.html">Vision Problems</a></h4>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet. </p>
-				</div>
-				<!-- End Single Service -->
-			</div>
-			<div class="col-lg-4 col-md-6 col-12">
-				<!-- Start Single Service -->
-				<div class="single-service">
-					<i class="icofont icofont-blood"></i>
-					<h4><a href="service-details.html">Blood Transfusion</a></h4>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet. </p>
-				</div>
-				<!-- End Single Service -->
 			</div>
 		</div>
 	</div>
 </section>
 <!--/ End service -->
-<!-- Pricing Table -->
+@* <!-- Pricing Table -->
 <section class="pricing-table section">
 	<div class="container">
 		<div class="row">
@@ -600,7 +447,6 @@
 	</div>
 </section>
 <!-- End Blog Area -->
-
 <!-- Start Appointment -->
 <section class="appointment">
 	<div class="container">
@@ -719,8 +565,12 @@
 		</div>
 	</div>
 </section>
-<!-- /End Newsletter Area -->
+ *@<!-- /End Newsletter Area -->
 <style>
+	#bluebtn{
+		color: #fff;
+		width: 500px;
+	}
 	.content {
 		display: flex;
 		margin: 0 2px;

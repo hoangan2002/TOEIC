@@ -14,6 +14,8 @@ namespace ChillToeic.Models.Entity
         public int TestTypeId { get; set; }
         public virtual TestType TestType { get; set; }
         public int NumberOfQuestion { get; set; }
+        public int NumberOfPart { get; set; }
+        public int NumberOfUserTest { get; set; }
         public int Duration { get; set; }
         public int Score { get; set; }
         public Boolean Status { get; set; }

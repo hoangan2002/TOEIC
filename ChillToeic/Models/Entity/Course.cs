@@ -12,7 +12,7 @@ namespace ChillToeic.Models.Entity
         public string Name { get; set; }
         public string Description { get; set; }
         public double Price { get; set; }
-        public string level { get; set; }
+        public int level { get; set; }
         public int QuantityOfLecture { get; set; }
         public int QuantityOfRegister { get; set; }
         public Boolean IsApproved { get; set; }

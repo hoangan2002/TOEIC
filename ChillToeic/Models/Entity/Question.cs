@@ -8,7 +8,7 @@ namespace ChillToeic.Models.Entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        
+        public int Part {  get; set; }
         public string Title { get; set; }
         public string Detail { get; set; }
         [ForeignKey("QuestionType")]

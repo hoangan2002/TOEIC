@@ -27,7 +27,7 @@
 <!-- Start Contact Us -->
 
 <section class="contact-us section" asp-area="testpage">
-	@using (Html.BeginForm("TestSubmit", "Test", new { testId = ViewBag.idTest }, FormMethod.Post))
+	@using (Html.BeginForm("TestSubmit", "Test",  new { testId = ViewBag.idTest ,id ="testForm"} ,FormMethod.Post))
                     {
 
 	<div class="containerTest">
@@ -38,11 +38,13 @@
 						<div class="col-lg-12">
 							<div class="contact-us-form">
 								<div>
-									<!--Phần audio nên cần sửa lại-->
+									<!--Phần audio nên cần sửa lại  ~/audio/abc.mp3-->
 									<div class="music-player">
-										<audio id="audio-player" src="path/to/your/music.mp3"></audio>
+										
+										<audio id="audio-player" src="~/audio/@Model.First().Detail"></audio>
                                         <div class="controls">
-                                            <button id="play-btn" class="control-btn">&#9658;</button>
+											
+                                            <button type="button" onclick="playAudio()" id="play-btn" class="control-btn">&#9654;</button>
 											<progress id="progress-bar" value="0" max="100"></progress>
 											<input type="range" id="volume-slider" min="0" max="1" step="0.1" value="1">
 										</div>
@@ -116,7 +118,7 @@
 							<p id="demo"></p>
 							<h3>Time left: <span id="democc"></span> </h3>
 						</div>
-						<button type="submit"class="btn">Submit</button>
+						<button type="submit"class="btn" id="submitButton">Submit</button>
 						<p>Phần này anh thích bỏ gì thì bỏ</p>
 						<div class="part">
 							@foreach (var question in Model)
@@ -317,7 +319,8 @@
     color: white; /* Thay đổi màu văn bản tùy chọn */
 }
 .selected {
-    color: red; /* Thay đổi màu sắc tùy chọn */
+     background-color: red; /* Thay đổi màu sắc tùy chọn */
+    color: white; /* Thay đổi màu văn bản tùy chọn */
 }
 
 
@@ -326,7 +329,7 @@
 	
 	</script>
 		<script>
-	console.log("abc")
+	
 console.log("checkpint")
 	const audioPlayer = document.getElementById('audio-player');
 	const playBtn = document.getElementById('play-btn');
@@ -337,10 +340,7 @@ console.log("checkpint")
 		if (audioPlayer.paused) {
 			audioPlayer.play();
 			playBtn.textContent = '❚❚';
-		} else {
-			audioPlayer.pause();
-			playBtn.textContent = '&#9658;';
-		}
+		} 
 	});
 
 	volumeSlider.addEventListener('input', function () {
@@ -362,18 +362,11 @@ console.log("checkpint")
 	// });
 	// Ẩn
 	function loadQuestionDetails(questionId) {
-		
-
-
-		console.log("====>",questionId)
 		// Thêm sự kiện click cho mỗi tiêu đề câu hỏi
 		$('.btn-qnum').click(function () {
-			console.log(questionId, "show")
 			// Lấy id của câu hỏi được click
 			$('#details-' + questionId).show();
 			// Hiển thị danh sách câu hỏi của phần được chọn
-			
-
 			// Ẩn các phần khác
 			 $('.btn-qnum').each(function () {
 			 	var otherQuestionId = $(this).data('question-id');
@@ -384,72 +377,57 @@ console.log("checkpint")
 
 			});
 		});
-		 document.querySelectorAll('.btn-qnum').forEach(item => {
-        item.classList.remove('reverse-color');
-    });
-
-
-		console.log(questionId)
+		console.log("1")
+		document.querySelectorAll('.btn-qnum').forEach(item => {
+        item.classList.remove('selected');
+    });console.log("2")
+	    
     var questionDiv = document.getElementById('question---' + questionId);
-    if (questionDiv.classList.contains('reverse-color')) {
+    if (questionDiv.classList.contains('selected')) {
 		console.log("trong if---",questionId)
     } else {
-        questionDiv.classList.add('reverse-color');
+        questionDiv.classList.add('selected');
 		console.log("trong elsse---",questionId)
     }
 	console.log("OK----",questionId)
 	}
+	console.log("3")
 	
-	// 	function loadQuestionDetails2(questionId) {
-	// 	// Thêm sự kiện click cho mỗi tiêu đề câu hỏi
-	// 	$('.btn-qnum2').click(function () {
-	// 		// Lấy id của câu hỏi được click
-	// 		$('#details-' + questionId).show();
 
-	// 		// Hiển thị danh sách câu hỏi của phần được chọn
-			
-
-	// 		// Ẩn các phần khác
-	// 		 $('.btn-qnum2').not(this).each(function () {
-	// 		 	var otherQuestionId = $(this).data('question-id');
-	// 		 	$('#details-' + otherQuestionId).hide();
-	// 		});
-	// 	});
-	// }
-	
 
 	<!-- Display the countdown timer in an element -->
 
 
 
-// // Set the date we're counting down to
-// var countDownDate = new Date("Jan 5, 2030 15:37:25").getTime();
+// Set the date we're counting down to
+var now = new Date().getTime();
+			var countDownDate = now + (1 * 60 * 1000);
+console.log("time")
+// Update the count down every 1 second
+var x = setInterval(function() {
 
-// // Update the count down every 1 second
-// var x = setInterval(function() {
+	var currentTime = new Date().getTime();
 
-//   // Get today's date and time
-//   var now = new Date().getTime();
+  // Tính khoảng cách thời gian còn lại
+  var distance = countDownDate - currentTime;
+ 
 
-//   // Find the distance between now and the count down date
-//   var distance = countDownDate - now;
+// Tính toán số ngày, giờ, phút và giây
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-//   // Time calculations for days, hours, minutes and seconds
-//   var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-//   var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-//   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-//   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  // Hiển thị kết quả trong phần tử có id="democc"
+  document.getElementById("democc").innerHTML = minutes + "m " + seconds + "s ";
 
-//   // Display the result in the element with id="demo"
-//   document.getElementById("democc").innerHTML = days + "d " + hours + "h "
-//   + minutes + "m " + seconds + "s ";
-
-//   // If the count down is finished, write some text
-//   if (distance < 0) {
-//     clearInterval(x);
-//     document.getElementById("democc").innerHTML = "EXPIRED";
-//   }
-// }, 1000);
+  // Khi thời gian đếm ngược kết thúc, hiển thị "EXPIRED"
+  if (distance < 0) {
+    clearInterval(x);
+	  var submitButton = document.getElementById("submitButton");
+            // Gửi biểu mẫu
+            submitButton.click();
+			console.log("đã nộp")
+  }
+}, 1000); 
 function changeColor(detailId) {
 	console.log(detailId)
     var questionDiv = document.getElementById('question--' + detailId);
@@ -461,6 +439,7 @@ function changeColor(detailId) {
     }
 	console.log("OK",detailId)
 }
+
 // function changeColor2(questionId) {
 // 	console.log(questionId)
 //  var questionDiv = document.getElementById('question---' + questionId);
@@ -472,5 +451,9 @@ function changeColor(detailId) {
 //         element.classList.add('selected');
 //     }
 // }
+ // var audio = document.getElementById("play-btn");
 
+ //    function playAudio() {
+ //        audio.play();
+ //    }
 		</script>
