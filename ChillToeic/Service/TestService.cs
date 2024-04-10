@@ -22,25 +22,33 @@ namespace ChillToeic.Service
         {
             return _testRepository.Find(m => m.Id == id).FirstOrDefault();
         }
-        //public Test FindUserByEmail(string email)
-        //{
-          
-
-        //    return _testRepository.Find(m => m.Email == email).FirstOrDefault();
-        //}
-        //public User FindUserByUserName(string username)
-        //{
+		//public Test FindUserByEmail(string email)
+		//{
 
 
-        //    return _testRepository.Find(m => m.UserName == username).FirstOrDefault();
-        //}
+		//    return _testRepository.Find(m => m.Email == email).FirstOrDefault();
+		//}
+		//public User FindUserByUserName(string username)
+		//{
 
-        public void AddTest(Test test)
+
+		//    return _testRepository.Find(m => m.UserName == username).FirstOrDefault();
+		//}
+	
+		public void AddTest(Test test)
         {
 			_testRepository.Add(test);
         }
+		public void AddTestNoSaveChanges(Test test)
+		{
+			_testRepository.AddNoSaveChanges(test);
+		}
+		public void SaveChanges()
+		{
+            _testRepository.SaveChanges();
+		}
 
-        public void UpdateTest(Test test)
+		public void UpdateTest(Test test)
         {
 			_testRepository.Update(test);
         }

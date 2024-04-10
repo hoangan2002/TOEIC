@@ -1,6 +1,7 @@
 @using System.Security.Claims
 @using ChillToeic.Service
 @inject UserService userService
+@inject EducationService educationService
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
@@ -118,10 +119,24 @@
 						<div class="col-lg-2 col-md-3 col-12">
 							<!-- Start Logo -->
 							@{
-								var claimsIdentity = User.Identity as ClaimsIdentity;
-								var nameClaim = claimsIdentity?.FindFirst(ClaimTypes.Name);
-								string userName = nameClaim.Value;
-								int id = userService.FindUserByUserName(userName).Id;
+								int id = 0;
+								string userName = null;
+								if (User.Identity.IsAuthenticated)
+								{
+									var claimsIdentity = User.Identity as ClaimsIdentity;
+									var nameClaim = claimsIdentity?.FindFirst(ClaimTypes.Name);
+									userName = nameClaim.Value;
+									if (userService.FindUserByUserName(userName) != null)
+									{
+										id = userService.FindUserByUserName(userName).Id;
+									}
+									if (educationService.FindEducationCenterByUserName(userName) != null)
+									{
+										id = educationService.FindEducationCenterByUserName(userName).Id;
+									}
+									
+
+								}
 							}
 							<div class="logo">
 								<a asp-area="" asp-controller="Home" asp-action="HomePage"><img src="~/img/Toeic.png" alt="#"></a>
@@ -140,6 +155,7 @@
 											<a asp-area="" asp-controller="Home" asp-action="HomePage">Home</a>
 
 										</li>
+										
 										<li><a asp-area="" asp-controller="MyCourse" asp-action="MyCourse" asp-route-id="@id">My Course</a></li>
 
 										<li><a asp-area="" asp-controller="Course" asp-action="Course">Course</a></li>
@@ -159,7 +175,13 @@
 						</div>
 						<div class="col-lg-2 col-12">
 							<div class="get-quote">
+								@if (User.Identity.IsAuthenticated)
+								{
 								<a asp-area="" asp-controller="CenterDetail" asp-action="CenterDetail" class="btn">@userName</a>
+								}
+								else {
+								<a asp-area="" asp-controller="Login" asp-action="Index" class="btn">Login</a>
+								}
 							</div>
 						</div>
 						<div class="col-lg-1 col-12">

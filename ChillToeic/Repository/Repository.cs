@@ -17,8 +17,16 @@ namespace ChillToeic.Repository
             _context.Set<TEntity>().Add(entity);
              _context.SaveChanges();
         }
-
-        public void Delete(int id)
+		public void AddNoSaveChanges(TEntity entity)
+		{
+			_context.Set<TEntity>().Add(entity);
+			
+		}
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
+		public void Delete(int id)
         {
             var entity = GetById(id);
             _context.Set<TEntity>().Remove(entity);

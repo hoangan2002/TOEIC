@@ -54,9 +54,26 @@ namespace ChillToeic.Controllers
         [HttpPost]
         public ActionResult Index(string username, string password)
         {
-            {  User user = _userService.FindUserByUserName(username);
-                if(user != null )
-                { if(user.Password == password)
+            {
+                User user = _userService.FindUserByUserName(username);
+                EducationCenter edu = _educationService.FindEducationCenterByUserName(username);
+                if (edu != null)
+                {
+                    if (edu.Password == password)
+                    {
+                        UserModel userModel = new UserModel { Username = edu.UserName, Role = "EducationCenter" };
+                        string jwtToken = _jwtService.GenerateJSONWebToken(userModel);
+
+                        Response.Cookies.Append("jwt", jwtToken);
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                   
+                }
+                
+            
+                if (user != null )
+                { if(user.Password == password )
                     {
                         UserModel userModel = new UserModel { Username= user.UserName , Role ="User"};
                      string jwtToken=   _jwtService.GenerateJSONWebToken(userModel);

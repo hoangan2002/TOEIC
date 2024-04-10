@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Upload Excel File";
+}
+
+<h2>Upload Excel File</h2>
+
+@using (Html.BeginForm("UploadFile", "Test", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        <label for="excelFile">Select Excel File:</label>
+        <input type="file" name="excelFile" id="excelFile" class="form-control" />
+        <input type="hidden" name="TestName" id="TestName" value="Đây là test name" class="form-control" />
+        <input type="hidden" name="Description" id="Description" value="Mô tả" class="form-control" />
+        <input type="hidden" name="TestType" id="TestType" value="toeic"class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+}

@@ -10,7 +10,9 @@ namespace ChillToeic.Repository
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties);
 
 		void Add(TEntity entity);
-        void Update(TEntity entity);
+		void AddNoSaveChanges(TEntity entity);
+        void SaveChanges();
+		void Update(TEntity entity);
         void Delete(int id);
     }
 }

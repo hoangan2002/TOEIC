@@ -24,14 +24,10 @@ namespace ChillToeic.Service
         }
         public User FindUserByEmail(string email)
         {
-          
-
             return _userRepository.Find(m => m.Email == email).FirstOrDefault();
         }
         public User FindUserByUserName(string username)
         {
-
-
             return _userRepository.Find(m => m.UserName == username).FirstOrDefault();
         }
 

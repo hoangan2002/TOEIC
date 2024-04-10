@@ -39,8 +39,11 @@ namespace ChillToeic.Service
         {
 			_questionRepository.Add(question);
         }
-
-        public void UpdateQuestion(Question question)
+		public void AddQuestionNoSaveChanges(Question question)
+		{
+			_questionRepository.AddNoSaveChanges(question);
+		}
+		public void UpdateQuestion(Question question)
         {
 			_questionRepository.Update(question);
         }
