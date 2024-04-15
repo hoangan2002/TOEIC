@@ -15,5 +15,7 @@ namespace ChillToeic.Models.DTO
         public string Password { get; set; }
         [Required]
         public string VerifyOTP { get; set; }
-    }
+		
+		
+	}
 }

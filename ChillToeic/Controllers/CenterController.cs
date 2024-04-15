@@ -1,20 +1,24 @@
-﻿using ChillToeic.Models.Entity;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using ChillToeic.Repository;
-using Microsoft.AspNetCore.Mvc;
+using ChillToeic.Service;
+using ChillToeic.Models.Entity;
 
 namespace ChillToeic.Controllers
 {
+
     public class CenterController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly CenterService _dbCenter;
 
-        public CenterController(ApplicationDbContext _context)
+        public CenterController(CenterService dbCenter)
         {
-            this._context = _context;
+            _dbCenter = dbCenter;
         }
-       public IActionResult Center()
+
+        public IActionResult Center()
         {
-            var centers = _context.EducationCenters.ToList();
+            var centers = _dbCenter.GetCentersIsApprove().ToList();
             return View(centers);
         }
 

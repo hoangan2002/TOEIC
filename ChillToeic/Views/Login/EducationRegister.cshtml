@@ -16,14 +16,11 @@
     @model ChillToeic.Models.DTO.UserRegisterDTO
     <div class="container" id="container">
         <div class="form-container sign-in">
-             @using (Html.BeginForm("EducationRegister", "Login", FormMethod.Post))
+            @using (Html.BeginForm("EducationRegister", "Login", FormMethod.Post, new { enctype = "multipart/form-data"}))
         {
 
                 <h1>Create Education Center Account</h1>
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                </div>
-                <span>or use your email for registration</span>
+               
                 <div >
                     @Html.TextBoxFor(m => m.FullName, "", new { @type="text", @placeholder = "Name" })
                     @Html.ValidationMessageFor(m => m.FullName, "")
@@ -50,6 +47,11 @@
                 @Html.TextBoxFor(m => m.VerifyOTP, "", new { @type = "verifyemail", @placeholder = "Enter your OTP", @class = "verifyemail", @id = "verifyemail" })
                 @Html.ValidationMessageFor(m => m.VerifyOTP, "")
                 @ViewBag.otp
+                <label for="imageUpload" class="custom-file-upload">
+                    <i class="fa fa-cloud-upload"></i> Upload Your Certificatee
+                </label>
+                <input type="file" name="filecertificate" id="filecertificate" accept="image/*" ;">
+                
                 <button type="submit" value="Login">Sign Up</button>
             }
         </div>

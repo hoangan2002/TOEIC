@@ -27,7 +27,7 @@
 <!-- Start Contact Us -->
 
 <section class="contact-us section" asp-area="testpage">
-	@using (Html.BeginForm("TestSubmit", "Test",  new { testId = ViewBag.idTest ,id ="testForm"} ,FormMethod.Post))
+	@using (Html.BeginForm("SubmitTest", "Test",  new { testId = ViewBag.idTest ,id ="testForm"} ,FormMethod.Post))
                     {
 
 	<div class="containerTest">
@@ -40,8 +40,10 @@
 								<div>
 									<!--Phần audio nên cần sửa lại  ~/audio/abc.mp3-->
 									<div class="music-player">
-										
-										<audio id="audio-player" src="~/audio/@Model.First().Detail"></audio>
+										@{
+											string path = $"~/img/Test{ViewBag.idTest}/{Model.First().Detail}";
+										}
+										<audio id="audio-player" src="@path"></audio>
                                         <div class="controls">
 											
                                             <button type="button" onclick="playAudio()" id="play-btn" class="control-btn">&#9654;</button>
@@ -75,9 +77,9 @@
 
 												@if (@detail.Img != null)
 												{
-													<img src="@detail.Img" alt="#">
-
-													<img src="~/img/author1.jpg" alt="#">
+													string path2 = $"/img/Test{ViewBag.idTest}/{detail.Img}";
+													
+													<img src="@path2" alt="#">
 												}
 
 											</div>
@@ -117,6 +119,7 @@
 						<div class="timeleft">
 							<p id="demo"></p>
 							<h3>Time left: <span id="democc"></span> </h3>
+							<h3 style="display: none;">Time left: <span id="thoigian">@ViewBag.Duration</span> </h3>
 						</div>
 						<button type="submit"class="btn" id="submitButton">Submit</button>
 						<p>Phần này anh thích bỏ gì thì bỏ</p>
@@ -398,11 +401,13 @@ console.log("checkpint")
 	<!-- Display the countdown timer in an element -->
 
 
-
+	var spanElement = document.getElementById("thoigian");
+	var data = spanElement.innerHTML;
+	var a = parseInt(data);
 // Set the date we're counting down to
 var now = new Date().getTime();
-			var countDownDate = now + (1 * 60 * 1000);
-console.log("time")
+			var countDownDate = now + (a * 60 * 1000);
+
 // Update the count down every 1 second
 var x = setInterval(function() {
 
@@ -413,11 +418,12 @@ var x = setInterval(function() {
  
 
 // Tính toán số ngày, giờ, phút và giây
+var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
   // Hiển thị kết quả trong phần tử có id="democc"
-  document.getElementById("democc").innerHTML = minutes + "m " + seconds + "s ";
+  document.getElementById("democc").innerHTML = hours + "h " +minutes + "m " + seconds + "s ";
 
   // Khi thời gian đếm ngược kết thúc, hiển thị "EXPIRED"
   if (distance < 0) {
@@ -425,7 +431,7 @@ var x = setInterval(function() {
 	  var submitButton = document.getElementById("submitButton");
             // Gửi biểu mẫu
             submitButton.click();
-			console.log("đã nộp")
+			
   }
 }, 1000); 
 function changeColor(detailId) {
@@ -440,20 +446,13 @@ function changeColor(detailId) {
 	console.log("OK",detailId)
 }
 
-// function changeColor2(questionId) {
-// 	console.log(questionId)
-//  var questionDiv = document.getElementById('question---' + questionId);
-// 		 if (element.classList.contains('selected')) {
-//         // Nếu có, xóa lớp 'selected'
-//         element.classList.remove('selected');
-//     } else {
-//         // Nếu không, thêm lớp 'selected'
-//         element.classList.add('selected');
-//     }
-// }
- // var audio = document.getElementById("play-btn");
 
- //    function playAudio() {
- //        audio.play();
- //    }
 		</script>
+
+
+
+
+
+
+
+

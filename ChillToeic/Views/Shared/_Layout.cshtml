@@ -91,11 +91,11 @@
 					<div class="col-lg-6 col-md-5 col-12">
 						<!-- Contact -->
 						<ul class="top-link">
-							<li><a asp-area="" asp-controller="Home" asp-action="HomePage">Home</a></li>
+							<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
 							<li><a asp-area="" asp-controller="TestList" asp-action="TestList">Test</a></li>
 							<li><a asp-area="" asp-controller="Center" asp-action="CenterList">Center</a></li>
 							<li><a asp-area="" asp-controller="" asp-action="">Course</a></li>
-							<li><a asp-area="" asp-controller="" asp-action="">Center Registration</a></li>
+							<li><a asp-area="" asp-controller="Admin" asp-action="Dashboard">Center Registration</a></li>
 						</ul>
 						<!-- End Contact -->
 					</div>
@@ -121,11 +121,14 @@
 							@{
 								int id = 0;
 								string userName = null;
+								string role = null;
 								if (User.Identity.IsAuthenticated)
 								{
 									var claimsIdentity = User.Identity as ClaimsIdentity;
 									var nameClaim = claimsIdentity?.FindFirst(ClaimTypes.Name);
+									var roleClaim = claimsIdentity?.FindFirst(ClaimTypes.Role);
 									userName = nameClaim.Value;
+									role = roleClaim.Value;
 									if (userService.FindUserByUserName(userName) != null)
 									{
 										id = userService.FindUserByUserName(userName).Id;
@@ -134,12 +137,10 @@
 									{
 										id = educationService.FindEducationCenterByUserName(userName).Id;
 									}
-									
-
 								}
 							}
 							<div class="logo">
-								<a asp-area="" asp-controller="Home" asp-action="HomePage"><img src="~/img/Toeic.png" alt="#"></a>
+								<a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/Toeic.png" alt="#"></a>
 							</div>
 							<!-- End Logo -->
 							<!-- Mobile Nav -->
@@ -152,9 +153,8 @@
 								<nav class="navigation">
 									<ul class="nav menu">
 										<li>
-											<a asp-area="" asp-controller="Home" asp-action="HomePage">Home</a>
-
-										</li>
+											<a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                        </li>
 										
 										<li><a asp-area="" asp-controller="MyCourse" asp-action="MyCourse" asp-route-id="@id">My Course</a></li>
 
@@ -167,7 +167,8 @@
 											<a asp-area="" asp-controller="TestList" asp-action="TestList">Test</a>
 
 										</li>
-										<li><a asp-area="" asp-controller="" asp-action="">Payment</a></li>
+										<li><a asp-area="" asp-controller="PaymentHistory" asp-action="PaymentHistory">Payment</a></li>
+										<li><a asp-area="" asp-controller="User" asp-action="ScoreHistory">Your Score</a></li>
 									</ul>
 								</nav>
 							</div>
@@ -177,10 +178,27 @@
 							<div class="get-quote">
 								@if (User.Identity.IsAuthenticated)
 								{
-								<a asp-area="" asp-controller="CenterDetail" asp-action="CenterDetail" class="btn">@userName</a>
+									if (role == "User")
+									{
+										<a id="usernames" class="btn">@userName</a>
+										<div id="optionss" style="display: none;">
+											<a href="" id="logout">Logout</a>
+											<a href="/UserProfile/UserProfile">Profile</a>
+										</div>
+									}
+									if (role == "EducationCenter")
+									{
+										<a id="usernames" class="btn">@userName</a>
+										<div id="optionss" style="display: none;">
+											<a href="" id="logout">Logout</a>
+											<a href="/CenterDetail/CenterDetail">Profile</a>
+										</div>
+									}
+
 								}
 								else {
 								<a asp-area="" asp-controller="Login" asp-action="Index" class="btn">Login</a>
+									
 								}
 							</div>
 						</div>
@@ -311,6 +329,31 @@
 	<script src="~/js/bootstrap.min.js"></script>
 	<!-- Main JS -->
 	<script src="~/js/main.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$("#usernames").click(function () {
+				$("#optionss").toggle();
+			});
+		});
+		$("#logout").click(function (e) {
+			console.log("vao")
+			e.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
+			$.ajax({
+				url: "/",
+				method: "GET", // hoặc "GET", tùy thuộc vào cách bạn đã thiết lập server
+				success: function (response) {
+					// Xóa cookie
+					document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+					// Chuyển hướng người dùng đến trang chính
+					window.location.href = "/"; // hoặc đến bất kỳ URL nào bạn muốn
+				},
+				error: function (xhr, status, error) {
+					// Xử lý lỗi nếu cần
+				}
+			});
+		});
+	</script>
 </body>
 </html>
 <style>

@@ -1,0 +1,186 @@
+﻿@model ChillToeic.Models.Entity.User
+
+
+@{
+	ViewBag.Title = "User Profile";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs overlay">
+	<div class="container">
+		<div class="bread-inner">
+			<div class="row">
+				<div class="col-12">
+					<h2>Contact Us</h2>
+					<ul class="bread-list">
+						<li><a asp-area="" asp-controller="Home" asp-action="HomePage">Home</a></li>
+						<li><i class="icofont-simple-right"></i></li>
+						<li class="active">My Course</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Breadcrumbs -->
+<!-- Start Contact Us -->
+<section class="contact-us section">
+	<div class="containerUserProfile">
+		<div class="row">
+			<div class="col-lg-4 col-12">
+				<div class="contact-us-form">
+					<h2>Profile</h2>
+					<p>These are courses that you have not completed.</p>
+					<div class="infoProfile">
+						<h4>Name: <span>@Model.FullName</span></h4>
+						<h4>Email: <span>@Model.Email</span></h4>
+						<h4>DayOfBirth: <span>@Model.DateOfBirth?.ToString("dd/MM/yyyy")</span></h4>
+						<h4>Point: <span>@Model.Point</span></h4>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-8 col-12">
+				<div class="contact-us-form">
+					point
+					<h2>Edit Profile</h2>
+					<p>These are courses that you have completed.</p>
+					@using (Html.BeginForm("UserProfile", "UserProfile", FormMethod.Post))
+					{
+						@Html.AntiForgeryToken()
+
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+						<div class="form-group">
+							@Html.LabelFor(m => m.FullName)
+							@Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+							@Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger" })
+						</div>
+						<div class="form-group">
+							@Html.LabelFor(m => m.Email)
+							@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+							@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+						</div>
+						<div class="form-group">
+							<label asp-for="DateOfBirth"></label>
+							<input asp-for="DateOfBirth" class="form-control" />
+						</div>
+
+
+						<button type="submit" class="btn btn-primary">Update</button>
+					}
+				</div>
+				<form asp-controller="Login" asp-action="ResetPassword" method="post">
+					<!-- Your form fields go here -->
+
+					<button type="submit" class="btn btn-primary">Update Password</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+
+
+	<div class="contact-info">
+		<div class="row">
+			<!-- single-info -->
+			<div class="col-lg-4 col-12 ">
+				<div class="single-info">
+					<i class="icofont icofont-ui-call"></i>
+					<div class="content">
+						<h3>+(000) 1234 56789</h3>
+						<p>info@company.com</p>
+					</div>
+				</div>
+			</div>
+			<!--/End single-info -->
+			<!-- single-info -->
+			<div class="col-lg-4 col-12 ">
+				<div class="single-info">
+					<i class="icofont-google-map"></i>
+					<div class="content">
+						<h3>2 Fir e Brigade Road</h3>
+						<p>Chittagonj, Lakshmipur</p>
+					</div>
+				</div>
+			</div>
+			<!--/End single-info -->
+			<!-- single-info -->
+			<div class="col-lg-4 col-12 ">
+				<div class="single-info">
+					<i class="icofont icofont-wall-clock"></i>
+					<div class="content">
+						<h3>Mon - Sat: 8am - 5pm</h3>
+						<p>Sunday Closed</p>
+					</div>
+				</div>
+			</div>
+			<!--/End single-info -->
+		</div>
+	</div>
+	</div>
+</section>
+<!--/ End Contact Us -->
+<style>
+	.form-group:hover {
+		background-color: #f8f9fa; /* Hiệu ứng màu nền khi hover */
+	}
+
+	.form-group:active {
+		transform: scale(0.98); /* Hiệu ứng thu nhỏ khi click */
+	}
+
+	.form-control:focus {
+		box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); /* Tăng độ rõ cho viền khi input được focus */
+	}
+
+	.infoProfile h4 {
+		margin-bottom: 20px; /* Thêm khoảng cách giữa các thẻ h4 */
+	}
+
+		.infoProfile h4 .a {
+			color: #777; /* Màu nhạt hơn cho nội dung */
+			font-weight: normal; /* Loại bỏ in đậm */
+		}
+
+	.containerUserProfile {
+		margin-left: 25px;
+		margin-right: 25px;
+	}
+
+	#top {
+		margin-bottom: 20px;
+	}
+
+	#course {
+		background-color: ##1A76D1;
+	}
+
+	.contact-us .single-info .content h2 {
+		color: #fff;
+		font-size: 26px;
+		font-weight: 600;
+	}
+
+	.progress {
+		height: 35px;
+	}
+
+		.progress span {
+			font-size: 25px;
+		}
+
+	.single-info {
+		position: relative; /* Thiết lập vị trí tương đối */
+	}
+
+		.single-info .btn {
+			position: absolute; /* Thiết lập vị trí tuyệt đối để điều chỉnh vị trí */
+			right: 25px;
+			top: 25px;
+			color: #000;
+			background-color: #fff;
+		}
+
+</style>

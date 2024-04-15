@@ -1,18 +1,35 @@
-
+﻿
 
 using ChillToeic.Infrastructure.EmailSender;
 using ChillToeic.Infrastructure.Middleware;
 using ChillToeic.Jwt;
-using ChillToeic.Models.Entity;
+//using ChillToeic.Models.Entity;
 using ChillToeic.Repository;
 using ChillToeic.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+
+})
+    .AddCookie()
+    .AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+    {
+        options.ClientId = builder.Configuration.GetSection("GoogleKeys:ClientId").Value;
+        options.ClientSecret = builder.Configuration.GetSection("GoogleKeys:ClientSecret").Value;
+    });
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -34,6 +51,7 @@ builder.Services.AddTransient<LectureDetailService>();
 builder.Services.AddTransient<LectureService>();
 builder.Services.AddTransient<CenterService>();
 builder.Services.AddTransient<LearningProgressService>();
+builder.Services.AddTransient<IVnPayService, VnPayService>();
 
 builder.Services.AddTransient<OrdersService>();
 // Add Authentication
@@ -72,7 +90,32 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();
-
+app.Use(async (context, next) =>
+{
+    if (context.User.Identity.IsAuthenticated)
+    {
+        // Kiểm tra vai trò của người dùng
+        if (context.User.IsInRole("Admin"))
+        {
+            // Nếu người dùng có vai trò là "admin" và đường dẫn không bắt đầu bằng "/Admin/", chuyển hướng tới trang cần thiết
+            if (!context.Request.Path.StartsWithSegments("/Admin"))
+            {
+                context.Response.Redirect("/Admin"); // Thay thế "/Admin/AccessDenied" bằng trang cần thiết cho việc chuyển hướng khi truy cập bị từ chối
+                return;
+            }
+        }
+    }
+    else // Nếu người dùng chưa đăng nhập, chuyển hướng tới trang đăng nhập
+    {
+        if (!context.Request.Path.StartsWithSegments("/Login") &&
+            context.Request.Path != "/")
+        {
+            context.Response.Redirect("/Login");
+            return;
+        }
+    }
+    await next();
+});
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

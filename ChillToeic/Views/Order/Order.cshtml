@@ -1,0 +1,102 @@
+﻿@model ChillToeic.Models.Entity.Course
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var totalPrice = ViewBag.DiscountedPrice ?? Model.Price;
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Thanh Toán</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Order and Payment Wrapper -->
+        <div class="flex flex-wrap -mx-4">
+            <!-- Order Section -->
+            <div class="w-full lg:w-1/2 px-4 mb-4 lg:mb-0">
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <!-- Order Details -->
+                    <div class="mb-4 border-b pb-4">
+                        <h2 class="text-2xl font-bold text-blue-600">Thông tin đơn hàng:</h2>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr>
+                                    <th class="border-b-2 border-gray-200 p-4 text-left text-sm font-semibold text-gray-600">Sản phẩm</th>
+                                    <th class="border-b-2 border-gray-200 p-4 text-left text-sm font-semibold text-gray-600">Đơn giá</th>
+
+                                    <th class="border-b-2 border-gray-200 p-4 text-left text-sm font-semibold text-gray-600">Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                    <tr>
+                                    <td class="border-b border-gray-200 p-4 text-sm text-gray-800">@Model.Name</td>
+                                    <td class="border-b border-gray-200 p-4 text-sm text-gray-800">@Model.Price</td>
+
+                                    @* <td class="border-b border-gray-200 p-4 text-sm text-gray-800">@Model.TotalAmount.ToString("N0")đ</td> *@
+                                    </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Section -->
+            <div class="w-full lg:w-1/2 px-4">
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <!-- Payment Details -->
+                    <div class="mb-4 border-b pb-4">
+                        <h2 class="text-2xl font-bold text-blue-600">Mã đơn hàng: </h2>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm font-semibold text-gray-600">Thành tiền</span>
+                            <span class="text-sm text-gray-800">0đ</span>
+                        </div>
+                        <div>
+                            <form asp-action="ApplyDiscount" asp-controller="Order" method="post">
+                                <input type="hidden" name="courseId" value="@Model.Id" />
+                                <input type="hidden" name="UnitPrice" value="@Model.Price" />
+                                <div>
+                                    <label for="discount-code">Mã giảm giá:</label>
+                                    <input type="text" id="discount-code" name="discountCode" placeholder="Nhập mã giảm giá" />
+                                    <button type="submit">Áp dụng</button>
+                                </div>
+                            </form>
+                            @if (ViewBag.DiscountErrorMessage != null)
+                            {
+                                <div>@ViewBag.DiscountErrorMessage</div>
+                            }
+                            <div>
+                                <span>Giảm: @ViewBag.DiscountPercentage %</span>
+                                <span>@totalPrice.ToString("N0")đ</span>
+                            </div>
+                        </div>
+
+                        <!-- Total Price Section -->
+                        <div>
+                            <span>Tổng tiền:</span>
+                            <span>@totalPrice.ToString("N0")đ</span>
+                        </div>
+                    <!-- Place Order Button -->
+                        <form asp-controller="Order" asp-action="Checkout" method="post">
+                            <input type="hidden" name="courseId" value="@Model.Id" />
+                            <input type="hidden" name="orderId" value="@Model.Id" />
+                            <button type="submit" class="btn btn-primary">Thanh toán VNPay</button>
+                        </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

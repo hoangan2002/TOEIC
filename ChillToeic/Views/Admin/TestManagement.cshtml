@@ -1,0 +1,62 @@
+﻿@{
+
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="card-body">
+    <p class="card-title mb-0">List of all learners</p>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Duration</th>
+                    <th>Number Of Question</th>
+                    <th>Number Of Part</th>
+                    <th>Number Of User Test</th>
+                    <th>Course</th>
+                    <th>Education Center</th>
+                    <th>Created At</th>
+                    <th>Status</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Sample Test</td>
+                    <td>90 minutes</td>
+                    <td>50</td>
+                    <td>3</td>
+                    <td>100</td>
+                    <td>Mathematics</td>
+                    <td>ABC Education Center</td>
+                    <td>2024-04-14</td>
+                    <td>Active</td>
+                    <td><a class="btn1" href="/Admin/TestDetailManagement">View</a></td>
+                </tr>
+                <!-- Thêm các hàng khác tương tự tại đây -->
+            </tbody>
+
+        </table>
+    </div>
+</div>
+<style>
+    .btn1 {
+        color: white;
+        background: #1a76d1;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        s
+    }
+
+        .btn1:hover {
+            color: white;
+            background: #125d9b;
+        }
+</style>

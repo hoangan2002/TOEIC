@@ -1,0 +1,42 @@
+﻿@{
+
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="card-body">
+    <p class="card-title mb-0">List of all learners</p>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Full name</th>
+                    <th>Date of birth</th>
+                    <th>Email</th>
+                    <th>Point</th>
+                    <th>Created at</th>
+                    <th>RoleId</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>John Doe</td>
+                    <td>1990-01-01</td>
+                    <td>john.doe@example.com</td>
+                    <td>85</td>
+                    <td>2024-04-14</td>
+                    <td>1</td>
+                    <td><a class="btn1" href="/Admin/UserDetailManagement">View</a></td>
+                </tr>
+                <!-- Thêm các hàng khác tương tự tại đây -->
+            </tbody>
+
+        </table>
+    </div>
+</div>
+<style>
+
+</style>

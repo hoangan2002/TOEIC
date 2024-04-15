@@ -1,0 +1,119 @@
+﻿@model ChillToeic.Models.Entity.Review
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "";
+}
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="~/css/Reviews.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+   
+</head>
+<body>
+    <form id="ratingForm" action="@Url.Action("SaveRating", "Reviews")" method="post">
+        <div id="rating-css" style="display:none;">
+            <div>Please rate your course</div>
+        </div>
+
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            Please rate your course
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <h1 class="modal-title text-center mt-3"
+                id="exampleModalLongTitle">Please rate your course</h1>
+                <div class="modal-body ">
+                        <div class="star-icon d-flex align-items-center justify-content-center">
+                            <input type="hidden" id="ratingInput" name="rating" >
+
+                            <button type="button" class="border-0" name="rating" id="rating1">
+                                <label for="rating1"><ion-icon name="star"></ion-icon></label>
+                            </button>
+                            <button type="button" class="border-0 " name="rating" id="rating2">
+                                <label for="rating2"><ion-icon name="star"></ion-icon></label>
+                            </button>
+                            <button type="button" class="border-0" name="rating" id="rating3">
+                                <label for="rating3"><ion-icon name="star"></ion-icon></label>
+                            </button>
+                            <button type="button" class="border-0" name="rating" id="rating4">
+                                <label for="rating4"><ion-icon name="star"></ion-icon></label>
+                            </button>
+                            <button type="button" class="border-0" name="rating" id="rating5">
+                                <label for="rating5"><ion-icon name="star"></ion-icon></label>
+                            </button>
+                        </div>
+                    <div class="comment-section d-flex justify-content-center align-items-center">
+                        <div id="displayComments"></div>
+                        <textarea id="commentBox" name="comment" class="p-3"
+                                      placeholder="Enter your comment here..."></textarea>
+
+                        </div>
+                        <div class=" d-flex align-items-end justify-content-end mt-4">
+                            <button type="button" class="tn-secondary mx-1" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary mx-1">Save changes</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+            integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+    <script>
+        // JavaScript
+        const stars = document.querySelectorAll('.star-icon ion-icon');
+        let currentRating = 0;
+
+        stars.forEach((star, index) => {
+            star.addEventListener('mouseover', function () {
+                const value = parseInt(this.getAttribute('data-value'));
+                stars.forEach((s, i) => {
+                    if (i <= index) {
+                        s.style.color = 'gold';
+                    } else {
+                        s.style.color = 'gray';
+                    }
+                });
+            });
+
+            star.addEventListener('click', function () {
+                currentRating = index + 1;
+                stars.forEach((s, i) => {
+                    if (i <= index) {
+                        s.style.color = 'gold';
+                    } else {
+                        s.style.color = 'gray';
+                    }
+                });
+            });
+
+            star.addEventListener('mouseout', function () {
+                stars.forEach((s, i) => {
+                    if (i < currentRating) {
+                        s.style.color = 'gold';
+                    } else {
+                        s.style.color = 'gray';
+                    }
+                        document.getElementById("ratingInput").value = currentRating;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

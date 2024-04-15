@@ -12,7 +12,10 @@ namespace ChillToeic.Service
         {
             _CenterRepository = CenterRepository;
         }
-
+        public IEnumerable<EducationCenter> GetCentersIsApprove()
+        {
+            return _CenterRepository.Find(m => m.IsApprove == true);
+        }
         public IEnumerable<EducationCenter> GetAllCenter()
         {
             return _CenterRepository.GetAll();
@@ -22,8 +25,14 @@ namespace ChillToeic.Service
         {
             return _CenterRepository.Find(m => m.Id == id);
         }
+		public EducationCenter FindEducationCenterByUserName(string username)
+		{
 
-        public EducationCenter GetCourseById(int id)
+
+			return _CenterRepository.Find(m => m.UserName == username).FirstOrDefault();
+		}
+
+		public EducationCenter GetCourseById(int id)
         {
             return _CenterRepository.GetById(id);
         }
@@ -42,5 +51,6 @@ namespace ChillToeic.Service
         {
             _CenterRepository.Delete(id);
         }
+
     }
 }

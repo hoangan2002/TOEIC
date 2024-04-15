@@ -30,6 +30,10 @@ namespace ChillToeic.Service
         {
             return _userRepository.Find(m => m.UserName == username).FirstOrDefault();
         }
+        public User FindUserByUserNamewithRole(string username)
+        {
+            return _userRepository.Find(m => m.UserName == username, m =>m.Role).FirstOrDefault();
+        }
 
         public void AddUser(User user)
         {

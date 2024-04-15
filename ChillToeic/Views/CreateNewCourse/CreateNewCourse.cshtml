@@ -1,0 +1,198 @@
+﻿@model ChillToeic.Models.Entity.CreateNewCourseInfo
+
+<form asp-action="CreateNewCourse" method="post" id="testForm" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="level"></label>
+        <input asp-for="level" class="form-control" />
+        <span asp-validation-for="level" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="QuantityOfLecture"></label>
+        <input asp-for="QuantityOfLecture" class="form-control" id="quantityInput" />
+        <span asp-validation-for="QuantityOfLecture" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CreatedAt"></label>
+        <input asp-for="CreatedAt" type="date" class="form-control" />
+        <span asp-validation-for="CreatedAt" class="text-danger"></span>
+    </div>
+
+    <!-- LectureInfos -->
+    <div id="lectureInfosContainer">
+    </div>
+    <button type="button" onclick="submitFormss()" class="btn btn-primary">Create Course</button>
+</form>
+
+<script>
+    var previousQuantity = 0;
+    var quantityInput = document.getElementById('quantityInput');
+    var container = document.getElementById('lectureInfosContainer');
+    var ids = [];
+    // Hàm JavaScript để cập nhật số lần lặp trong vòng lặp for
+    quantityInput.addEventListener('input', function () {
+        var quantity = parseInt(this.value); // Lấy giá trị mới của QuantityOfLecture
+
+        // Kiểm tra nếu số lượng mới khác số lượng trước đó
+        if (quantity !== previousQuantity) {
+            // Xóa bỏ tất cả các trường dữ liệu đã tạo trước đó
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+
+            // Tạo ra các trường dữ liệu mới trong vòng lặp for
+            for (var i = 0; i < quantity; i++) {
+                var lecture = {};
+                var lectureDetail = {};
+                // Tạo một phần tử div mới cho mỗi trường dữ liệu
+                var div = document.createElement('div');
+                div.classList.add('form-group');
+
+                // Tạo một phần tử h4 mới chứa thông tin số lượng bài giảng
+                var lectureCount = document.createElement('h4');
+                lectureCount.textContent = 'Lecture ' + (i + 1);
+
+                // Thêm lectureCount vào container
+                container.appendChild(lectureCount);
+
+                // Tạo một phần tử label và input mới cho Title của LectureDetailInfos
+                var titleLabel = document.createElement('label');
+                titleLabel.setAttribute('asp-for', 'LectureDetailInfos[' + i + '].Title');
+                titleLabel.textContent = 'Title';
+
+                var titleInput = document.createElement('input');
+                titleInput.setAttribute('name', 'LectureDetailInfos[' + i + '].Title');
+                titleInput.classList.add('form-control');
+
+                // Thêm titleLabel và titleInput vào div
+                div.appendChild(titleLabel);
+                div.appendChild(titleInput);
+
+                // Tạo một phần tử label và textarea mới cho Content của LectureDetailInfos
+                var contentLabel = document.createElement('label');
+                contentLabel.setAttribute('asp-for', 'LectureDetailInfos[' + i + '].Content');
+                contentLabel.textContent = 'Content';
+
+                var contentInput = document.createElement('input');
+                contentInput.setAttribute('name', 'LectureDetailInfos[' + i + '].Content');
+                contentInput.setAttribute('type', 'file');
+                contentInput.classList.add('form-control');
+                div.appendChild(contentLabel);
+                div.appendChild(contentInput);
+
+                var timeLabel = document.createElement('label');
+                timeLabel.setAttribute('asp-for', 'LectureDetailInfos[' + i + '].Time');
+                timeLabel.textContent = 'Time';
+
+                var timeInput = document.createElement('input');
+                timeInput.setAttribute('name', 'LectureDetailInfos[' + i + '].Time');
+                //timeInput.setAttribute('type', 'time'); // Để nhập thời gian
+                timeInput.setAttribute('type', 'text'); // Sử dụng kiểu text
+                timeInput.setAttribute('pattern', '^\\d{1,2}:\\d{2}$');
+                timeInput.classList.add('form-control');
+
+                // Thêm timeLabel và timeInput vào div
+                div.appendChild(timeLabel);
+                div.appendChild(timeInput);
+
+                // Tạo một phần tử select mới
+                var typeLabel = document.createElement('label');
+                typeLabel.textContent = 'Type';
+
+                div.appendChild(typeLabel);
+
+                var Mirror = document.createElement('input');
+                Mirror.setAttribute('name', 'LectureDetailInfos[' + i + '].LectureTypeId');
+                Mirror.setAttribute('type', 'hidden');
+                Mirror.setAttribute('id', 'daylaid' + i);
+                div.appendChild(Mirror);
+                var lectureTypeIdSelect = document.createElement('select');
+                // Thiết lập các thuộc tính cho select
+                lectureTypeIdSelect.setAttribute('name', 'selectOption');
+                lectureTypeIdSelect.classList.add('form-control');
+                lectureTypeIdSelect.setAttribute('id', 'selectOption' + i);
+                // Tạo một mảng chứa dữ liệu loại bài giảng. Thay thế [] bằng dữ liệu thực tế của bạn.
+                var lectureTypeData = [
+                    { value: '1', text: 'Video' },
+                    { value: '2', text: 'Audio' },
+                    { value: '3', text: 'Document' }
+                ];
+
+                // Duyệt qua mảng dữ liệu và tạo các tùy chọn từ dữ liệu
+                lectureTypeData.forEach(function (lectureType) {
+                    // Tạo một phần tử option mới
+                    var option = document.createElement('option');
+                    // Thiết lập giá trị và nội dung cho option
+                    option.value = lectureType.value; // Giá trị của tùy chọn
+                    option.textContent = lectureType.text; // Nội dung của tùy chọn
+                    // Thêm option vào select
+                    lectureTypeIdSelect.appendChild(option);
+                });
+
+                //Thêm bảng chọn vào phần tử div
+                div.appendChild(lectureTypeIdSelect);
+
+                // Thêm div vào container
+                container.appendChild(div);
+            }
+            for (var i = 0; i < quantity; i++) {
+
+                ids.push(i); // Thêm detail.id vào mảng ids
+
+            }
+            // Cập nhật số lượng trường dữ liệu đã tạo trước đó
+            previousQuantity = quantity;
+        }
+    });
+
+    function updateAnswerValue(id) {
+        var element = document.getElementById('selectOption' + id);
+
+        var answerInput = document.getElementById('daylaid' + id);
+
+        answerInput.value = element.value;
+
+    }
+    function submitFormss() {
+        // Gọi hàm updateAnswerValue() trước khi thực hiện submit
+        ids.forEach(function (id) {
+
+            updateAnswerValue(id);
+        });
+
+        document.getElementById("testForm").submit();
+        // Thực hiện các thao tác submit form ở đây
+
+        // Ví dụ: document.getElementById("myForm").submit();
+    }
+
+
+    // Thêm sự kiện khi nhấp vào nút "Upload Images"
+    uploadButton.addEventListener('click', function () {
+        fileInput.click(); // Kích hoạt thẻ input ẩn
+    });
+
+    // Thêm sự kiện để xử lý khi tệp được chọn
+    fileInput.addEventListener('change', function (event) {
+        // Lấy tệp đã chọn
+        const selectedFile = event.target.files[0];
+        console.log('Selected file:', selectedFile);
+        // Ở đây bạn có thể thực hiện các xử lý khác nhau với tệp đã chọn
+    });
+
+    });
+</script>

@@ -1,0 +1,478 @@
+﻿@{
+
+	ViewBag.Title = "Home Page";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@model IEnumerable<ChillToeic.Models.Entity.Question>
+<!-- Breadcrumbs -->
+<div class="breadcrumbs overlay">
+	<div class="container">
+		<div class="bread-inner">
+			<div class="row">
+				<div class="col-12">
+					<h2>Contact Us</h2>
+					<ul class="bread-list">
+						<li><a asp-area="" asp-controller="Home" asp-action="HomePage">Home</a></li>
+						<li><i class="icofont-simple-right"></i></li>
+						<li class="active">My Course</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Breadcrumbs -->
+<!-- Start Contact Us -->
+
+<section class="contact-us section" >
+	@using (Html.BeginForm("SubmitUpdate", "Test",  new {enctype = "multipart/form-data", testId = ViewBag.idTest ,id ="testForm"} ,FormMethod.Post))
+                               {
+	<div class="containerTest">
+		<div class="row">
+			<div class=" col-lg-10 col-12">
+				<div class="inner" >
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="contact-us-form">
+								<div>
+									<!--Phần audio nên cần sửa lại  ~/audio/abc.mp3-->
+									<div class="music-player">
+										@{
+											string path = $"~/img/Test{ViewBag.idTest}/{Model.First().Detail}";
+										}
+										
+										 <audio id="audio-player" src="@path"></audio> 
+                                        <div class="controls">
+											
+                                            <button type="button" onclick="playAudio()" id="play-btn" class="control-btn">&#9654;</button>
+											<progress id="progress-bar" value="0" max="100"></progress>
+											<input type="range" id="volume-slider" min="0" max="1" step="0.1" value="1">
+										</div>
+									</div>
+									<!--Phần audio nên cần sửa lại-->
+									@foreach (var i in Model)
+									{
+									 <a href="javascript:void(0)"  class="btn-qnum" id="question---@i.Id" data-question-id="@i.Id"  onclick="loadQuestionDetails(@i.Id)"> @i.Title</a>
+                                    }
+								</div>
+								<div class="line-container">
+									<hr class="horizontal-line">
+								</div>
+								<div>
+										
+										 @{
+											int j = 0;
+										}
+										<!--Sua 1-->
+										@foreach (var i in Model)
+									
+										{
+											
+										<div id="details-@i.Id" style="display:none;">
+											@foreach (var detail in i.QuestionDetails.OrderBy(q => q.NumberQuestion))
+										{
+
+											<div class="img-q" id="imageContainer-@detail.Id">
+												@if (@detail.Img != null)
+												{
+													string path2 = $"/img/Test{ViewBag.idTest}/{detail.Img}";
+													
+													<img id="uploadedImage-@detail.Id" src="@path2" alt="#">
+															<button type="button" id="removeButton-@detail.Id" onclick="removeImage(@detail.Id,@i.Id,@j)">X</button>
+														}
+														 else
+														{
+															<input type="file" accept="image/*" name="answers[@j].ImgForm" id="excelFile" class="form-control" onchange="displayImage(this)" />
+															<img id="previewImage" src="#" alt="Preview Image" style="display: none; " />
+														} 
+
+
+											</div>
+											<!--Sua 1-->
+											<div class="img-q">
+												<h1>@detail.NumberQuestion</h1>
+
+												@if (detail.Description != null)
+												{
+													<p><span contenteditable="true" name="answers[@j].Title" id="editableTitle-@detail.Id">@detail.Description</span></p>
+													@* <input type="hidden" name="answers[@j].Title"   id="hiddenTitle-@detail.Id" value="@detail.Description" /> *@
+												}
+											</div id="question-@detail.Id">
+													<input type="hidden" name="answers[@j].QuestionId" value="@i.Id" />
+													<input type="hidden" name="answers[@j].QuestionDetailId" value="@detail.Id" />
+													
+													<label name="answers[@j].AnswerValue"><input onclick="changeColor(@detail.Id)" type="radio" name="answers[@j].AnswerValue" value="1" @(detail.CorrectAnswer == 1 ? "checked" : "")> A.<span contenteditable="true" id="editableTitleA-@detail.Id" name="answers[@j].AnswerA">@detail.AnswerA</span> </label>
+													@* <input type="hidden" name="answers[@j].AnswerA"   id="hiddenTitleA-@detail.Id" value="@detail.AnswerA" />
+													 *@
+													<label name="answers[@j].AnswerValue"><input onclick="changeColor(@detail.Id)" type="radio" name="answers[@j].AnswerValue" value="2" @(detail.CorrectAnswer == 2 ? "checked" : "")> B.<span contenteditable="true" id="editableTitleB-@detail.Id" name="answers[@j].AnswerB">@detail.AnswerB</span></label>
+													@* <input type="hidden" name="answers[@j].AnswerB"   id="hiddenTitleB-@detail.Id" value="@detail.AnswerB" /> *@
+													<label name="answers[@j].AnswerValue"><input onclick="changeColor(@detail.Id)" type="radio" name="answers[@j].AnswerValue" value="3"  @(detail.CorrectAnswer == 3 ? "checked" : "")> C.<span contenteditable="true" id="editableTitleC-@detail.Id" name="answers[@j].AnswerC">@detail.AnswerC</span></label>
+											       @*  <input type="hidden" name="answers[@j].AnswerC"   id="hiddenTitleC-@detail.Id" value="@detail.AnswerC" /> *@
+													@if (detail.AnswerD != null)
+											{
+												    <label name="answers[@j].AnswerValue"><input onclick="changeColor(@detail.Id)" type="radio" name="answers[@j].AnswerValue" value="4"@(detail.CorrectAnswer == 4 ? "checked" : "")> D.<span contenteditable="true" id="editableTitleD-@detail.Id" name="answers[@j].AnswerD">@detail.AnswerD</span></label>
+											@* <input type="hidden" name="answers[@j].AnswerD"   id="hiddenTitleD-@detail.Id" value="@detail.AnswerD" />	 *@	
+											}
+													j = j + 1;
+
+												}
+										</div>
+									} 
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class=" col-lg-2 col-12">
+				<div class="inner">
+					<div class="contact-us-form">
+						<div class="timeleft">
+							<p id="demo"></p>
+							<h3>Time left: 180p <span id="democc"></span> </h3>
+						</div>
+						<button type="submit"class="btn" id="submitButton">Save Changes</button>
+						<button type="button"class="btn-click" id="submitButton-click" onclick="saveChanges()">Save Changes</button>
+						<p>Phần này anh thích bỏ gì thì bỏ</p>
+						<div class="part">
+							@foreach (var question in Model)
+							{
+								<h3>@question.Title</h3>
+								
+									<div class="row">
+									@foreach (var detail in question.QuestionDetails)
+									{
+										
+										 	<div  class=" col-lg-3 col-12"><a id="question--@detail.Id" href="#question-@detail.Id" class="btn-qnum" onclick="loadQuestionDetails(@question.Id)">@detail.NumberQuestion</a></div> 
+										
+									}
+									</div>
+								
+							}
+
+						
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="contact-info">
+			<div class="row">
+				<!-- single-info -->
+				<div class="col-lg-4 col-12 ">
+					<div class="single-info">
+						<i class="icofont icofont-ui-call"></i>
+						<div class="content">
+							<h3>+(000) 1234 56789</h3>
+							<p>info@company.com</p>
+						</div>
+					</div>
+				</div>
+				<!--/End single-info -->
+				<!-- single-info -->
+				<div class="col-lg-4 col-12 ">
+					<div class="single-info">
+						<i class="icofont-google-map"></i>
+						<div class="content">
+							<h3>2 Fir e Brigade Road</h3>
+							<p>Chittagonj, Lakshmipur</p>
+						</div>
+					</div>
+				</div>
+				<!--/End single-info -->
+				<!-- single-info -->
+				<div class="col-lg-4 col-12 ">
+					<div class="single-info">
+						<i class="icofont icofont-wall-clock"></i>
+						<div class="content">
+							<h3>Mon - Sat: 8am - 5pm</h3>
+							<p>Sunday Closed</p>
+						</div>
+					</div>
+				</div>
+				<!--/End single-info -->
+			</div>
+		</div>
+	</div>
+	}
+</section>
+<!--/ End Contact Us -->
+<style>
+	.question{
+		margin: 20px 20px;
+	}
+	label {
+		display: block;
+		margin-bottom: 10px;
+		font-size: 20px;
+		color: #000;
+	}
+	.img-q span{
+		color:#000;
+		font-size:22px;
+	}
+	.line-container {
+		width: 100%; /* Chiều rộng của div */
+		margin: 20px 20px; /* Margin để tạo khoảng cách trên và dưới đường line */
+	}
+
+	.horizontal-line {
+		border: none; /* Loại bỏ border mặc định của thẻ hr */
+		background-color: #000; /* Màu của đường line */
+		height: 2px; /* Độ cao của đường line */
+		width: 100%; /* Chiều rộng của đường line, bằng với div cha */
+	}
+
+	.containerTest{
+		margin-left: 15px;
+		margin-right: 15px;
+
+	}
+	#top {
+		margin-bottom: 20px;
+	}
+
+	#course {
+		background-color: ##1A76D1;
+	}
+
+	.contact-us .single-info .content h2 {
+		color: #fff;
+		font-size: 26px;
+		font-weight: 600;
+	}
+
+	.progress {
+		height: 35px;
+	}
+
+		.progress span {
+			font-size: 25px;
+		}
+
+	.single-info {
+		position: relative; /* Thiết lập vị trí tương đối */
+	}
+
+		.single-info .btn {
+			position: absolute; /* Thiết lập vị trí tuyệt đối để điều chỉnh vị trí */
+			right: 25px;
+			top: 25px;
+			color: #000;
+			background-color: #fff;
+		}
+
+	.btn-qnum {
+		-webkit-transition: all 0.4s ease;
+		-moz-transition: all 0.4s ease;
+		transition: all 0.4s ease;
+		/* display: inline-block; */
+		display: inline-flex; /* Sử dụng flexbox */
+		justify-content: center; /* Canh giữa theo chiều ngang */
+		align-items: center; /* Canh giữa theo chiều dọc */
+		padding: 15px;
+		margin: 5px;
+		border: 1px solid #000; /* Màu và độ dày của khung */
+		text-decoration: none; /* Loại bỏ gạch chân mặc định của các liên kết */
+		border-radius: 7px;
+		width: 30px;
+		height: 30px;
+	}
+
+		.btn-qnum:hover {
+			background: #1A76D1;
+			color: #fff;
+		}
+
+	#part{
+		color: #fff;
+		background-color: #1A76D1 ;
+		width: 90px;
+	}
+	#part:hover{
+			background: #fff;
+			color: #000;
+	}
+
+	#numq{
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+	}
+
+	.music-player {
+		width: 300px;
+		margin: 20px auto;
+	}
+
+	.controls {
+		display: flex;
+		align-items: center;
+	}
+
+	.control-btn {
+		background-color: #007bff;
+		color: white;
+		border: none;
+		padding: 10px;
+		cursor: pointer;
+	}
+
+	#volume-slider {
+		width: 100px;
+		margin-left: 10px;
+	}
+
+	#progress-bar {
+		width: 100%;
+		margin-top: 10px;
+	}
+	.reverse-color {
+    background-color: red; /* Thay đổi màu sắc tùy chọn */
+    color: white; /* Thay đổi màu văn bản tùy chọn */
+}
+.selected {
+     background-color: red; /* Thay đổi màu sắc tùy chọn */
+    color: white; /* Thay đổi màu văn bản tùy chọn */
+}
+
+
+</style>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js">
+	
+	</script>
+		<script>
+			function removeImage(detailid, questionid,index) {
+    var imageContainer = document.getElementById("imageContainer-"+detailid);
+	console.log("1")
+    // Xóa hình ảnh và nút xóa khỏi container
+    imageContainer.removeChild(document.getElementById("uploadedImage-"+detailid));
+    imageContainer.removeChild(document.getElementById("removeButton-"+detailid));
+	console.log("3")
+    // Hiển thị nút tải lên mới
+    var uploadButton = document.createElement("input");
+	console.log("2")
+    uploadButton.type = "file";
+	uploadButton.name = "answers["+index+"].ImgForm";
+	uploadButton.id = "answers["+index+"].ImgForm";
+	// uploadButton.name = "fileInput";
+	// uploadButton.id = "fileInput";
+	uploadButton.className="form-control"
+	
+    uploadButton.addEventListener("change", function() {
+        // Xử lý tệp tải lên ở đây
+			console.log("4")
+        var file = this.files[0];
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            var img = document.createElement("img");
+            img.src = event.target.result;
+            // Thay thế hình ảnh đã xóa bằng hình ảnh mới
+            imageContainer.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    });
+    imageContainer.appendChild(uploadButton);
+}
+//////////////////////////////////////////
+	function saveChanges() {
+        // Lấy ra nút "Save Changes" từ ID của nó
+        var button = document.getElementById("submitButton-click");
+        
+        
+        
+        // Chuyển hướng người dùng đến trang chính của bạn.
+        // Thay đổi "url_of_homepage" thành URL thực của trang chính của bạn.
+        window.location.href = "/";
+    }
+    
+    // Lắng nghe sự kiện khi nút được nhấp và gọi hàm saveChanges
+    document.getElementById("submitButton-click").addEventListener("click", saveChanges);
+
+	const audioPlayer = document.getElementById('audio-player');
+	const playBtn = document.getElementById('play-btn');
+	const volumeSlider = document.getElementById('volume-slider');
+	const progressBar = document.getElementById('progress-bar');
+
+	playBtn.addEventListener('click', function () {
+		if (audioPlayer.paused) {
+			audioPlayer.play();
+			playBtn.textContent = '❚❚';
+		} 
+	});
+
+	volumeSlider.addEventListener('input', function () {
+		audioPlayer.volume = volumeSlider.value;
+	});
+
+	audioPlayer.addEventListener('timeupdate', function () {
+		const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+		progressBar.value = progress;
+	});
+
+
+	function loadQuestionDetails(questionId) {
+		console.log("1")
+		// Thêm sự kiện click cho mỗi tiêu đề câu hỏi
+		$('.btn-qnum').click(function () {
+			// Lấy id của câu hỏi được click
+			$('#details-' + questionId).show();
+			// Hiển thị danh sách câu hỏi của phần được chọn
+			// Ẩn các phần khác
+			 $('.btn-qnum').each(function () {
+			 	var otherQuestionId = $(this).data('question-id');
+				 if (otherQuestionId != questionId) {
+					$('#details-' + otherQuestionId).hide();
+				 
+				 }
+
+			});
+		});
+		
+		document.querySelectorAll('.btn-qnum').forEach(item => {
+        item.classList.remove('selected');
+    });
+	    
+    var questionDiv = document.getElementById('question---' + questionId);
+    if (questionDiv.classList.contains('selected')) {
+		
+    } else {
+        questionDiv.classList.add('selected');
+		
+    }
+	
+	}
+	
+	
+	document.getElementById('editableTitle').addEventListener('input', function() {
+    var newTitle = this.textContent;
+    document.getElementById('hiddenTitle').value = newTitle;
+});
+
+	
+
+	function displayImage(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            document.getElementById('previewImage').src = e.target.result;
+            document.getElementById('previewImage').style.display = 'block';
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+		</script>
+		@* @foreach (var i in Model)
+									{
+		@foreach (var detail in i.QuestionDetails.OrderBy(q => q.NumberQuestion))
+{
+    
+}
+									} *@

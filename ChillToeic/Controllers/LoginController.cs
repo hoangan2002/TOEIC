@@ -4,6 +4,9 @@ using ChillToeic.Jwt;
 using ChillToeic.Models.DTO;
 using ChillToeic.Models.Entity;
 using ChillToeic.Service;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,8 +31,15 @@ namespace ChillToeic.Controllers
             _emailOTPService = emailOTPService;
             _educationService = educationService;
         }
-       
-        public ActionResult Index()
+
+		public ActionResult Logout()
+		{
+			
+
+			// Nếu chưa được xác thực, trả về trang index của login
+			return View();
+		}
+		public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -55,27 +65,30 @@ namespace ChillToeic.Controllers
         public ActionResult Index(string username, string password)
         {
             {
-                User user = _userService.FindUserByUserName(username);
-                EducationCenter edu = _educationService.FindEducationCenterByUserName(username);
-                if (edu != null)
-                {
-                    if (edu.Password == password)
+                User user = _userService.FindUserByUserNamewithRole(username);
+                EducationCenter edu = _educationService.FindEducationCenterByUserNamewithRole(username);
+                if (edu != null )
+                {   if(edu.IsApprove == false) { ViewBag.approve = "Tài khoản chưa được cấp phép"; }
+                    
+                    if (edu.IsApprove == true)
                     {
-                        UserModel userModel = new UserModel { Username = edu.UserName, Role = "EducationCenter" };
-                        string jwtToken = _jwtService.GenerateJSONWebToken(userModel);
+                        if (edu.Password == password)
+                        {
+                            UserModel userModel = new UserModel { Username = edu.UserName, Role = edu.Role.Name };
+                            string jwtToken = _jwtService.GenerateJSONWebToken(userModel);
 
-                        Response.Cookies.Append("jwt", jwtToken);
+                            Response.Cookies.Append("jwt", jwtToken);
 
-                        return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "Home");
+                        }
                     }
-                   
                 }
                 
             
                 if (user != null )
                 { if(user.Password == password )
-                    {
-                        UserModel userModel = new UserModel { Username= user.UserName , Role ="User"};
+                    { 
+                        UserModel userModel = new UserModel { Username= user.UserName , Role = user.Role.Name };
                      string jwtToken=   _jwtService.GenerateJSONWebToken(userModel);
                       
                         Response.Cookies.Append("jwt", jwtToken);
@@ -130,7 +143,7 @@ namespace ChillToeic.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult EducationRegister(UserRegisterDTO userRegisterDTO)
+        public async Task<ActionResult> EducationRegister(UserRegisterDTO userRegisterDTO,IFormFile filecertificate)
         {
             if (ModelState.IsValid)
             {
@@ -151,8 +164,16 @@ namespace ChillToeic.Controllers
                 }
                 else
                 {
+
                     _emailOTPService.DeleteEmailOTP(userRegisterDTO.Email);
-                    _educationService.AddEducationCenter( new EducationCenter { Name = userRegisterDTO.FullName, UserName = userRegisterDTO.UserName, Password = userRegisterDTO.Password, Email = userRegisterDTO.Email });
+                    EducationCenter education = new EducationCenter { Name = userRegisterDTO.FullName, UserName = userRegisterDTO.UserName, Password = userRegisterDTO.Password, Email = userRegisterDTO.Email, Img = filecertificate.FileName, IsApprove=false};
+                    _educationService.AddEducationCenter(education);
+                    string folder = $"{Directory.GetCurrentDirectory()}\\wwwroot\\img\\Education{education.Id}";
+                    string duongdanmoi = Path.Combine(folder, filecertificate.FileName);
+                    using (var stream = new FileStream(duongdanmoi, FileMode.Create))
+                    {
+                        await filecertificate.CopyToAsync(stream);
+                    }
                     return RedirectToAction("Index", "Login");
                 }
             }
@@ -245,13 +266,37 @@ namespace ChillToeic.Controllers
 
 
         }
-       
-        
-        
-        
-        
-        
-        
+        public async Task LoginGmail()
+        {
+            await HttpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme,
+                new AuthenticationProperties
+                {
+                    RedirectUri = Url.Action("GoogleResponse")
+                });
+        }
+
+        public async Task<IActionResult> GoogleResponse()
+        {
+            var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var claims = result.Principal.Identities.FirstOrDefault().Claims.Select(claim => new
+            {
+                claim.Issuer,
+                claim.OriginalIssuer,
+                claim.Type,
+                claim.Value
+
+            });
+
+            return Json(claims);
+
+        }
+
+
+
+
+
+
         // GET: LoginController/Details/5
         public ActionResult Details(int id)
         {

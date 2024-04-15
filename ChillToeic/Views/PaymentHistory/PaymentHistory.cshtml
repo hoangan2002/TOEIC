@@ -1,0 +1,161 @@
+﻿@{
+
+    ViewBag.Title = "Lịch Sử Thanh Toán";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumbs -->
+@model IEnumerable<ChillToeic.Models.Entity.Order>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div class="container">
+            <div class="chung">
+                <table class="table">
+                    <thead class="head">
+                        <tr class="dau" id="payList">
+                            <th class="py-3 px-6 text-left" id="chu">Mã người dùng</th>
+                            <th class="py-3 px-6 text-left" id="chu">Mã sản phẩm</th>
+                            <th class="py-3 px-6 text-left" id="chu">Tên sản phẩm</th>
+                            <th class="py-3 px-6 text-center" id="chu">Ngày thanh toán</th>
+                            <th class="py-3 px-6 text-center" id="chu">Đơn vị</th>
+                            <th class="py-3 px-6 text-center" id="chu">Giá tiền</th>
+                            
+                            <th class="py-3 px-6 text-center" id="chu">Giảm giá</th>
+                            <th class="py-3 px-6 text-center" id="chu">Thành tiền</th>
+                            <th class="py-3 px-6 text-center" id="chu">Đã thanh toán</th>
+                        </tr>
+                    </thead>
+                    <tbody class="body">
+                        @foreach (var order in Model)
+                        {
+                            <tr class="noidung" id="payList">
+                                <td class="py-3 px-6 text-left" id="chuden">@order.UserId</td>
+                                <td class="py-3 px-6 text-left" id="chuden">@order.CourseId</td>
+                                <td class="py-3 px-6 text-left" id="chuden">@order.ProductName</td>
+                                <td class="py-3 px-6 text-center" id="chuden">@order.OrderDate.ToString("dd/MM/yyyy")</td>
+
+                                <td class="py-3 px-6 text-center" id="chuden">@order.UnitPrice VND</td>
+                               
+                                <td class="py-3 px-6 text-center" id="chuden">@order.Discount</td>
+                                <td class="py-3 px-6 text-center" id="chuden">@order.TotalAmount VND</td>
+                                <td class="py-3 px-6 text-center" id="chuden">@order.Status</td>
+                                <td class="py-3 px-6 text-center">
+                                    <span class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">@order.Status</span>
+                                </td>
+                            </tr>
+
+
+                        }
+                    </tbody>
+                </table>
+                <div class="p-3 bg-white border-t flex justify-between">
+                    <!-- Pagination or navigation buttons here -->
+                    <button class="text-xs text-blue-500"> &lt; 1 &gt; </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<style>
+    #chu{
+        color: #fff;
+    }
+    #chuden{
+        color: #000;
+    }
+    .container {
+        /* Your container styles here */
+    }
+
+    .chung {
+        /* Styles for the container with class "chung" */
+    }
+
+    .table {
+        /* Styles for the table */
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .head {
+        /* Styles for the table head */
+        background-color: #1a76d1; /* Light gray background */
+    }
+
+    .dau th {
+        /* Styles for the table header cells */
+        padding: 10px 20px; /* Adjust padding as needed */
+        text-align: left;
+    }
+
+    .body {
+        background-color: #fff;
+        /* Styles for the table body */
+    }
+
+    .noidung td {
+        /* Styles for the table data cells */
+        padding: 10px 20px; /* Adjust padding as needed */
+    }
+
+    .p-3 {
+        /* Styles for the padding */
+        padding: 0.75rem; /* Adjust padding as needed */
+    }
+
+    .bg-white {
+        /* Styles for the background color */
+        background-color: #fff; /* White background */
+    }
+
+    .border-t {
+        /* Styles for the top border */
+        border-top: 1px solid #ddd; /* Light gray border */
+    }
+
+    .flex {
+        /* Styles for the flexbox */
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .justify-between {
+        /* Styles for justifying content */
+        justify-content: space-between;
+    }
+
+    /* Pagination button styles */
+    .text-xs {
+        /* Styles for small text */
+        font-size: 0.75rem; /* Adjust font size as needed */
+    }
+
+    .text-blue-500 {
+        /* Styles for blue text */
+        color: #3b82f6; /* Blue color */
+    }
+
+    /* Adjust button styles as needed */
+    button {
+        /* Button styles */
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+</style>

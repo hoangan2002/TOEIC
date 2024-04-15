@@ -7,7 +7,7 @@
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
- @model IEnumerable<ChillToeic.Models.Entity.Test> 
+ @model IEnumerable<ChillToeic.Models.Entity.Test>
 
 <!-- Breadcrumbs -->
 <div class="breadcrumbs overlay">
@@ -56,8 +56,8 @@
 		<!------------------------------------------------------------------------------------------------------------------------------------>
 		<div class="inner">
 			<div class="row">
-				 @foreach (var test in Model)
-				{ 
+				@foreach (var test in Model)
+				{
 					<div class="col-lg-4 col-md-6 mb-4" id="test">
 						<div class="rounded overflow-hidden mb-2">
 							<div class="card p-4">
@@ -68,15 +68,15 @@
 									<small class="m-0" id="small"><i class="far fa-user"></i> @Html.DisplayFor(modelItem => test.NumberOfUserTest)</small>
 								</div>
 								<div class="d-flex justify-content-between mb-3">
-									<small class="m-0" id="small"><i class=""></i> @Html.DisplayFor(modelItem => test.NumberOfPart) contest</small>
+									<small class="m-0" id="small"><i class="far fa-address-book"></i> @Html.DisplayFor(modelItem => test.NumberOfPart) contest</small>
 									<p>|</p>
 									<small class="m-0" id="small"><i class=""></i> @Html.DisplayFor(modelItem => test.NumberOfQuestion) question</small>
 								</div>
-									<a href="/CourseDetail/CourseDetail" class="btn" id="detail" sid="detail">Delail</a>
-								</div>
+								<a href="/TestList/Detail?testId=@test.Id" class="btn" id="detail" sid="detail">Delail</a>
+							</div>
 						</div>
 					</div>
-				 }  
+				}
 			</div>
 		</div>
 
@@ -84,19 +84,22 @@
 </section>
 <!--/ End Contact Us -->
 <style>
-	#detail{
+	#detail {
 		color: #fff;
 	}
-	#small{
+
+	#small {
 		font-size: 15px;
 	}
-	#test{
+
+	#test {
 		padding: 15px;
 	}
-	.cart{
-		margin: 15px;
 
+	.cart {
+		margin: 15px;
 	}
+
 	#top {
 		margin-bottom: 20px;
 	}
@@ -166,7 +169,8 @@
 	.btn-primary {
 		color: #fff;
 	}
-	.h5{
+
+	.h5 {
 		color: #000;
 	}
 

@@ -1,0 +1,257 @@
+﻿@{
+
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@model ChillToeic.Models.TestDetailViewModel;
+
+<div class="single">
+    <h2 style="color: black;">Infomation of Tên</h2>
+    <table class="table">
+        <tr>
+            <td><strong>ID:</strong></td>
+            <td>@Model.Id</td>
+        </tr>
+        <tr>
+            <td><strong>Name:</strong></td>
+            <td>@Model.Name</td>
+        </tr>
+        <tr>
+            <td><strong>Number Of Question:</strong></td>
+            <td>@Model.NumberOfQuestion</td>
+        </tr>
+        <tr>
+            <td><strong>Number Of Part:</strong></td>
+            <td>@Model.NumberOfPart</td>
+        </tr>
+        <tr>
+            <td><strong>Duration:</strong></td>
+            <td>@Model.Duration</td>
+        </tr>
+        
+        <tr>
+            <td><strong>Created At:</strong></td>
+            <td>@Model.CreatedAt</td>
+        </tr>
+        <tr>
+            <td><strong>Number Of User Test:</strong></td>
+            <td>@Model.NumberOfUserTest</td>
+        </tr>
+        <tr>
+            <td><strong>Status:</strong></td>
+            <td>@Model.Status</td>
+        </tr>
+        <tr>
+            <td><strong>Course:</strong></td>
+            <td>@Model.CourseName</td>
+            <td><button class="btn1" ">Detail</button> </td>
+        </tr>
+        <tr>
+            <td><strong>Education Center:</strong></td>
+            <td>@Model.EducationCenterName</td>
+            <td><button class="btn1" ">Detail</button> </td>
+        </tr>
+    </table>
+</div>
+
+
+
+<!--Neu course da duoc duyet-->
+
+<!------------------------------>
+
+
+<style>
+        #ban {
+        font-size: 40px;
+        height: auto;
+        width: auto;
+        margin: 0 auto;
+        display: flex;
+    }
+    .Approved {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    #Approved {
+        font-size: 40px;
+        height: auto;
+        width: auto;
+        margin: 0 auto;
+        display: flex;
+    }
+
+    #NotApproved {
+        font-size: 40px;
+        height: auto;
+        width: auto;
+        margin: 0 auto;
+        display: flex;
+    }
+
+    .two-but {
+        margin: 0 auto;
+        display: flex;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    /* CSS cho modal */
+    .modal {
+        display: none; /* Ẩn modal ban đầu */
+        position: fixed; /* Đặt vị trí cố định */
+        z-index: 1; /* Đảm bảo modal ở phía trên các phần tử khác */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto; /* Cho phép cuộn khi nội dung quá dài */
+        background-color: rgba(0,0,0,0.4); /* Tạo một lớp mờ */
+    }
+
+    /* CSS cho nội dung của modal */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* Đặt khoảng cách từ trên xuống và căn giữa theo chiều ngang */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%; /* Đặt chiều rộng của modal */
+    }
+
+    /* Đóng modal khi nhấn vào nút đóng hoặc nút Hủy */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .button-container button {
+            flex: 1; /* Để nút mở rộng để đều nhau */
+            margin-right: 10px; /* Khoảng cách giữa các nút */
+        }
+
+</style>
+<script>
+   // Lấy các phần tử modal
+var approvedModal = document.getElementById("approvedModal");
+var notApprovedModal = document.getElementById("notApprovedModal");
+var confirmBanModal = document.getElementById("confirmBanModal");
+
+// Lấy nút mở modal
+var approvedButton = document.getElementById("Approved");
+var notApprovedButton = document.getElementById("NotApproved");
+var banButton = document.getElementById("ban");
+
+// Lấy nút đóng modal
+var closeButtons = document.querySelectorAll(".modal .close");
+
+// Mở popup xác nhận Approved khi nhấn vào nút "Approved"
+approvedButton.onclick = function() {
+    approvedModal.style.display = "block";
+}
+
+// Mở popup xác nhận Not Approved khi nhấn vào nút "Not Approved"
+notApprovedButton.onclick = function() {
+    notApprovedModal.style.display = "block";
+}
+
+// Mở popup xác nhận Ban khi nhấn vào nút "Ban"
+banButton.onclick = function() {
+    confirmBanModal.style.display = "block";
+}
+
+// Đóng modal khi nhấn vào nút đóng hoặc nút Hủy
+closeButtons.forEach(function(button) {
+    button.onclick = function() {
+        var modal = this.closest('.modal');
+        modal.style.display = "none";
+    }
+});
+
+// Đóng modal khi nhấn vào bất kỳ nơi nào bên ngoài modal
+window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+        event.target.style.display = "none";
+    }
+}
+
+// Xử lý khi người dùng nhấn Yes để ban
+document.getElementById("confirmBanModal").querySelector("button#yes").onclick = function() {
+    // Thực hiện hành động ban ở đây
+    alert("Đã ban!");
+    confirmBanModal.style.display = "none"; // Đóng modal sau khi xác nhận
+}
+
+// Xử lý khi người dùng nhấn No để hủy bỏ ban
+document.getElementById("confirmBanModal").querySelector("button#no").onclick = function() {
+    confirmBanModal.style.display = "none"; // Đóng modal
+}
+
+</script>
+
+@if (Model.Status == true)
+{
+    <!-- Nếu course đã được duyệt -->
+    <div class="ban">
+        <button class="btn1" id="ban">BAN</button>
+    </div>
+    <div id="confirmBanModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Bạn có chắc chắn muốn ban?</p>
+            <div class="button-container">
+                <button class="btn1">Đồng ý</button>
+                <button class="btn1">Hủy</button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.Status == false)
+{
+    <!-- Nếu course chưa được duyệt -->
+    <div class="two-but">
+        <div class="Approved">
+            <button class="btn1" id="Approved">Approved</button>
+        </div>
+        <div class="Approved">
+            <button class="btn1" id="NotApproved">Not approved</button>
+        </div>
+    </div>
+    <!-- Popup xác nhận Approved -->
+    <div id="approvedModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Bạn có chắc chắn muốn Approved?</p>
+            <div class="button-container">
+                <button class="btn1">Đồng ý</button>
+                <button class="btn1">Hủy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup xác nhận Not Approved -->
+    <div id="notApprovedModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Bạn có chắc chắn muốn Not Approved?</p>
+            <div class="button-container">
+                <button class="btn1">Đồng ý</button>
+                <button class="btn1">Hủy</button>
+            </div>
+        </div>
+    </div>
+}

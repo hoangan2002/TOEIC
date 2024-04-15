@@ -1,4 +1,4 @@
-﻿@@{
+﻿@{
     ViewData["Title"] = "CourseDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -32,7 +32,7 @@
                     <div class="border-bottom px-4">
                         <div class="feature-item d-flex justify-content-between">
                             <h6 class="my-3">Price:</h6>
-                            <h6 class="my-3">@Model.Price$</h6>
+                            <h6 class="my-3">@Model.Price VNĐ</h6>
                         </div>
                         <div class="feature-item d-flex justify-content-between">
                             <h6 class="my-3">Level:</h6>
@@ -52,7 +52,11 @@
                         </div>
                     </div>
                     <div class="py-3 px-4 text-center">
-                        <a class="btn btn-block btn-dark" href="">Enroll Now</a>
+                        <form method="post" action="/Order/Order">
+                            <input type="hidden" name="CourseId" value="@Model.Id" />
+                            <input type="hidden" name="Price" value="@Model.Price" />
+                            <button type="submit" class="btn btn-block btn-dark">Enroll Now</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -142,5 +146,4 @@
     .bg-primary h6 {
         color: white;
     }
-
 </style>

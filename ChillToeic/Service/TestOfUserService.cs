@@ -22,6 +22,10 @@ namespace ChillToeic.Service
 		{
 			return _testofuserRepository.Find(m => m.Id == id).FirstOrDefault();
 		}
+		public IEnumerable<TestOfUser> GetTestOfUserByUserIdIncludeTest(int id)
+		{
+			return _testofuserRepository.Find(m => m.UserId == id, m =>m.Test);
+		}
 		public TestOfUser? GetTestOfUserByUserIdAndTestId(int idUser, int idTest)
 		{
 			Expression<Func<TestOfUser, bool>> predicate =  tu => tu.UserId == idUser && tu.TestId == idTest; 

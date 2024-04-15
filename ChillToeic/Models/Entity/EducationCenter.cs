@@ -20,7 +20,7 @@ namespace ChillToeic.Models.Entity
         public Boolean IsApprove { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         [ForeignKey("Role")]
-        public int RoleId { get; set; } = 2;
+        public int RoleId { get; set; } = 3;
         public virtual Role Role { get; set; }
         public virtual ICollection<Test> Tests { get; set; }
         public virtual ICollection<Course> Courses { get; set; }

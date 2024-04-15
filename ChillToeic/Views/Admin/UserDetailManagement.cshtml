@@ -1,0 +1,180 @@
+﻿@{
+
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="single">
+    <h2 style="color: black;">Infomation of Tên</h2>
+    <table class="table">
+        <tr>
+            <td><strong>ID:</strong></td>
+            <td>Đây là ID</td>
+        </tr>
+        <tr>
+            <td><strong>Full name:</strong></td>
+            <td>Đây là full name</td>
+        </tr>
+        <tr>
+            <td><strong>Day of birth:</strong></td>
+            <td>Đây là ngày sinh</td>
+        </tr>
+        <tr>
+            <td><strong>Email:</strong></td>
+            <td>Đây là email</td>
+        </tr>
+        <tr>
+            <td><strong>Point:</strong></td>
+            <td>Đây là điểm số</td>
+        </tr>
+        <tr>
+            <td><strong>Created At:</strong></td>
+            <td>Đây là ngày tạo</td>
+        </tr>
+    </table>
+</div>
+
+<div class="single">
+    <h2 style="color: black;">List course</h2>
+    <table class="table">
+        <tr>
+            <td><strong>Tên course</strong></td>
+            <td> <button class="btn1" ">Detail</button></td>
+        </tr>
+    </table>
+</div>
+
+<div class="single">
+    <h2 style="color: black;">List certificates</h2>
+    <table class="table">
+        <tr>
+            <td><strong>Description</strong></td>
+            <td> <button class="btn1" ">Detail</button></td>
+        </tr>
+    </table>
+</div>
+<div class="ban">
+    <button class="btn1" id="ban">BAN</button>
+</div>
+<!-- Modal -->
+<div id="confirmBanModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Bạn có chắc chắn muốn ban?</p>
+        <button class="btn1">Yes</button>
+        <button class="btn1" id="no">No</button>
+    </div>
+</div>
+
+<style>
+    #ban{
+        font-size: 40px;
+        height: auto;
+        width: auto;
+        margin: 0 auto;
+        display: flex;
+    }
+    .single{
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .leftTable{
+        padding-left: 50px;
+        font-size: 30px;
+        color: black;
+    }
+    .rightTable{
+        font-size: 30px;
+        color: black;
+    }
+
+    /* CSS cho modal */
+    .modal {
+        display: none; /* Ẩn modal ban đầu */
+        position: fixed; /* Đặt vị trí cố định */
+        z-index: 1; /* Đảm bảo modal ở phía trên các phần tử khác */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto; /* Cho phép cuộn khi nội dung quá dài */
+        background-color: rgba(0,0,0,0.4); /* Tạo một lớp mờ */
+    }
+
+    /* CSS cho nội dung của modal */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* Đặt khoảng cách từ trên xuống và căn giữa theo chiều ngang */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%; /* Đặt chiều rộng của modal */
+    }
+
+    /* Đóng modal khi nhấn vào nút đóng hoặc nút Hủy */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .button-container button {
+            flex: 1; /* Để nút mở rộng để đều nhau */
+            margin-right: 10px; /* Khoảng cách giữa các nút */
+        }
+
+        #no{
+            margin-top: 20px;
+        }
+</style>
+
+<script>
+    // Lấy thẻ nút BAN
+    var banButton = document.getElementById("ban");
+
+    // Lấy modal
+    var modal = document.getElementById("confirmBanModal");
+
+    // Lấy nút đóng modal
+    var closeButton = document.getElementsByClassName("close")[0];
+
+    // Khi người dùng nhấn vào nút BAN, hiển thị modal
+    banButton.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // Khi người dùng nhấn vào nút đóng, đóng modal
+    closeButton.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // Khi người dùng nhấn vào bất kỳ nơi nào bên ngoài modal, đóng modal
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // Xử lý khi người dùng xác nhận ban
+    document.getElementById("confirmBan").onclick = function () {
+        // Thực hiện hành động ban ở đây
+        alert("Đã ban!");
+        modal.style.display = "none"; // Đóng modal sau khi xác nhận
+    }
+
+    // Xử lý khi người dùng hủy bỏ ban
+    document.getElementById("cancelBan").onclick = function () {
+        modal.style.display = "none"; // Đóng modal
+    }
+</script>

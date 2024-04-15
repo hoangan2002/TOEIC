@@ -34,7 +34,12 @@ namespace ChillToeic.Service
 
             return _educationRepository.Find(m => m.UserName == username).FirstOrDefault();
         }
+        public EducationCenter FindEducationCenterByUserNamewithRole(string username)
+        {
 
+
+            return _educationRepository.Find(m => m.UserName == username, m=>m.Role).FirstOrDefault();
+        }
         public void AddEducationCenter(EducationCenter educationCenter)
         {
             _educationRepository.Add(educationCenter);

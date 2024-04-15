@@ -1,4 +1,5 @@
-﻿using ChillToeic.Repository;
+﻿using ChillToeic.Models.Entity;
+using ChillToeic.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,12 +14,12 @@ namespace ChillToeic.Controllers
 			_context = context;
 		}
 
-		public IActionResult CoursePurchased()
+		public IActionResult CoursePurchased(int id)
 		{
 			var course = _context.Courses
 				.Include(c => c.Lectures)
 				.ThenInclude(l => l.LectureDetails)
-				.FirstOrDefault();
+				.FirstOrDefault(c => c.Id == id);
 
 			return View(course);
 		}

@@ -27,14 +27,16 @@
             <div class="card">
                 @if (lecture.LectureType.Title == "video")
                 {
-                    <a href="@Url.Action("Video", "LectureDetail", new { lectureId = lecture.Id })">
+                    <a href="@Url.Action("DocumentViewer", "LectureDetail", new { lecturedetailId = lecture.Id })">
+
                         <h3>@lecture.Title</h3>
                         <p>Lecture Type: Video</p>
                     </a>
                 }
                 else if (lecture.LectureType.Title == "pdf")
                 {
-                    <a href="@Url.Action("Document", "LectureDetail", new { lectureId = lecture.Id })">
+                    <a href="@Url.Action("DocumentViewer", "LectureDetail", new { lecturedetailId = lecture.Id, action = 0 })">
+
                         <h3>@lecture.Title</h3>
                         <p>Lecture Type: PDF</p>
                     </a>

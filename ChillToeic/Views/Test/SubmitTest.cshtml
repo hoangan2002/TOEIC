@@ -1,0 +1,32 @@
+﻿@{
+	ViewData["Title"] = "";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+    <div>
+        <p class="nameTest">@ViewBag.testname </p>
+        <p class="scorepop">@ViewBag.score </p>
+    </div>
+
+
+</div>
+<style>
+    .nameTest {
+        margin: 50px 0px 50px 0px;
+        text-align: center; /* Căn giữa nội dung của .nameTest */
+        font-size: 5em; /* Cỡ chữ lớn lên */
+        color: black; /* Màu chữ đen */
+        margin-bottom: 30px;
+    }
+
+    .scorepop {
+        text-align: center; /* Căn giữa nội dung của .scorepop */
+        font-size: 10em; /* Cỡ chữ lớn lên */
+        color: red; /* Màu chữ đỏ */
+        font-weight: bold;
+        margin: 100px 0px 50px 0px;
+    }
+</style>

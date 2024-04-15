@@ -1,0 +1,59 @@
+﻿@{
+
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@model IEnumerable<ChillToeic.Models.Entity.EducationCenter>
+
+<div class="card-body">
+    <p class="card-title mb-0">List of all learners</p>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Establishment Date</th>
+                    <th>Certification</th>
+                    <th>Created at</th>
+                    <th>Status</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var center in Model){
+                <tr>
+                        <td>@Html.DisplayFor(modelItem => center.Id)</td>
+                        <td>@Html.DisplayFor(modelItem => center.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => center.Email)</td>
+                        <td>@Html.DisplayFor(modelItem => center.Address)</td>
+                        
+                        <td>@Html.DisplayFor(modelItem => center.Certification)</td>
+                        <td>@Html.DisplayFor(modelItem => center.CreatedAt)</td>
+                        <td>@Html.DisplayFor(modelItem => center.IsApprove)</td>
+                        <td><a class="btn1" href="/Admin/CenterDetailManagement?id=@Html.DisplayFor(modelItem => center.Id)">View</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<style>
+    .btn1 {
+        color: white;
+        background: #1a76d1;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        s
+    }
+
+        .btn1:hover {
+            color: white;
+            background: #125d9b;
+        }
+</style>

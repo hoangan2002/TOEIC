@@ -29,6 +29,11 @@
                 <input type="text" id="username" name="username" class="form-control" placeholder="Username" />
                 <input type="password" id="username" name="password" class="form-control" placeholder="Password" />
                 <a href="/Login/ResetPassword">Forget Your Password?</a>
+                @if (@ViewBag.approve != null)
+                {
+                    <p>@ViewBag.approve</p>
+                   
+                }
                 <button type="submit" value="Login">Sign In</button>
             
             }
