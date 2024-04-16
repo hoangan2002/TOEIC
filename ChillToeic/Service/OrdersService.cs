@@ -17,7 +17,10 @@ namespace ChillToeic.Service
         {
             return _OrdersRepository.GetAll();
         }
-
+        public IEnumerable<Order> GetOrderByUserId(int id)
+        {
+            return _OrdersRepository.Find(m => m.UserId == id);
+        }
         public Order GetCourseById(int id)
         {
             return _OrdersRepository.GetById(id);

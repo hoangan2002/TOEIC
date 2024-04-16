@@ -17,7 +17,7 @@ namespace ChillToeic.Models.Entity
         public string Email { get; set; }
         public string? Address { get; set; }
         public string? Certification {  get; set; }
-        public Boolean IsApprove { get; set; } = false;
+        public Boolean IsApprove { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         [ForeignKey("Role")]
         public int RoleId { get; set; } = 3;

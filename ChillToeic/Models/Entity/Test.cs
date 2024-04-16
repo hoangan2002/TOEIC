@@ -32,5 +32,10 @@ namespace ChillToeic.Models.Entity
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<TestOfUser> TestOfUsers { get; set; }
         public virtual ICollection<QuestionOfTest> QuestionOfTests { get; set; }
+
+        internal string? FirstOrDefault()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

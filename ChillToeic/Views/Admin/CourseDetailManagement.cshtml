@@ -3,99 +3,50 @@
     ViewBag.Title = "";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+@model ChillToeic.Models.Entity.Course
+    
 <div class="single">
-    <h2 style="color: black;">Infomation of Tên</h2>
+    <h2 style="color: black;">Infomation of @Model.Name</h2>
     <table class="table">
         <tr>
             <td><strong>ID:</strong></td>
-            <td>Đây là ID</td>
+            <td>@Model.Id</td>
         </tr>
         <tr>
             <td><strong>Name:</strong></td>
-            <td>Đây là full name</td>
+            <td>@Model.Name</td>
         </tr>
         <tr>
             <td><strong>Price:</strong></td>
-            <td>Đây là ngày sinh</td>
+            <td>@Model.Price</td>
         </tr>
         <tr>
             <td><strong>Level:</strong></td>
-            <td>Đây là email</td>
+            <td>@Model.level</td>
         </tr>
         <tr>
             <td><strong>Quantity Of Lecture:</strong></td>
-            <td>Đây là điểm số</td>
+            <td>@Model.QuantityOfLecture</td>
         </tr>
         <tr>
             <td><strong>Quantity Of Register:</strong></td>
-            <td>Đây là điểm số</td>
+            <td>@Model.QuantityOfRegister</td>
         </tr><
-            tr>
             <td><strong>Status:</strong></td>
-            <td>Đây là điểm số</td>
+            <td>@Model.IsApproved</td>
         </tr>
         <tr>
             <td><strong>Created At:</strong></td>
-            <td>Đây là ngày tạo</td>
+            <td>@Model.CreatedAt</td>
         </tr>
         <tr>
             <td><strong>Education Center:</strong></td>
-            <td>Đây là ngày tạo</td>
+            <td>@Model.EducationCenterId</td>
             <td><button class="btn1" ">Hủy</button> </td>
         </tr>
     </table>
 </div>
-<!--neu course chua duoc duyet-->
-<div class="two-but">
-    <div class="Approved">
-        <button class="btn1" id="Approved">Approved</button>
-    </div>
-    <div class="Approved">
-        <button class="btn1" id="NotApproved">Not approved</button>
-    </div>
-</div>
-<!-- Popup xác nhận Approved -->
-<div id="approvedModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Bạn có chắc chắn muốn Approved?</p>
-        <div class="button-container">
-            <button class="btn1">Đồng ý</button>
-            <button class="btn1">Hủy</button>
-        </div>
-    </div>
-</div>
-
-<!-- Popup xác nhận Not Approved -->
-<div id="notApprovedModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Bạn có chắc chắn muốn Not Approved?</p>
-        <div class="button-container">
-            <button class="btn1">Đồng ý</button>
-            <button class="btn1" ">Hủy</button>
-        </div>
-    </div>
-</div>
-<!------------------------------>
-
-<!--Neu course da duoc duyet-->
-<div class="ban">
-    <button class="btn1" id="ban">BAN</button>
-</div>
-<div id="confirmBanModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Bạn có chắc chắn muốn ban?</p>
-        <div class="button-container">
-            <button class="btn1">Đồng ý</button>
-            <button class="btn1" ">Hủy</button>
-        </div>
-    </div>
-</div
-<!------------------------------>
-
-
+                    
 <style>
         #ban {
         font-size: 40px;
@@ -179,60 +130,118 @@
         }
 
 </style>
+
 <script>
-   // Lấy các phần tử modal
-var approvedModal = document.getElementById("approvedModal");
-var notApprovedModal = document.getElementById("notApprovedModal");
-var confirmBanModal = document.getElementById("confirmBanModal");
+    // Lấy các phần tử modal
+    var approvedModal = document.getElementById("approvedModal");
+    var notApprovedModal = document.getElementById("notApprovedModal");
+    var confirmBanModal = document.getElementById("confirmBanModal");
 
-// Lấy nút mở modal
-var approvedButton = document.getElementById("Approved");
-var notApprovedButton = document.getElementById("NotApproved");
-var banButton = document.getElementById("ban");
+    // Lấy nút mở modal
+    var approvedButton = document.getElementById("Approved");
+    var notApprovedButton = document.getElementById("NotApproved");
+    var banButton = document.getElementById("ban");
 
-// Lấy nút đóng modal
-var closeButtons = document.querySelectorAll(".modal .close");
+    // Lấy nút đóng modal
+    var closeButtons = document.querySelectorAll(".modal .close");
 
-// Mở popup xác nhận Approved khi nhấn vào nút "Approved"
-approvedButton.onclick = function() {
-    approvedModal.style.display = "block";
-}
-
-// Mở popup xác nhận Not Approved khi nhấn vào nút "Not Approved"
-notApprovedButton.onclick = function() {
-    notApprovedModal.style.display = "block";
-}
-
-// Mở popup xác nhận Ban khi nhấn vào nút "Ban"
-banButton.onclick = function() {
-    confirmBanModal.style.display = "block";
-}
-
-// Đóng modal khi nhấn vào nút đóng hoặc nút Hủy
-closeButtons.forEach(function(button) {
-    button.onclick = function() {
-        var modal = this.closest('.modal');
-        modal.style.display = "none";
+    // Mở popup xác nhận Approved khi nhấn vào nút "Approved"
+    approvedButton.onclick = function () {
+        approvedModal.style.display = "block";
     }
-});
 
-// Đóng modal khi nhấn vào bất kỳ nơi nào bên ngoài modal
-window.onclick = function(event) {
-    if (event.target.classList.contains('modal')) {
-        event.target.style.display = "none";
+    // Mở popup xác nhận Not Approved khi nhấn vào nút "Not Approved"
+    notApprovedButton.onclick = function () {
+        notApprovedModal.style.display = "block";
     }
-}
 
-// Xử lý khi người dùng nhấn Yes để ban
-document.getElementById("confirmBanModal").querySelector("button#yes").onclick = function() {
-    // Thực hiện hành động ban ở đây
-    alert("Đã ban!");
-    confirmBanModal.style.display = "none"; // Đóng modal sau khi xác nhận
-}
+    // Mở popup xác nhận Ban khi nhấn vào nút "Ban"
+    banButton.onclick = function () {
+        confirmBanModal.style.display = "block";
+    }
 
-// Xử lý khi người dùng nhấn No để hủy bỏ ban
-document.getElementById("confirmBanModal").querySelector("button#no").onclick = function() {
-    confirmBanModal.style.display = "none"; // Đóng modal
-}
+    // Đóng modal khi nhấn vào nút đóng hoặc nút Hủy
+    closeButtons.forEach(function (button) {
+        button.onclick = function () {
+            var modal = this.closest('.modal');
+            modal.style.display = "none";
+        }
+    });
+
+    // Đóng modal khi nhấn vào bất kỳ nơi nào bên ngoài modal
+    window.onclick = function (event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = "none";
+        }
+    }
+
+    // Xử lý khi người dùng nhấn Yes để ban
+    document.getElementById("confirmBanModal").querySelector("button#yes").onclick = function () {
+        // Thực hiện hành động ban ở đây
+        alert("Đã ban!");
+        confirmBanModal.style.display = "none"; // Đóng modal sau khi xác nhận
+    }
+
+    // Xử lý khi người dùng nhấn No để hủy bỏ ban
+    document.getElementById("confirmBanModal").querySelector("button#no").onclick = function () {
+        confirmBanModal.style.display = "none"; // Đóng modal
+    }
 
 </script>
+
+
+
+                    @if (Model.IsApproved == true)
+                    {
+    <!-- Nếu course đã được duyệt -->
+    <div class="ban">
+        <button class="btn1" id="ban">BAN</button>
+    </div>
+
+    <div id="confirmBanModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Bạn có chắc chắn muốn ban?</p>
+            <div class="button-container">
+                <button class="btn1" id="yes">Đồng ý</button>
+                <button class="btn1" id="no">Hủy</button>
+            </div>
+        </div>
+    </div>
+                    }
+
+                    @if (Model.IsApproved == false)
+                    {
+    <!-- nếu center chưa được duyệt -->
+    <div class="two-but">
+        <div class="Approved">
+            <button class="btn1" id="Approved">Approved</button>
+        </div>
+        <div class="Approved">
+            <button class="btn1" id="NotApproved">Not approved</button>
+        </div>
+    </div>
+    <!-- Popup xác nhận Approved -->
+    <div id="approvedModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Bạn có chắc chắn muốn Approved?</p>
+            <div class="button-container">
+                <button class="btn1">Đồng ý</button>
+                <button class="btn1">Hủy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup xác nhận Not Approved -->
+    <div id="notApprovedModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Bạn có chắc chắn muốn Not Approved?</p>
+            <div class="button-container">
+                <button class="btn1">Đồng ý</button>
+                <button class="btn1">Hủy</button>
+            </div>
+        </div>
+    </div>
+                    }

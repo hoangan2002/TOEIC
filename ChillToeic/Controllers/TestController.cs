@@ -180,7 +180,7 @@ namespace ChillToeic.Controllers
 
                             Test test = new Test();
                           
-                                test = new Test { Name = TestName, Description = Description, TestTypeId = 1, NumberOfQuestion = 200, NumberOfPart = 7, NumberOfUserTest = 0, Duration = 180, Score = 990, Status = false, EducationCenterId = GetUserId() };
+                                test = new Test { Name = TestName, Description = Description, TestTypeId = 1, NumberOfQuestion = 200, NumberOfPart = 7, NumberOfUserTest = 0, Duration = 180, Score = 990, Status = true, EducationCenterId = GetUserId() };
                                 _testService.AddTest(test);
                             
                             int tested = test.Id;

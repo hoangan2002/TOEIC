@@ -3,32 +3,34 @@
     ViewBag.Title = "";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+@model ChillToeic.ViewModels.UserDetailViewModel;
+
 <div class="single">
     <h2 style="color: black;">Infomation of Tên</h2>
     <table class="table">
         <tr>
             <td><strong>ID:</strong></td>
-            <td>Đây là ID</td>
+            <td>@Model.Users[0].Id</td>
         </tr>
         <tr>
             <td><strong>Full name:</strong></td>
-            <td>Đây là full name</td>
+            <td>@Model.Users[0].FullName</td>
         </tr>
         <tr>
             <td><strong>Day of birth:</strong></td>
-            <td>Đây là ngày sinh</td>
+            <td>@Model.Users[0].DateOfBirth</td>
         </tr>
         <tr>
             <td><strong>Email:</strong></td>
-            <td>Đây là email</td>
+            <td>@Model.Users[0].Email</td>
         </tr>
         <tr>
             <td><strong>Point:</strong></td>
-            <td>Đây là điểm số</td>
+            <td>@Model.Users[0].Point</td>
         </tr>
         <tr>
             <td><strong>Created At:</strong></td>
-            <td>Đây là ngày tạo</td>
+            <td>@Model.Users[0].CreatedAt</td>
         </tr>
     </table>
 </div>
@@ -36,20 +38,28 @@
 <div class="single">
     <h2 style="color: black;">List course</h2>
     <table class="table">
-        <tr>
-            <td><strong>Tên course</strong></td>
-            <td> <button class="btn1" ">Detail</button></td>
-        </tr>
+        @foreach (var course in Model.Orders)
+        {
+            <tr>
+                <td><strong>@Html.DisplayFor(modelItem => course.ProductName)</strong></td>
+                <td><a class="btn1" href="/Admin/CourseDetailManagement?id=@Html.DisplayFor(modelItem => course.CourseId)">Detail</a></td>
+            </tr>
+        }
+        
+        
     </table>
 </div>
 
 <div class="single">
     <h2 style="color: black;">List certificates</h2>
     <table class="table">
-        <tr>
-            <td><strong>Description</strong></td>
-            <td> <button class="btn1" ">Detail</button></td>
-        </tr>
+        @foreach (var certificates in Model.Certificates)
+        {
+            <tr>
+                <td><strong>@Html.DisplayFor(modelItem => certificates.Description)</strong></td>
+                @* <td><a class="btn1" href="/Admin/CourseDetailManagement?id=@Html.DisplayFor(modelItem => certificates.CourseId)">Detail</a></td> *@
+            </tr>
+        }
     </table>
 </div>
 <div class="ban">

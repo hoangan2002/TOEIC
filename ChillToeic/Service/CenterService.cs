@@ -25,6 +25,7 @@ namespace ChillToeic.Service
         {
             return _CenterRepository.Find(m => m.Id == id);
         }
+		
 		public EducationCenter FindEducationCenterByUserName(string username)
 		{
 

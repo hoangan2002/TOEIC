@@ -85,7 +85,7 @@
 	<!-- Header Area -->
 	<header class="header">
 		<!-- Topbar -->
-		<div class="topbar">
+@* 		<div class="topbar">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-6 col-md-5 col-12">
@@ -109,7 +109,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> *@
 		<!-- End Topbar -->
 		<!-- Header Inner -->
 		<div class="header-inner">
@@ -152,23 +152,37 @@
 							<div class="main-menu">
 								<nav class="navigation">
 									<ul class="nav menu">
-										<li>
-											<a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                                        </li>
+										@if (User.Identity.IsAuthenticated)
+										{
+											if (role == "User")
+											{
+												<li>
+													<a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+												</li>
+
+												<li><a asp-area="" asp-controller="MyCourse" asp-action="MyCourse" asp-route-id="@id">My Course</a></li>
+
+												<li><a asp-area="" asp-controller="Course" asp-action="Course">Course</a></li>
+												<li>
+													<a asp-area="" asp-controller="Center" asp-action="Center">Center</a>
+
+												</li>
+												<li>
+													<a asp-area="" asp-controller="TestList" asp-action="TestList">Test</a>
+
+												</li>
+												<li><a asp-area="" asp-controller="PaymentHistory" asp-action="PaymentHistory">Payment</a></li>
+												<li><a asp-area="" asp-controller="User" asp-action="ScoreHistory">My Score</a></li>
+											}
+											if (role == "EducationCenter")
+											{
+												<li>
+													<a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+												</li>
+											}
+
+										}
 										
-										<li><a asp-area="" asp-controller="MyCourse" asp-action="MyCourse" asp-route-id="@id">My Course</a></li>
-
-										<li><a asp-area="" asp-controller="Course" asp-action="Course">Course</a></li>
-										<li>
-											<a asp-area="" asp-controller="Center" asp-action="Center">Center</a>
-
-										</li>
-										<li>
-											<a asp-area="" asp-controller="TestList" asp-action="TestList">Test</a>
-
-										</li>
-										<li><a asp-area="" asp-controller="PaymentHistory" asp-action="PaymentHistory">Payment</a></li>
-										<li><a asp-area="" asp-controller="User" asp-action="ScoreHistory">Your Score</a></li>
 									</ul>
 								</nav>
 							</div>
@@ -191,7 +205,7 @@
 										<a id="usernames" class="btn">@userName</a>
 										<div id="optionss" style="display: none;">
 											<a href="" id="logout">Logout</a>
-											<a href="/CenterDetail/CenterDetail">Profile</a>
+											<a href="/CenterProfile/CenterProfile">Profile</a>
 										</div>
 									}
 
@@ -204,7 +218,7 @@
 						</div>
 						<div class="col-lg-1 col-12">
 							<div class="get-quote">
-								<a asp-area="" asp-controller="Center" asp-action="CenterProfileEdit" id="avatar"><img src="~/img/author1.jpg" alt="#"></a>
+								<a asp-area="" asp-controller="" asp-action="" id="avatar"><img src="~/img/author1.jpg" alt="#"></a>
 							</div>
 						</div>
 					</div>

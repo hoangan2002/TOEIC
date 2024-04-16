@@ -10,11 +10,12 @@ namespace ChillToeic.Controllers
     public class CreateNewCourseController : Controller
     {
         private readonly UserService _userService;
+        private readonly EducationService _educationService;
 
-
-        public CreateNewCourseController(UserService userService)
+        public CreateNewCourseController(UserService userService, EducationService educationService)
         {
             _userService = userService;
+            _educationService = educationService;
         }
         public IActionResult CreateNewCourse()
         {
@@ -35,6 +36,17 @@ namespace ChillToeic.Controllers
 
         //    throw new InvalidOperationException("User is not authenticated properly.");
         //}
+        private int GetUserId()
+        {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var nameClaim = claimsIdentity?.FindFirst(ClaimTypes.Name);
+            string userName = nameClaim.Value;
+            if (_userService.FindUserByUserName(userName) != null)
+            {
+                return _userService.FindUserByUserName(userName).Id;
+            }
+            return _educationService.FindEducationCenterByUserName(userName).Id;
+        }
         [HttpPost]
         public IActionResult CreateNewCourse(CreateNewCourseInfo newCourseInfo, IEnumerable<LectureInfo> LectureDetailInfos)
         {
@@ -49,7 +61,7 @@ namespace ChillToeic.Controllers
                     level = newCourseInfo.level,
                     QuantityOfLecture = newCourseInfo.QuantityOfLecture,
                     CreatedAt = newCourseInfo.CreatedAt,
-                    EducationCenterId = 1,
+                    EducationCenterId = GetUserId(),
                 };
 
                 dbContext.Add(course);

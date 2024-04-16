@@ -44,7 +44,7 @@
 									<!--Phần audio nên cần sửa lại  ~/audio/abc.mp3-->
 									<div class="music-player">
 										@{
-											string path = $"~/img/Test{ViewBag.idTest}/{Model.First().Detail}";
+											string path = $"/img/Test{ViewBag.idTest}/{Model.First().Detail}";
 										}
 										
 										 <audio id="audio-player" src="@path"></audio> 
@@ -55,6 +55,7 @@
 											<input type="range" id="volume-slider" min="0" max="1" step="0.1" value="1">
 										</div>
 									</div>
+									
 									<!--Phần audio nên cần sửa lại-->
 									@foreach (var i in Model)
 									{
@@ -144,7 +145,7 @@
 						</div>
 						<button type="button"class="btn" id="submitButton" onclick="submitFormss()" >Save Changes</button>
 						<button type="button"class="btn-click" id="submitButton-click" onclick="saveChanges()">Save Changes</button>
-						<p>Phần này anh thích bỏ gì thì bỏ</p>
+						
 						<div class="part">
 							@foreach (var question in Model)
 							{

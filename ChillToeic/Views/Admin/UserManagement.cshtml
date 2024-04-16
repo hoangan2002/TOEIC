@@ -3,6 +3,7 @@
     ViewBag.Title = "";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+@model IEnumerable<ChillToeic.Models.Entity.User>
 
 <div class="card-body">
     <p class="card-title mb-0">List of all learners</p>
@@ -21,17 +22,18 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach(var user in Model){
                 <tr>
-                    <td>1</td>
-                    <td>John Doe</td>
-                    <td>1990-01-01</td>
-                    <td>john.doe@example.com</td>
-                    <td>85</td>
-                    <td>2024-04-14</td>
-                    <td>1</td>
-                    <td><a class="btn1" href="/Admin/UserDetailManagement">View</a></td>
+                        <td>@Html.DisplayFor(modelItem => user.Id)</td>
+                        <td>@Html.DisplayFor(modelItem => user.FullName)</td>
+                        <td>@Html.DisplayFor(modelItem => user.DateOfBirth)</td>
+                        <td>@Html.DisplayFor(modelItem => user.Email)</td>
+                        <td>@Html.DisplayFor(modelItem => user.Point)</td>
+                        <td>@Html.DisplayFor(modelItem => user.CreatedAt)</td>
+                        <td>@Html.DisplayFor(modelItem => user.RoleId)</td>
+                        <td><a class="btn1" href="/Admin/UserDetailManagement?id=@Html.DisplayFor(modelItem => user.Id)">View</a></td>
                 </tr>
-                <!-- Thêm các hàng khác tương tự tại đây -->
+                }<!-- Thêm các hàng khác tương tự tại đây -->
             </tbody>
 
         </table>

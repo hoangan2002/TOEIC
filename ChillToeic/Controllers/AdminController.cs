@@ -1,22 +1,26 @@
 ﻿using ChillToeic.Models;
 using ChillToeic.Models.Entity;
 using ChillToeic.Service;
+using ChillToeic.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChillToeic.Controllers
 {
-	public class AdminController : Controller
-	{
+    public class AdminController : Controller
+    {
         private readonly CenterService _dbCenter;
         private readonly CourseService _dbCourse;
         private readonly TestService _dbTest;
         private readonly UserService _dbUser;
         private readonly TestOfUserService _dbTestOfUser;
         private readonly LearningProgressService _dbLearningProgress;
+        private readonly OrdersService _dbOrders;
+        private readonly CertificateService _dbCertificate;
 
-        public AdminController(CenterService centerService, CourseService courseService, 
-                                TestService testService, UserService userService, 
-                                TestOfUserService testOfUserService, LearningProgressService learningProgressService)
+        public AdminController(CenterService centerService, CourseService courseService,
+                                TestService testService, UserService userService,
+                                TestOfUserService testOfUserService, LearningProgressService learningProgressService,
+                                OrdersService ordersService, CertificateService certificateService)
         {
             _dbCenter = centerService;
             _dbCourse = courseService;
@@ -24,16 +28,19 @@ namespace ChillToeic.Controllers
             _dbUser = userService;
             _dbTestOfUser = testOfUserService;
             _dbLearningProgress = learningProgressService;
+            _dbOrders = ordersService;
+            _dbCertificate = certificateService;
 
         }
         public IActionResult Dashboard()
-		{
-			return View();
-		}
+        {
+            return View();
+        }
 
         public IActionResult UserManagement()
         {
-            return View();
+            var user = _dbUser.GetAllUsers();
+            return View(user);
         }
 
         public IActionResult CenterManagement()
@@ -44,17 +51,29 @@ namespace ChillToeic.Controllers
 
         public IActionResult CourseManagement()
         {
-            return View();
+            var course = _dbCourse.GetAllCourses();
+            return View(course);
         }
 
         public IActionResult TestManagement()
         {
-            return View();
+            var test = _dbTest.GetAllTests();
+            return View(test);
         }
 
-        public IActionResult UserDetailManagement()
+        public IActionResult UserDetailManagement(int id)
         {
-            return View();
+            var user = _dbUser.GetUserByUserId(id);
+            var course = _dbOrders.GetOrderByUserId(id);
+            var certificate = _dbCertificate.GetCertificateByUserId(id);
+
+            var model = new UserDetailViewModel
+            {
+                Users = user.ToList(),
+                Orders = course.ToList(),
+                Certificates = certificate.ToList()
+            };
+            return View(model);
         }
 
         public IActionResult CenterDetailManagement(int id)
@@ -73,19 +92,20 @@ namespace ChillToeic.Controllers
             return View(model);
         }
 
-        public IActionResult CourseDetailManagement()
+        public IActionResult CourseDetailManagement(int id)
         {
-            return View();
+            var course = _dbCourse.GetCoursesByCourseId(id).FirstOrDefault();
+            return View(course);
         }
 
         public IActionResult TestDetailManagement(int id)
         {
-            var testDetail = _dbTest.GetTestById2(id).FirstOrDefault();
+            var testDetail = _dbTest.GetTestById(id);
 
-            if (testDetail == null)
-            {
-                return NotFound();
-            }
+            //if (testDetail == null)
+            //{
+            //    return NotFound();
+            //}
 
             return View(testDetail);
         }

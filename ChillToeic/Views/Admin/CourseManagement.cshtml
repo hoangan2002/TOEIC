@@ -3,6 +3,7 @@
     ViewBag.Title = "";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+@model IEnumerable<ChillToeic.Models.Entity.Course>
 
 <div class="card-body">
     <p class="card-title mb-0">List of all learners</p>
@@ -17,24 +18,24 @@
                     <th>QuantityOfLecture</th>
                     <th>QuantityOfRegister</th>
                     <th>CreatedAt</th>
-                    <th>Education center</th>
                     <th>Status</th>
                     <th>View</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach(var course in Model){
                 <tr>
-                    <td>1</td>
-                    <td>John Doe</td>
-                    <td>1990-01-01</td>
-                    <td>john.doe@example.com</td>
-                    <td>85</td>
-                    <td>2024-04-14</td>
-                    <td>1</td>
-                    <td>ABC</td>
-                    <td>True</td>
-                    <td><a class="btn1" href="/Admin/CourseDetailManagement">View</a></td>
-                </tr>
+                        <td>@Html.DisplayFor(modelItem => course.Id)</td>
+                        <td>@Html.DisplayFor(modelItem => course.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => course.Price)</td>
+                        <td>@Html.DisplayFor(modelItem => course.level)</td>
+                        <td>@Html.DisplayFor(modelItem => course.QuantityOfLecture)</td>
+                        <td>@Html.DisplayFor(modelItem => course.QuantityOfRegister)</td>
+                        <td>@Html.DisplayFor(modelItem => course.CreatedAt)</td>
+                        <td>@Html.DisplayFor(modelItem => course.IsApproved)</td>
+                        <td><a class="btn1" href="/Admin/CourseDetailManagement?id=@Html.DisplayFor(modelItem => course.Id)">View</a></td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>

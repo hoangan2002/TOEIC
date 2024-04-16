@@ -91,5 +91,13 @@ namespace ChillToeic.Service
         {
             return _testRepository.Find(m => m.EducationCenterId == id);
         }
-    }
+		public IEnumerable<Test> GetTestByCenterIdApprove(int id)
+		{
+			return _testRepository.Find(m => m.EducationCenterId == id&& m.Status );
+		}
+		public IEnumerable<Test> GetTestByCenterIdNotApprove(int id)
+		{
+			return _testRepository.Find(m => m.EducationCenterId == id && m.Status == false);
+		}
+	}
 }

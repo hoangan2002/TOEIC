@@ -1,7 +1,9 @@
 ﻿using ChillToeic.Models.Entity;
 using ChillToeic.Repository;
+using ChillToeic.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace ChillToeic.Controllers
 {
@@ -9,10 +11,13 @@ namespace ChillToeic.Controllers
 	{
 		
 		private readonly ApplicationDbContext _context;
-		public LectureDetailController(ApplicationDbContext _context)
+		private readonly UserService _userService;
+		public LectureDetailController(ApplicationDbContext _context, UserService userService)
 		{
 			this._context = _context;
-		}
+            _userService= userService;
+
+        }
 
 		public IActionResult Index(int id)
 		{
@@ -86,15 +91,29 @@ namespace ChillToeic.Controllers
 			// Trả về view "documentviewer" với lectureDetail
 			return View("documentviewer", lectureDetail);
 		}
+        private int GetUserId()
+        {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var nameClaim = claimsIdentity?.FindFirst(ClaimTypes.Name);
+            if (nameClaim != null)
+            {
+                var user = _userService.FindUserByUserName(nameClaim.Value);
+                if (user != null)
+                {
+                    return user.Id;
+                }
+            }
 
-		// Action để đánh dấu bài học đã hoàn thành
-		[HttpPost]
+            throw new InvalidOperationException("User is not authenticated properly.");
+        }
+        // Action để đánh dấu bài học đã hoàn thành
+        [HttpPost]
 		public IActionResult MarkLessonComplete(int lectureDetailId)
 		{
 			try
 			{
 				// Lấy ID của người dùng hiện tại từ xác thực (ví dụ từ ClaimsIdentity hoặc cách khác mà bạn sử dụng)
-				int userId = 1002;
+				int userId = GetUserId();
 
 				// Tìm lectureDetail dựa trên lectureDetailId
 				var lectureDetail = _context.LectureDetails
@@ -119,18 +138,16 @@ namespace ChillToeic.Controllers
 
 				}
 
-				// Tạo đối tượng LearningProgress mới
-				var learningProgress = new LearningProgress
-				{
-					UserId = userId,
-					CourseId = lectureDetail.Lecture.CourseId,
-					LectureId = lectureDetail.LectureId,
-					LectureDetailId = lectureDetailId,
-					IsCompleted = true
-				};
-
-				// Thêm LearningProgress vào cơ sở dữ liệu
-				_context.LearningProgresses.Add(learningProgress);
+                // Tạo đối tượng LearningProgress mới
+                var learningProgress = _context.LearningProgresses
+    .Where(lp => lp.UserId == userId &&
+                 lp.CourseId == lectureDetail.Lecture.CourseId &&
+                 lp.LectureId == lectureDetail.LectureId &&
+                 lp.LectureDetailId == lectureDetailId)
+    .FirstOrDefault();
+				learningProgress.IsCompleted=true;
+                // Thêm LearningProgress vào cơ sở dữ liệu
+                _context.LearningProgresses.Update(learningProgress);
 				_context.SaveChanges();
 
 

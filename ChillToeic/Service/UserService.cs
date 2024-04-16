@@ -17,7 +17,10 @@ namespace ChillToeic.Service
         {
             return  _userRepository.GetAll();
         }
-
+        public IEnumerable<User> GetUserByUserId(int id)
+        {
+            return _userRepository.Find(m => m.Id == id);
+        }
         public User GetUserById(int id)
         {
             return _userRepository.Find(m =>m.Id == id).FirstOrDefault();

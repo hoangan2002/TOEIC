@@ -11,11 +11,11 @@
 		<div class="bread-inner">
 			<div class="row">
 				<div class="col-12">
-					<h2>Contact Us</h2>
+					<h2>My profile</h2>
 					<ul class="bread-list">
 						<li><a asp-area="" asp-controller="Home" asp-action="HomePage">Home</a></li>
 						<li><i class="icofont-simple-right"></i></li>
-						<li class="active">My Course</li>
+						<li class="active">My Profile</li>
 					</ul>
 				</div>
 			</div>
@@ -30,20 +30,17 @@
 			<div class="col-lg-4 col-12">
 				<div class="contact-us-form">
 					<h2>Profile</h2>
-					<p>These are courses that you have not completed.</p>
 					<div class="infoProfile">
-						<h4>Name: <span>@Model.FullName</span></h4>
-						<h4>Email: <span>@Model.Email</span></h4>
-						<h4>DayOfBirth: <span>@Model.DateOfBirth?.ToString("dd/MM/yyyy")</span></h4>
-						<h4>Point: <span>@Model.Point</span></h4>
+						<h5>Name: <span>@Model.FullName</span></h5>
+						<h5>Email: <span>@Model.Email</span></h5>
+						<h5>DayOfBirth: <span>@Model.DateOfBirth?.ToString("dd/MM/yyyy")</span></h5>
+						<h5>Point: <span>@Model.Point</span></h5>
 					</div>
 				</div>
 			</div>
 			<div class="col-lg-8 col-12">
 				<div class="contact-us-form">
-					point
 					<h2>Edit Profile</h2>
-					<p>These are courses that you have completed.</p>
 					@using (Html.BeginForm("UserProfile", "UserProfile", FormMethod.Post))
 					{
 						@Html.AntiForgeryToken()
@@ -51,19 +48,18 @@
 						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 						<div class="form-group">
 							@Html.LabelFor(m => m.FullName)
-							@Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+							@Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "Enter your full name" })
 							@Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger" })
 						</div>
 						<div class="form-group">
 							@Html.LabelFor(m => m.Email)
-							@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+							@Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Enter your email" })
 							@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
 						</div>
 						<div class="form-group">
 							<label asp-for="DateOfBirth"></label>
 							<input asp-for="DateOfBirth" class="form-control" />
 						</div>
-
 
 						<button type="submit" class="btn btn-primary">Update</button>
 					}
@@ -76,55 +72,13 @@
 			</div>
 		</div>
 	</div>
-	</div>
-	</div>
-	</div>
-
-
-
-	<div class="contact-info">
-		<div class="row">
-			<!-- single-info -->
-			<div class="col-lg-4 col-12 ">
-				<div class="single-info">
-					<i class="icofont icofont-ui-call"></i>
-					<div class="content">
-						<h3>+(000) 1234 56789</h3>
-						<p>info@company.com</p>
-					</div>
-				</div>
-			</div>
-			<!--/End single-info -->
-			<!-- single-info -->
-			<div class="col-lg-4 col-12 ">
-				<div class="single-info">
-					<i class="icofont-google-map"></i>
-					<div class="content">
-						<h3>2 Fir e Brigade Road</h3>
-						<p>Chittagonj, Lakshmipur</p>
-					</div>
-				</div>
-			</div>
-			<!--/End single-info -->
-			<!-- single-info -->
-			<div class="col-lg-4 col-12 ">
-				<div class="single-info">
-					<i class="icofont icofont-wall-clock"></i>
-					<div class="content">
-						<h3>Mon - Sat: 8am - 5pm</h3>
-						<p>Sunday Closed</p>
-					</div>
-				</div>
-			</div>
-			<!--/End single-info -->
-		</div>
-	</div>
-	</div>
 </section>
+
 <!--/ End Contact Us -->
 <style>
 	.form-group:hover {
-		background-color: #f8f9fa; /* Hiệu ứng màu nền khi hover */
+		background-color: #f8f9fa; /* Màu nền khi hover */
+		border: 1px solid #ced4da; /* Hiển thị khung viền khi hover */
 	}
 
 	.form-group:active {
@@ -135,26 +89,18 @@
 		box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); /* Tăng độ rõ cho viền khi input được focus */
 	}
 
-	.infoProfile h4 {
+	.infoProfile h5 {
 		margin-bottom: 20px; /* Thêm khoảng cách giữa các thẻ h4 */
 	}
 
-		.infoProfile h4 .a {
-			color: #777; /* Màu nhạt hơn cho nội dung */
-			font-weight: normal; /* Loại bỏ in đậm */
-		}
+	.infoProfile h4 span {
+		color: #777; /* Màu nhạt hơn cho nội dung */
+		font-weight: normal; /* Loại bỏ in đậm */
+	}
 
 	.containerUserProfile {
-		margin-left: 25px;
-		margin-right: 25px;
-	}
-
-	#top {
-		margin-bottom: 20px;
-	}
-
-	#course {
-		background-color: ##1A76D1;
+		margin-left: 40px;
+		margin-right: 40px;
 	}
 
 	.contact-us .single-info .content h2 {
@@ -181,6 +127,24 @@
 			top: 25px;
 			color: #000;
 			background-color: #fff;
+			border: 1px solid #ccc; /* Thêm khung viền cho nút */
+			padding: 5px 10px; /* Thêm padding cho nút */
+			border-radius: 5px; /* Bo tròn các góc của nút */
+		}
+
+	.contact-us-form {
+		border: 1px solid #ddd; /* Thêm khung viền cho phần form */
+		padding: 20px;
+		border-radius: 5px; /* Bo tròn các góc của form */
+		margin-bottom: 20px; /* Thêm khoảng cách dưới cùng của form */
+	}
+
+		.contact-us-form h2 {
+			margin-bottom: 20px; /* Thêm khoảng cách dưới cùng của tiêu đề */
+		}
+
+		.contact-us-form p {
+			margin-bottom: 20px; /* Thêm khoảng cách dưới cùng của đoạn văn */
 		}
 
 </style>

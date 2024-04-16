@@ -22,13 +22,23 @@ namespace ChillToeic.Service
 		{
 			return _CourseRepository.GetById(id);
 		}
-
+		public IEnumerable<Course> GetCourseByCenterIdApprove(int id)
+		{
+			return _CourseRepository.Find(m=>m.EducationCenterId == id && m.IsApproved );
+		}
+		public IEnumerable<Course> GetCourseByCenterIdNotApprove(int id)
+		{
+			return _CourseRepository.Find(m => m.EducationCenterId == id && m.IsApproved ==false);
+		}
 		public void AddCourse(Course Course)
 		{
 			_CourseRepository.Add(Course);
 		}
-
-		public void UpdateCourse(Course Course)
+        public IEnumerable<Course> GetCoursesByCourseId(int id)
+        {
+            return _CourseRepository.Find(m => m.Id == id);
+        }
+        public void UpdateCourse(Course Course)
 		{
 			_CourseRepository.Update(Course);
 		}

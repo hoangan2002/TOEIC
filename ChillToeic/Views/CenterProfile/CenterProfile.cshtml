@@ -3,7 +3,7 @@
 	ViewBag.Title = "Home Page";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model ChillToeic.Models.CenterDetailViewModel;
+@model ChillToeic.Models.DTO.CenterDetail;
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 <!-- Breadcrumbs -->
@@ -30,11 +30,47 @@
 		<div class="inner" id="top">
 			<div class="row">
 				<div class="col-lg-12">
+					<div class="contact-us-form">
+						<h3 class="titleList">Center Information</h3>
+						<div class="infoProfile">
+							<table class="table">
+								<tr>
+									<td><strong>Name:</strong></td>
+									<td>@Model.EducationCenter.Name</td>
+								</tr>
+								<tr>
+									<td><strong>Email:</strong></td>
+									<td>@Model.EducationCenter.Email</td>
+								</tr>
+								<tr>
+									<td><strong>CreatedA:</strong></td>
+									<td>@Model.EducationCenter.CreatedAt.ToString("dd/MM/yyyy")</td>
+								</tr>
+								<tr>
+									<td><strong>Address:</strong></td>
+									<td>@Model.EducationCenter.Address</td>
+								</tr>
+								<tr>
+									<td><strong>Description:</strong></td>
+									<td>@Model.EducationCenter.Description</td>
+								</tr>
+							</table>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="inner" id="top">
+			<div class="row">
+				<div class="col-lg-12">
 
 					<div class="contact-us-form">
 						<div class="row">
 							<div class="col-lg-8 col-12">
-								<a asp-area="" asp-controller="Center" asp-action="CenterAddCourse" class="btn btn-primary btn-block">Add Course</a>
+								<a asp-area="" asp-controller="CreateNewCourse" asp-action="CreateNewCourse" class="btn btn-primary btn-block">Add Course</a>
+								<a asp-area="" asp-controller="Test" asp-action="UploadFile" class="btn btn-primary btn-block">Add Test</a>
+							
 							</div>
 							<div class="col-lg-4 col-12">
 								<form class="form-inline">
@@ -59,10 +95,10 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="contact-us-form">
-						<h3 class="titleList">Course list</h3>
+						<h3 class="titleList">Course Approve</h3>
 						<div class="row">
 							
- 							@foreach (var course in Model.Courses)
+ 							@foreach (var course in Model.CoursesApprove)
 							{
 								<div class="col-lg-4 col-md-6 mb-4">
 									<a href="/CourseDetail/CourseDetail" id="a-card">
@@ -87,6 +123,38 @@
 							} 
 						</div>
 					</div>
+					@if(Model.CoursesNotApprove!=null){
+					<div class="contact-us-form">
+						
+						<h3 class="titleList">Course Pending Approval</h3>
+						<div class="row">
+
+							@foreach (var course in Model.CoursesNotApprove)
+							{
+								<div class="col-lg-4 col-md-6 mb-4">
+									<a href="/CourseDetail/CourseDetail" id="a-card">
+										<div class="rounded overflow-hidden mb-2">
+											<img class="img-fluid" src="~/img/author1.jpg" alt="">
+											<div class="card p-4">
+												<div class="d-flex justify-content-between mb-3">
+													<small class="m-0"><i class="fa fa-users text-primary mr-2"></i> @Html.DisplayFor(modelItem => course.QuantityOfRegister)</small>
+													<small class="m-0"><i class="far fa-clock text-primary mr-2"></i>@Html.DisplayFor(modelItem => course.CreatedAt)</small>
+												</div>
+												<a class="h5" href=""> @Html.DisplayFor(modelItem => course.Name)</a>
+												<div class="border-top mt-4 pt-4">
+													<div class="d-flex justify-content-between">
+														<h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
+														<h5 class="m-0">@Html.DisplayFor(modelItem => course.Price)</h5>
+													</div>
+												</div>
+											</div>
+										</div>
+									</a>
+								</div>
+							}
+						</div>
+					</div>
+					}
 					<!--/ End Course -->
 				</div>
 			</div>
@@ -96,9 +164,9 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="contact-us-form">
-						<h3 class="titleList">Test list</h3>
+						<h3 class="titleList">Test Approve</h3>
 						<div class="row">
-							@foreach (var test in Model.Tests)
+							@foreach (var test in Model.TestsApprove)
 							{
 								<div class="col-lg-4 col-md-6 mb-4" id="test">
 									<div class="rounded overflow-hidden mb-2">
@@ -114,7 +182,7 @@
 												<p>|</p>
 												<small class="m-0" id="small"><i class=""></i> @Html.DisplayFor(modelItem => test.NumberOfQuestion) question</small>
 											</div>
-											<a href="/CourseDetail/CourseDetail" class="btn" id="detail" sid="detail">Delail</a>
+											<a href="/Test/UpdateTest?testid=@test.Id" class="btn" id="detail" sid="detail">Update Test</a>
 										</div>
 									</div>
 								</div>
@@ -126,7 +194,40 @@
 			</div>
 		</div>
 
-		<div class="contact-info">
+		<div class="inner">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="contact-us-form">
+						<h3 class="titleList">Test Pending Approval</h3>
+						<div class="row">
+							@foreach (var test in Model.TestsNotApprove)
+							{
+								<div class="col-lg-4 col-md-6 mb-4" id="test">
+									<div class="rounded overflow-hidden mb-2">
+										<div class="card p-4">
+											<h3 class="h5" href="">@Html.DisplayFor(modelItem => test.Name)</h3>
+											<div class="d-flex justify-content-between mb-3">
+												<small class="m-0" id="small"><i class="far fa-clock"></i> @Html.DisplayFor(modelItem => test.Duration) minute</small>
+												<p>|</p>
+												<small class="m-0" id="small"><i class="far fa-user"></i> @Html.DisplayFor(modelItem => test.NumberOfUserTest)</small>
+											</div>
+											<div class="d-flex justify-content-between mb-3">
+												<small class="m-0" id="small"><i class=""></i> @Html.DisplayFor(modelItem => test.NumberOfPart) contest</small>
+												<p>|</p>
+												<small class="m-0" id="small"><i class=""></i> @Html.DisplayFor(modelItem => test.NumberOfQuestion) question</small>
+											</div>
+											<a href="/Test/UpdateTest?testid=@test.Id" class="btn" id="detail" sid="detail">Update Test</a>
+										</div>
+									</div>
+								</div>
+							}
+						</div>
+					</div>
+					<!--/ End Course -->
+				</div>
+			</div>
+		</div>
+		@* <div class="contact-info">
 			
 			<div class="row">
 				<!-- single-info -->
@@ -134,7 +235,7 @@
 					<div class="single-info">
 						<i class="icofont icofont-ui-call"></i>
 						<div class="content">
-								<h3>@Model.Centers[0].Name</h3>
+								<h3></h3>
 							<div class="input-group ml-auto">
 								<input type="text" class="form-control" id="phonelInput" value="+84 234 567 890">
 								<div class="input-group-append">
@@ -179,11 +280,34 @@
 				<!--/End single-info -->
 			</div>
 			
-		</div>
+		</div> *@
 	</div>
 </section>
 <!--/ End Contact Us -->
 <style>
+	.table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+		.table td {
+			padding: 8px;
+			border-bottom: 1px solid #ddd;
+		}
+
+			.table td:first-child {
+				font-weight: bold;
+				width: 120px; /* Điều chỉnh kích thước của cột đầu tiên */
+			}
+
+		.table tr:last-child td {
+			border-bottom: none;
+		}
+
+		.table tr:nth-child(even) {
+			background-color: #f2f2f2; /* Màu nền cho các hàng chẵn */
+		}
+
 	#detail {
 		color: #fff;
 	}

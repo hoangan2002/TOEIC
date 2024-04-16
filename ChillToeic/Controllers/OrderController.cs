@@ -14,6 +14,7 @@ using ChillToeic.Models;
 using Order = ChillToeic.Models.Entity.Order;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using DocumentFormat.OpenXml.Presentation;
 
 
 
@@ -26,15 +27,21 @@ namespace ChillToeic
         private readonly ApplicationDbContext _context;
         private readonly CourseService _courseService;
         private readonly UserService _userService;
+		private readonly LectureService _lectureService;
+        private readonly LearningProgressService _learningProgressService;
+		private readonly EducationService _educationService;
 
-
-        public OrderController(ApplicationDbContext context, IVnPayService vnPayService, CourseService courseService, UserService userService)
+		public OrderController(EducationService educationService,LearningProgressService learningProgressService,LectureService lectureService,ApplicationDbContext context, IVnPayService vnPayService, CourseService courseService, UserService userService)
         {
-            _context = context;
+			_learningProgressService = learningProgressService;
+			_lectureService = lectureService;
+			_context = context;
             _vnPayService = vnPayService;
             _courseService = courseService;
             _userService = userService;
-        }
+            _educationService = educationService;
+
+		}
 
 
 
@@ -106,10 +113,21 @@ namespace ChillToeic
 
 
 
+		private int GetUserId()
+		{
+			var claimsIdentity = User.Identity as ClaimsIdentity;
+			var nameClaim = claimsIdentity?.FindFirst(ClaimTypes.Name);
+			string userName = nameClaim.Value;
+			if (_userService.FindUserByUserName(userName) != null)
+			{
+				return _userService.FindUserByUserName(userName).Id;
+			}
+			return _educationService.FindEducationCenterByUserName(userName).Id;
+		}
 
-
-        public async Task<IActionResult> PaymentCallBack()
+		public async Task<IActionResult> PaymentCallBack()
         {
+            int userid = GetUserId();
             var response = _vnPayService.PaymentExecute(Request.Query);
             string input = response.OrderDescription;
             string[] parts = input.Split(':');
@@ -127,7 +145,10 @@ namespace ChillToeic
                                                        // Update other fields if necessary, e.g., Discount, TotalAmount, etc.
                     await _context.SaveChangesAsync();
                     TempData["Message"] = "Payment successful.";
-                    return RedirectToAction("PaymentSuccess");
+                    int courseid = order.CourseId;
+					
+                   
+                    return RedirectToAction("PaymentSuccess", new { courseid = courseid, userid = userid });
                 }
                 else
                 {   
@@ -145,9 +166,16 @@ namespace ChillToeic
             return View(course);
         }
 
-        public IActionResult PaymentSuccess()
+        public IActionResult PaymentSuccess(int courseid, int userid )
         {
-            return View("Success", TempData["Message"]);
+			IList<Lecture> lectures = _context.Lectures.Where(l => l.CourseId == courseid).Include(m=>m.LectureDetails).ToList();
+			foreach (var lecture in lectures)
+			{
+
+				_learningProgressService.AddLearningProgress(new LearningProgress { IsCompleted = false, UserId = userid, CourseId = courseid, LectureId = lecture.Id, LectureDetailId = lecture.LectureDetails.FirstOrDefault().Id });
+
+			}
+			return View("Success", TempData["Message"]);
         }
 
         public IActionResult PaymentFail()

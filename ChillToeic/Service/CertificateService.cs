@@ -16,6 +16,9 @@ namespace ChillToeic.Service
 		{
 			return _certificateRepository.GetAll();
 		}
-
-	}
+        public IEnumerable<Certificate> GetCertificateByUserId(int id)
+        {
+            return _certificateRepository.Find(m => m.UserId == id);
+        }
+    }
 }

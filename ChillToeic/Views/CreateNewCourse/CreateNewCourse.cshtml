@@ -1,4 +1,8 @@
 ﻿@model ChillToeic.Models.Entity.CreateNewCourseInfo
+@{
+    ViewData["Title"] = "Create New Course";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <form asp-action="CreateNewCourse" method="post" id="testForm" enctype="multipart/form-data">
     <div class="form-group">
@@ -40,22 +44,25 @@
 
 <script>
     var previousQuantity = 0;
+    console.log("cc")
     var quantityInput = document.getElementById('quantityInput');
     var container = document.getElementById('lectureInfosContainer');
     var ids = [];
     // Hàm JavaScript để cập nhật số lần lặp trong vòng lặp for
     quantityInput.addEventListener('input', function () {
         var quantity = parseInt(this.value); // Lấy giá trị mới của QuantityOfLecture
-
+        console.log("cc")
         // Kiểm tra nếu số lượng mới khác số lượng trước đó
         if (quantity !== previousQuantity) {
             // Xóa bỏ tất cả các trường dữ liệu đã tạo trước đó
             while (container.firstChild) {
                 container.removeChild(container.firstChild);
             }
+            console.log("cc")
 
             // Tạo ra các trường dữ liệu mới trong vòng lặp for
             for (var i = 0; i < quantity; i++) {
+                console.log("cc")
                 var lecture = {};
                 var lectureDetail = {};
                 // Tạo một phần tử div mới cho mỗi trường dữ liệu
@@ -194,5 +201,5 @@
         // Ở đây bạn có thể thực hiện các xử lý khác nhau với tệp đã chọn
     });
 
-    });
+    
 </script>

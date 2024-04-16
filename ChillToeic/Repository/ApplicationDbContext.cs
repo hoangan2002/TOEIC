@@ -31,7 +31,7 @@ namespace ChillToeic.Repository
 
 		private const string connectionString = @"
                 Data Source=localhost;Database=ChillToeicNew;
-                User ID=sa;Password=123; TrustServerCertificate=True;";
+                User ID=sa;Password=123; TrustServerCertificate=True;MultipleActiveResultSets=true";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

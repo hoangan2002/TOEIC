@@ -145,7 +145,7 @@
 
 </script>
 <div class="single">
-    <h2 style="color: black;">Infomation of Tên</h2>
+    <h2 style="color: black;">Infomation of @Model.Centers[0].Name</h2>
     <table class="table">
         <tr>
             <td><strong>ID:</strong></td>
@@ -167,7 +167,6 @@
             <td><strong>Certification:</strong></td>
             <td>@Model.Centers[0].Certification</td> <!-- Sử dụng dữ liệu thực từ Model cho cột Certification -->
         </tr>
-       
         <tr>
             <td><strong>Created At:</strong></td>
             <td>@Model.Centers[0].CreatedAt</td> <!-- Sử dụng dữ liệu thực từ Model cho cột Created At -->
@@ -187,7 +186,7 @@
         </div>
     </div>
     <!-- Popup xác nhận Approved -->
-    <div id="approvedModal" class="modal">
+    <div id="approvedModal" class="Approved">
         <div class="modal-content">
             <span class="close">&times;</span>
             <p>Bạn có chắc chắn muốn Approved?</p>
@@ -199,7 +198,7 @@
     </div>
 
     <!-- Popup xác nhận Not Approved -->
-    <div id="notApprovedModal" class="modal">
+    <div id="notApprovedModal" class="NotApproved">
         <div class="modal-content">
             <span class="close">&times;</span>
             <p>Bạn có chắc chắn muốn Not Approved?</p>
@@ -241,7 +240,7 @@
     <button class="btn1" id="ban">BAN</button>
 </div>
 
-<div id="confirmBanModal" class="modal">
+    <div id="confirmBanModal" class="ban">
     <div class="modal-content">
         <span class="close">&times;</span>
         <p>Bạn có chắc chắn muốn ban?</p>

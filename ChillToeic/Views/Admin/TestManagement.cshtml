@@ -3,6 +3,7 @@
     ViewBag.Title = "";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+@model IEnumerable<ChillToeic.Models.Entity.Test>
 
 <div class="card-body">
     <p class="card-title mb-0">List of all learners</p>
@@ -16,27 +17,25 @@
                     <th>Number Of Question</th>
                     <th>Number Of Part</th>
                     <th>Number Of User Test</th>
-                    <th>Course</th>
-                    <th>Education Center</th>
                     <th>Created At</th>
                     <th>Status</th>
                     <th>View</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach(var test in Model){
                 <tr>
-                    <td>1</td>
-                    <td>Sample Test</td>
-                    <td>90 minutes</td>
-                    <td>50</td>
-                    <td>3</td>
-                    <td>100</td>
-                    <td>Mathematics</td>
-                    <td>ABC Education Center</td>
-                    <td>2024-04-14</td>
-                    <td>Active</td>
-                    <td><a class="btn1" href="/Admin/TestDetailManagement">View</a></td>
-                </tr>
+                        <td>@Html.DisplayFor(modelItem => test.Id)</td>
+                        <td>@Html.DisplayFor(modelItem => test.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => test.Duration)</td>
+                        <td>@Html.DisplayFor(modelItem => test.NumberOfQuestion)</td>
+                        <td>@Html.DisplayFor(modelItem => test.NumberOfPart)</td>
+                        <td>@Html.DisplayFor(modelItem => test.NumberOfUserTest)</td>
+                        <td>@Html.DisplayFor(modelItem => test.CreatedAt)</td>
+                        <td>@Html.DisplayFor(modelItem => test.Status)</td>
+                        <td><a class="btn1" href="/Admin/TestDetailManagement?id=@Html.DisplayFor(modelItem => test.Id)">View</a></td>
+                    </tr>
+                }
                 <!-- Thêm các hàng khác tương tự tại đây -->
             </tbody>
 

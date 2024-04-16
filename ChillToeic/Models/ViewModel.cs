@@ -16,7 +16,7 @@ namespace ChillToeic.Models.Entity
         [ForeignKey("EducationCenter")]
         public int EducationCenterId { get; set; }
 
-        public IEnumerable<LectureInfo> LectureInfos { get; set; }
+        
     }
 
     // ViewModel la gi?

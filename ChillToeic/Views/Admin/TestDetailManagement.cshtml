@@ -3,10 +3,10 @@
     ViewBag.Title = "";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-@model ChillToeic.Models.TestDetailViewModel;
+@model ChillToeic.Models.TestDetailViewModel
 
 <div class="single">
-    <h2 style="color: black;">Infomation of Tên</h2>
+    <h2 style="color: black;">Infomation of @Model.Name</h2>
     <table class="table">
         <tr>
             <td><strong>ID:</strong></td>
@@ -208,7 +208,7 @@ document.getElementById("confirmBanModal").querySelector("button#no").onclick = 
     <div class="ban">
         <button class="btn1" id="ban">BAN</button>
     </div>
-    <div id="confirmBanModal" class="modal">
+    <div id="confirmBanModal" class="ban">
         <div class="modal-content">
             <span class="close">&times;</span>
             <p>Bạn có chắc chắn muốn ban?</p>
@@ -232,7 +232,7 @@ document.getElementById("confirmBanModal").querySelector("button#no").onclick = 
         </div>
     </div>
     <!-- Popup xác nhận Approved -->
-    <div id="approvedModal" class="modal">
+    <div id="approvedModal" class="Approved">
         <div class="modal-content">
             <span class="close">&times;</span>
             <p>Bạn có chắc chắn muốn Approved?</p>
@@ -244,7 +244,7 @@ document.getElementById("confirmBanModal").querySelector("button#no").onclick = 
     </div>
 
     <!-- Popup xác nhận Not Approved -->
-    <div id="notApprovedModal" class="modal">
+    <div id="notApprovedModal" class="NotApproved">
         <div class="modal-content">
             <span class="close">&times;</span>
             <p>Bạn có chắc chắn muốn Not Approved?</p>

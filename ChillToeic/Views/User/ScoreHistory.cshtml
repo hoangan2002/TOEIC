@@ -1,7 +1,7 @@
 ﻿@{
 
     ViewBag.Title = "Điểm";
-	Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!-- Breadcrumbs -->
@@ -20,18 +20,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
+    <div class="breadcrumbs overlay">
+        <div class="container">
+            <div class="bread-inner">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>My score</h2>
+                        <ul class="bread-list">
+                            <li><a asp-area="" asp-controller="Home" asp-action="HomePage">Home</a></li>
+                            <li><i class="icofont-simple-right"></i></li>
+                            <li class="active">My score</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="min-h-screen bg-gray-100 flex items-center justify-center">
         <div class="container">
             <div class="chung">
                 <table class="table">
                     <thead class="head">
                         <tr class="dau" id="payList">
-                            
+
                             <th class="py-3 px-6 text-left" id="chu">Bài Kiểm tra</th>
                             <th class="py-3 px-6 text-center" id="chu">Điểm</th>
-                            
-                            
-                            
+
+
+
                         </tr>
                     </thead>
                     <tbody class="body">
@@ -42,8 +58,6 @@
                                 <tr class="noidung" id="payList">
                                     <td class="py-3 px-6 text-left" id="chuden">@order.Test.Name</td>
                                     <td class="py-3 px-6 text-left" id="chuden">@order.Score</td>
-                                    <td class="py-3 px-6 text-center">
-                                    </td>
                                 </tr>
 
 
@@ -63,12 +77,14 @@
 </html>
 
 <style>
-    #chu{
+    #chu {
         color: #fff;
     }
-    #chuden{
+
+    #chuden {
         color: #000;
     }
+
     .container {
         /* Your container styles here */
     }

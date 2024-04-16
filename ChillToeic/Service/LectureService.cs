@@ -17,8 +17,11 @@ namespace ChillToeic.Service
         {
             return _LectureRepository.Find(lecture => lecture.CourseId == courseId);
         }
-
-        public IEnumerable<Lecture> GetAllLecture()
+		//public IList<Lecture> GetLecturesByCourseId2(int courseId)
+		//{
+		//	return _LectureRepository.Find(lecture => lecture.CourseId == courseId, m=> m.LectureDetails);
+		//}
+		public IEnumerable<Lecture> GetAllLecture()
         {
             return _LectureRepository.GetAll();
         }
